@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var MatchList = require('../src/module/match');
+var MatchList = require('../src/module/matchlist');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -10,13 +10,10 @@ router.get('/', function(req, res, next) {
 });
 
 
-// 获取当前日期的比赛列表
+// 获取当前日期(数据库里是2015-2017年)的比赛列表
 router.post('/getMatchItems', (req, res, next) => {
 	let date = req.body;
-	console.log(req.body);
-	MatchList.find({
-		'date': '20181126'
-	}).exec((err, matchItems) => {
+	MatchList.find(date).exec((err, matchItems) => {
 		if (err) {
 			console.log(err);
 		} else {

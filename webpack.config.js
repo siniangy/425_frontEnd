@@ -7,6 +7,7 @@ module.exports = {
 		path: path.join(__dirname, "./public/javascripts"),
 		filename: "bundle.js",
 	},
+	mode: 'development',
 	module: {
 		rules: [{
 			test: /\.js$/,
