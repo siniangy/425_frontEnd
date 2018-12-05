@@ -7,7 +7,8 @@ import {
   Icon
 } from 'antd';
 import $ from 'jquery';
-import MatchList from './comps/match-list.js';
+import MatchList from './comps/matchlist/match-list.js';
+import MatchDetail from './comps/matchdetail/match-detail.js';
 import './style/index.less'
 
 const Option = Select.Option;
@@ -30,6 +31,8 @@ class NewsVisualization extends React.Component {
       dateParams: '',
       matchContent: [],
       matchUrl: [],
+      currentMatch: '',
+      currentUrl: ''
     }
   }
   componentDidMount() {
@@ -87,8 +90,15 @@ class NewsVisualization extends React.Component {
       dateParams: this.state.year.toString() + '-' + this.state.month.toString() + '-' + this.state.day.toString(),
       mainContentShow: true
     }, () => {
-      console.log(this.state.dateParams);
       this.getMatchItems(this.state.dateParams);
+    })
+  }
+  handleMatchDetail(e) {
+    this.setState({
+      currentUrl: e.target.innerHTML.split('</span>')[0].split('">')[1],
+      currentMatch: e.target.innerHTML.split('</span>')[1]
+    }, () => {
+
     })
   }
   render() {
@@ -122,7 +132,8 @@ class NewsVisualization extends React.Component {
               style={{lineHeight: '64px'}}
             >
               <div>
-                <PandaIcon style={{ fontSize: '40px',marginRight: '30px'}} />
+                {/*<PandaIcon style={{ fontSize: '40px',marginRight: '30px'}} />*/}
+                <img src="/images/logocp.png" style={{marginLeft: '-40px',marginRight: '50px'}}/>
                 <span>请选择日期：</span>
                 <Select defaultValue={this.state.year} style={{ width: 240 }} onChange={(value) => this.handleYearChange(value)}>
                 <Option value="2015">2015</Option>
@@ -190,14 +201,12 @@ class NewsVisualization extends React.Component {
                   mode="inline"
                   style={{ height: '100%', borderRight: 0, padding:'10px 10px 10px 5px' }}
                 >
-                  <MatchList matchContent={this.state.matchContent} matchUrl={this.state.matchUrl} />
+                  <MatchList matchContent={this.state.matchContent} matchUrl={this.state.matchUrl} handleMatchDetail={this.handleMatchDetail.bind(this)}/>
                 </Menu>
               </Sider>
               <Layout style={{ padding: '0 24px 24px',marginTop: 10 }}>
                 <Content style={{ background: '#fff', padding: 24, minHeight: 1500 }}>
-                  <span>新闻报道实况</span>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <span>赛事数据可视化</span>
+                  <MatchDetail currentUrl={this.state.currentUrl} currentMatch={this.state.currentMatch} />
                 </Content>
               </Layout>
           </Layout>
