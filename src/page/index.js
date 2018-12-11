@@ -101,6 +101,7 @@ class NewsVisualization extends React.Component {
 
     })
   }
+
   render() {
     const {
       year,
@@ -131,68 +132,68 @@ class NewsVisualization extends React.Component {
               mode='horizontal'
               style={{lineHeight: '64px'}}
             >
-              <div>
-                {/*<PandaIcon style={{ fontSize: '40px',marginRight: '30px'}} />*/}
-                <img src="/images/logocp.png" style={{marginLeft: '-40px',marginRight: '50px'}}/>
-                <span>请选择日期：</span>
-                <Select defaultValue={this.state.year} style={{ width: 240 }} onChange={(value) => this.handleYearChange(value)}>
-                <Option value="2015">2015</Option>
-                <Option value="2016">2016</Option>
-                <Option value="2017">2017</Option>
-                </Select>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Select defaultValue={this.state.month} style={{ width: 240 }} onChange={(value) => this.handleMonthChange(value)}>
-                  <Option value="01">1</Option>
-                  <Option value="02">2</Option>
-                  <Option value="03">3</Option>
-                  <Option value="04">4</Option>
-                  <Option value="05">5</Option>
-                  <Option value="06">6</Option>
-                  <Option value="07">7</Option>
-                  <Option value="08">8</Option>
-                  <Option value="09">9</Option>
-                  <Option value="10">10</Option>
-                  <Option value="11">11</Option>
-                  <Option value="12">12</Option>
-                </Select>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Select defaultValue={this.state.day} style={{ width: 240 }} onChange={(value) => this.handleDayChange(value)}>
-                  <Option value="01">1
-                  </Option><Option value="02">2
-                  </Option><Option value="03">3
-                  </Option><Option value="04">4
-                  </Option><Option value="05">5
-                  </Option><Option value="06">6
-                  </Option><Option value="07">7
-                  </Option><Option value="08">8
-                  </Option><Option value="09">9
-                  </Option><Option value="10">10
-                  </Option><Option value="11">11
-                  </Option><Option value="12">12
-                  </Option><Option value="13">13
-                  </Option><Option value="14">14
-                  </Option><Option value="15">15
-                  </Option><Option value="16">16
-                  </Option><Option value="17">17
-                  </Option><Option value="18">18
-                  </Option><Option value="19">19
-                  </Option><Option value="20">20
-                  </Option><Option value="21">21
-                  </Option><Option value="22">22
-                  </Option><Option value="23">23
-                  </Option><Option value="24">24
-                  </Option><Option value="25">25
-                  </Option><Option value="26">26
-                  </Option><Option value="27">27
-                  </Option><Option value="28">28
-                  </Option><Option value="29">29
-                  </Option><Option value="30">30
-                  </Option><Option value="31">31
-                  </Option>
-                </Select>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <Button type="primary" shape="circle" icon="search" onClick={() => this.handleClick()}/>
-              </div>
+              <Menu.Item style={{backgroundColor: 'rgba(0,21,41,1)'}}>
+                  {/*<PandaIcon style={{ fontSize: '40px',marginRight: '30px'}} />*/}
+                  <img src="/images/logocp.png" style={{marginLeft: '-40px',marginRight: '50px'}}/>
+                  <span>请选择日期：</span>
+                  <Select defaultValue={this.state.year} style={{ width: 240 }} onChange={(value) => this.handleYearChange(value)}>
+                  <Option value="2015">2015</Option>
+                  <Option value="2016">2016</Option>
+                  <Option value="2017">2017</Option>
+                  </Select>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <Select defaultValue={this.state.month} style={{ width: 240 }} onChange={(value) => this.handleMonthChange(value)}>
+                    <Option value="01">1</Option>
+                    <Option value="02">2</Option>
+                    <Option value="03">3</Option>
+                    <Option value="04">4</Option>
+                    <Option value="05">5</Option>
+                    <Option value="06">6</Option>
+                    <Option value="07">7</Option>
+                    <Option value="08">8</Option>
+                    <Option value="09">9</Option>
+                    <Option value="10">10</Option>
+                    <Option value="11">11</Option>
+                    <Option value="12">12</Option>
+                  </Select>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <Select defaultValue={this.state.day} style={{ width: 240 }} onChange={(value) => this.handleDayChange(value)}>
+                    <Option value="01">1
+                    </Option><Option value="02">2
+                    </Option><Option value="03">3
+                    </Option><Option value="04">4
+                    </Option><Option value="05">5
+                    </Option><Option value="06">6
+                    </Option><Option value="07">7
+                    </Option><Option value="08">8
+                    </Option><Option value="09">9
+                    </Option><Option value="10">10
+                    </Option><Option value="11">11
+                    </Option><Option value="12">12
+                    </Option><Option value="13">13
+                    </Option><Option value="14">14
+                    </Option><Option value="15">15
+                    </Option><Option value="16">16
+                    </Option><Option value="17">17
+                    </Option><Option value="18">18
+                    </Option><Option value="19">19
+                    </Option><Option value="20">20
+                    </Option><Option value="21">21
+                    </Option><Option value="22">22
+                    </Option><Option value="23">23
+                    </Option><Option value="24">24
+                    </Option><Option value="25">25
+                    </Option><Option value="26">26
+                    </Option><Option value="27">27
+                    </Option><Option value="28">28
+                    </Option><Option value="29">29
+                    </Option><Option value="30">30
+                    </Option><Option value="31">31
+                    </Option>
+                  </Select>
+                  &nbsp;&nbsp;&nbsp;&nbsp;
+                  <Button type="primary" shape="circle" icon="search" onClick={() => this.handleClick()}/>
+              </Menu.Item>
             </Menu>
           </Header>
           <Layout>

@@ -8,7 +8,15 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/matchlist');
+mongoose.connect("mongodb://localhost:27017/matchlist", {
+	useNewUrlParser: true
+}, function(err) {
+	if (err) {
+		console.log('Connection Error:' + err)
+	} else {　　　
+		console.log('Connection success!')
+	}
+});
 var app = express();
 
 // view engine setup
