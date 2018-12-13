@@ -7,6 +7,11 @@ import {
   Icon
 } from 'antd';
 import $ from 'jquery';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom";
 import MatchList from './comps/matchlist/match-list.js';
 import MatchDetail from './comps/matchdetail/match-detail.js';
 import './style/index.less'
@@ -52,7 +57,6 @@ class NewsVisualization extends React.Component {
       dataType: 'json',
       data: postData, // 传递json
       success: data => {
-        console.log(data);
         this.setState({
           matchContent: data[0]['content'],
           matchUrl: data[0]['url']
@@ -133,9 +137,15 @@ class NewsVisualization extends React.Component {
               style={{lineHeight: '64px'}}
             >
               <Menu.Item style={{backgroundColor: 'rgba(0,21,41,1)'}}>
+                  <Router>
+                    <Link to="/">
+                      <img src="/images/logocp.png" style={{marginLeft: '-40px',marginRight: '50px'}}/>
+                    </Link>
+                  </Router>
+              </Menu.Item>
+              <Menu.Item style={{backgroundColor: 'rgba(0,21,41,1)'}}>
                   {/*<PandaIcon style={{ fontSize: '40px',marginRight: '30px'}} />*/}
-                  <img src="/images/logocp.png" style={{marginLeft: '-40px',marginRight: '50px'}}/>
-                  <span>请选择日期：</span>
+                  <span>请选择日期： </span>
                   <Select defaultValue={this.state.year} style={{ width: 240 }} onChange={(value) => this.handleYearChange(value)}>
                   <Option value="2015">2015</Option>
                   <Option value="2016">2016</Option>
@@ -193,6 +203,11 @@ class NewsVisualization extends React.Component {
                   </Select>
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <Button type="primary" shape="circle" icon="search" onClick={() => this.handleClick()}/>
+                  {/*<Router>
+                    <Link to='/match'>
+                      <Button type="primary" shape="circle" icon="search"/>
+                    </Link>
+                  </Router>*/}
               </Menu.Item>
             </Menu>
           </Header>

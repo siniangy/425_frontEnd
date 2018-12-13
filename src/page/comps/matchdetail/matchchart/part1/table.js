@@ -10,15 +10,16 @@ class Part1Table extends React.Component {
       team1Name: '',
       team2Name: '',
       team1Score: [],
-      team2Score: []
+      team2Score: [],
+      team1Sum: 0,
+      team2Sum: 0
     }
   }
   componentDidMount() {
-
+    // console.log(this.props.team1Name)
   }
-  componentWillMount() {
+  componentWillMount() {}
 
-  }
   componentWillReceiveProps(nextProps) {
     if (this.props.team1Name != nextProps.team1Name) {
       if (nextProps.team1Name) {
@@ -26,7 +27,9 @@ class Part1Table extends React.Component {
           team1Name: nextProps.team1Name,
           team2Name: nextProps.team2Name,
           team1Score: nextProps.team1Score,
-          team2Score: nextProps.team2Score
+          team2Score: nextProps.team2Score,
+          team1Sum: nextProps.team1Sum,
+          team2Sum: nextProps.team2Sum
         }, () => {
 
         })
@@ -38,20 +41,26 @@ class Part1Table extends React.Component {
       team1Name,
       team2Name,
       team1Score,
-      team2Score
-    } = this.state
+      team2Score,
+      team1Sum,
+      team2Sum
+    } = this.props
     const dataSource = [{
+      'key': '0',
       '球队': team1Name,
       '1': team1Score[0],
       '2': team1Score[1],
       '3': team1Score[2],
-      '4': team1Score[3]
+      '4': team1Score[3],
+      '5': team1Sum
     }, {
+      'key': '1',
       '球队': team2Name,
       '1': team2Score[0],
       '2': team2Score[1],
       '3': team2Score[2],
-      '4': team2Score[3]
+      '4': team2Score[3],
+      '5': team2Sum
     }];
 
     const columns = [{
@@ -74,11 +83,15 @@ class Part1Table extends React.Component {
       title: '4',
       dataIndex: '4',
       key: '4',
+    }, {
+      title: '总分',
+      dataIndex: '5',
+      key: '5',
     }];
     return (
       <div>
-        <Table dataSource={dataSource} columns={columns} rowKey="1" pagination={false}/>
-      </div>
+        <Table dataSource={dataSource} columns={columns} pagination={false}  bordered/>
+     </div>
     )
   }
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import Test from './test.js';
 
 class MatchNews extends React.Component {
   constructor(props) {
@@ -20,6 +21,8 @@ class MatchNews extends React.Component {
         this.setState({
           teamHome: nextProps.teamHome,
           teamAway: nextProps.teamAway
+        }, () => {
+
         })
       }
     }
@@ -32,6 +35,7 @@ class MatchNews extends React.Component {
     return (
       <div>
         <p>team1: {teamHome}</p>
+        <Test content={teamHome}/>
         <p>team2: {teamAway}</p>
       </div>
     )

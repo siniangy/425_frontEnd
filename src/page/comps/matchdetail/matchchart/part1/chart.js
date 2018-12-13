@@ -11,30 +11,35 @@ class Part1Chart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      team: [this.props.team1Name, this.props.team2Name],
-      team1Score: this.props.team1Score,
-      team2Score: this.props.team2Score
+      team1Name: '',
+      team2Name: '',
+      team1Score: [],
+      team2Score: []
     }
   }
   componentDidMount() {
-    this.getInitialChart(this.state.team, this.state.team1Score, this.state.team2Score)
+    this.getInitialChart(this.props.team1Name, this.props.team2Name, this.props.team1Score, this.props.team2Score)
   }
   componentWillMount() {
-
+    // console.log(this.props.team1Name)
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.team1Name != nextProps.team1Name) {
       if (nextProps.team1Name) {
         this.setState({
-          team: [nextProps.team1Name, nextProps.team2Name],
+          team1Name: nextProps.team1Name,
+          team2Name: nextProps.team2Name,
           team1Score: nextProps.team1Score,
           team2Score: nextProps.team2Score
+        }, () => {
+          // this.getInitialChart(this.state.team1Name, this.state.team2Name, this.state.team1Score, this.state.team2Score)
         })
       }
     }
   }
-  getInitialChart(team, team1Score, team2Score) {
-    var myChart = echarts.init(document.getElementById('main'));
+  getInitialChart(team1Name, team2Name, team1Score, team2Score) {
+    var myChart = echarts.init(document.getElementById('part1Main'));
+    let team = [team1Name, team2Name];
     myChart.setOption({
       title: {
         text: '单节比分对比'
@@ -85,9 +90,12 @@ class Part1Chart extends React.Component {
     })
   }
   render() {
+    const {
+      team1Name
+    } = this.state
     return (
       <div>
-        <div id="main" style={{ width: 500, height: 200}}></div>
+        <div id="part1Main" style={{ width: 750, height: 300}}></div>
       </div>
     )
   }

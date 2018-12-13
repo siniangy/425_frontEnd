@@ -47,7 +47,6 @@ class MatchDetail extends React.Component {
       dataType: 'json',
       data: postData, // 传递json
       success: data => {
-        console.log(data)
         this.setState({
           singleMatchData: data,
           teamHome: data[0]['team1Info'][1].toString(),

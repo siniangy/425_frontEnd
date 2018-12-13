@@ -2,7 +2,8 @@ import React from 'react';
 import {
   Row,
   Col,
-  Radio
+  Radio,
+  Skeleton
 } from 'antd';
 import Part1Table from './table.js';
 import Part1Chart from './chart.js';
@@ -23,7 +24,10 @@ class Part1 extends React.Component {
       team2NowRecord: '',
       team2Img: '',
       team2Score: '',
-      defaultValue: 'a'
+      team1Sum: 0,
+      team2Sum: 0,
+      defaultSwitchValue: 'a',
+      isLoading: false
     }
   }
   componentDidMount() {
@@ -35,9 +39,19 @@ class Part1 extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.data !== nextProps.data) {
       if (nextProps.data) {
+        this.setState({
+          isLoading: true
+        })
         this.handleProps(nextProps.data)
       }
     }
+  }
+  handleTeamSum(data) {
+    let res = 0;
+    for (let i = 0; i < data.length; i++) {
+      res += parseInt(data[i])
+    }
+    return res;
   }
   handleProps(data) {
     this.setState({
@@ -50,15 +64,18 @@ class Part1 extends React.Component {
       team2Home: data[0]['team2Home'][1],
       team2NowRecord: data[0]['team2Info'][2],
       team2Img: data[0]['team2Info'][0],
-      team2Score: data[0]['team2Score']
+      team2Score: data[0]['team2Score'],
+      team1Sum: this.handleTeamSum(data[0]['team1Score']),
+      team2Sum: this.handleTeamSum(data[0]['team2Score'])
     }, () => {
 
     })
   }
   handleButton(e) {
-    console.log(e.target.value)
     this.setState({
-      defaultValue: e.target.value
+      defaultSwitchValue: e.target.value
+    }, () => {
+
     })
   }
   render() {
@@ -73,7 +90,10 @@ class Part1 extends React.Component {
       team2NowRecord,
       team2Img,
       team2Score,
-      defaultValue
+      team1Sum,
+      team2Sum,
+      defaultSwitchValue,
+      isLoading
     } = this.state
     return (
       <div style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px'}}>
@@ -97,10 +117,10 @@ class Part1 extends React.Component {
                 <RadioButton value="b">Chart</RadioButton>
               </RadioGroup>
             </div>
-            {(defaultValue=='a') ? 
-              <Part1Table team1Name={team1Name} team2Name={team2Name} team1Score={team1Score} team2Score={team2Score}/> 
+            {(defaultSwitchValue=='a') ? 
+              (<Part1Table team1Name={team1Name} team2Name={team2Name} team1Score={team1Score} team2Score={team2Score} team1Sum={team1Sum} team2Sum={team2Sum}/>)         
             :
-              <Part1Chart team1Name={team1Name} team2Name={team2Name} team1Score={team1Score} team2Score={team2Score} />
+              (<Part1Chart team1Name={team1Name} team2Name={team2Name} team1Score={team1Score} team2Score={team2Score}/>)
             }
           </Col>
           <Col span={6}>

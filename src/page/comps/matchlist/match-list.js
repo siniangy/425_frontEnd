@@ -5,6 +5,11 @@ import {
   Icon,
   Input
 } from 'antd';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from "react-router-dom";
 import MatchItem from './match-item';
 
 class MatchList extends React.Component {
@@ -35,13 +40,18 @@ class MatchList extends React.Component {
       }
     }
     const matchItems = match.map((item, index) => {
+      const url = item.url.split('/')[4]
       return (
-        <MatchItem
-          key={index} 
-          content={item.content} 
-          url={item.url}
-          handleMatchDetail={this.props.handleMatchDetail}
-        />
+        <Router key={index} >
+          <Link to={`/match/${url}`}>
+            <MatchItem
+              key={index} 
+              content={item.content} 
+              url={item.url}
+              handleMatchDetail={this.props.handleMatchDetail}
+            />
+          </Link>
+        </Router>
       )
     });
     return (

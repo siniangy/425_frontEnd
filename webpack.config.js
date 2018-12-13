@@ -2,10 +2,13 @@ const webpack = require('webpack');
 const path = require('path');
 
 module.exports = {
-	entry: './src/page/app.js',
+	entry: {
+		app: './src/page/app.js',
+		vendor: ['react', 'react-dom']
+	},
 	output: {
 		path: path.join(__dirname, "./public/javascripts"),
-		filename: "bundle.js",
+		filename: "[name].js",
 	},
 	mode: 'development',
 	module: {
@@ -34,5 +37,23 @@ module.exports = {
 			test: /\.scss$/,
 			loader: 'style!css!sass'
 		}]
-	}
+	},
+	optimization: {
+		splitChunks: {
+			cacheGroups: {
+				commons: {
+					test: /[\\/]node_modules[\\/]/,
+					name: 'vendor',
+					chunks: 'all'
+				}
+			}
+		}
+	},
+	devServer: {
+		contentBase: './',
+		port: 3000
+	},
+	plugins: [
+		new webpack.HotModuleReplacementPlugin()
+	]
 };
