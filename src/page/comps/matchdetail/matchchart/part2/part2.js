@@ -51,7 +51,7 @@ class Part2 extends React.Component {
     let res = [];
     for (let i = 0; i < data.length; i++) {
       if (i == 1 || i == 4 || i == 7 || i == 11 || (i >= 14 && i < 19)) {
-        res.push(data[i])
+        res.push(data[i] * -1)
       } else {
         continue;
       }
@@ -63,7 +63,7 @@ class Part2 extends React.Component {
     let res = [];
     for (let i = 0; i < data.length; i++) {
       if (i == 1 || i == 4 || i == 7 || i == 11 || (i >= 14 && i < 19)) {
-        res.push(data[i] * -1)
+        res.push(data[i])
       } else {
         continue;
       }
@@ -208,18 +208,18 @@ class Part2 extends React.Component {
     const dataSource = [{
       key: '0',
       0: '得分',
-      1: team1ScoreMax[0],
-      2: team2ScoreMax[0],
+      1: team1ScoreMax,
+      2: team2ScoreMax,
     }, {
       key: '1',
       0: '篮板',
-      1: team1ReboundMax[0],
-      2: team2ReboundMax[0],
+      1: team1ReboundMax,
+      2: team2ReboundMax,
     }, {
       key: '2',
       0: '助攻',
-      1: team1AssistMax[0],
-      2: team2AssistMax[0],
+      1: team1AssistMax,
+      2: team2AssistMax,
     }];
     const columns = [{
       title: '',
@@ -228,11 +228,23 @@ class Part2 extends React.Component {
     }, {
       title: team1Name,
       dataIndex: '1',
-      key: '1'
+      key: '1',
+      render: text => (
+        <div>
+          <p style={{fontSize:'14px'}}>{text[0]}</p>
+          <b style={{fontSize:'14px'}}>{text[1]}</b>
+        </div>
+      )
     }, {
       title: team2Name,
       dataIndex: '2',
-      key: '2'
+      key: '2',
+      render: text => (
+        <div>
+          <p style={{fontSize:'14px'}}>{text[0]}</p>
+          <b style={{fontSize:'14px'}}>{text[1]}</b>
+        </div>
+      )
     }];
     return (
       <div style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px',marginTop: '20px'}}>

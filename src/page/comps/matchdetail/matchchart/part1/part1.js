@@ -3,10 +3,13 @@ import {
   Row,
   Col,
   Radio,
-  Skeleton
+  Skeleton,
+  Modal,
+  Button
 } from 'antd';
 import Part1Table from './table.js';
 import Part1Chart from './chart.js';
+import Chart from '../knowledgeMap.js';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -27,6 +30,8 @@ class Part1 extends React.Component {
       team1Sum: 0,
       team2Sum: 0,
       defaultSwitchValue: 'a',
+      modalVisible: false,
+      modalTarget: '',
       isLoading: false
     }
   }
@@ -78,6 +83,24 @@ class Part1 extends React.Component {
 
     })
   }
+  handleModal(e) {
+    this.setState({
+      modalVisible: true,
+      modalTarget: e.target.innerHTML
+    }, () => {
+
+    });
+  }
+  handleOk(e) {
+    this.setState({
+      modalVisible: false,
+    });
+  }
+  handleCancel(e) {
+    this.setState({
+      modalVisible: false,
+    });
+  }
   render() {
     const {
       team1Name,
@@ -93,6 +116,7 @@ class Part1 extends React.Component {
       team1Sum,
       team2Sum,
       defaultSwitchValue,
+      modalTarget,
       isLoading
     } = this.state
     return (
@@ -101,9 +125,21 @@ class Part1 extends React.Component {
           <Col span={6} >
             <Row>
               <Col span={12} style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px'}}>
-                <p>{team1Name}</p>
-                <p>{team1Home}</p>
-                <p>{team1NowRecord}</p>
+                <h3><b onClick={(e) => this.handleModal(e)} style={{cursor: 'pointer',color:'rgba(135,206,250,1)'}}>{team1Name}</b></h3>
+                <Modal
+                  title="Basic Modal"
+                  visible={this.state.modalVisible}
+                  onOk={(e) => this.handleOk(e)}
+                  onCancel={(e) => this.handleCancel(e)}
+                  footer={null}
+                >
+                  <p>Some contents...</p>
+                  <p>Some contents...</p>
+                  <p>Some contents...</p>
+                  <Chart target={modalTarget} />
+                </Modal>
+                <h4 style={{margin:'20px 0'}}><b>{team1Home}</b></h4>
+                <h4><b>{team1NowRecord}</b></h4>
               </Col>
               <Col span={12} style={{padding: '0px 10px'}}>
                 <img src={team1Img} />
@@ -129,9 +165,9 @@ class Part1 extends React.Component {
                 <img src={team2Img} />
               </Col>
               <Col span={12} style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px'}}>
-                <p>{team2Name}</p>
-                <p>{team2Home}</p>
-                <p>{team2NowRecord}</p>
+                <h3><b onClick={(e) => this.handleModal(e)} style={{cursor: 'pointer',color:'rgba(135,206,250,1)'}}>{team2Name}</b></h3>
+                <h4 style={{margin:'20px 0'}}><b>{team2Home}</b></h4>
+                <h4><b>{team2NowRecord}</b></h4>
               </Col>
             </Row>
           </Col>

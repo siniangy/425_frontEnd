@@ -202,12 +202,13 @@ class NewsVisualization extends React.Component {
                     </Option>
                   </Select>
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <Button type="primary" shape="circle" icon="search" onClick={() => this.handleClick()}/>
-                  {/*<Router>
+              </Menu.Item>
+              <Menu.Item style={{backgroundColor: 'rgba(0,21,41,1)'}}>
+                  <Router>
                     <Link to='/match'>
-                      <Button type="primary" shape="circle" icon="search"/>
+                      <Button type="primary" shape="circle" icon="search" onClick={() => this.handleClick()}/>
                     </Link>
-                  </Router>*/}
+                  </Router>
               </Menu.Item>
             </Menu>
           </Header>

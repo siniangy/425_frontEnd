@@ -49,11 +49,11 @@ module.exports = {
 			}
 		}
 	},
-	devServer: {
-		contentBase: './',
-		port: 3000
-	},
-	plugins: [
-		new webpack.HotModuleReplacementPlugin()
-	]
+	// devServer: {
+	// 	contentBase: './',
+	// 	port: 3000
+	// },
+	// plugins: [
+	// 	new webpack.HotModuleReplacementPlugin()
+	// ]
 };

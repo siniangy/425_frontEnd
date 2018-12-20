@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   Tabs,
-  Skeleton
+  Skeleton,
+  BackTop
 } from 'antd';
 import $ from 'jquery';
 import MatchNews from './matchnews/match-news.js';
@@ -16,6 +17,7 @@ class MatchDetail extends React.Component {
     this.state = {
       isLoading: false,
       singleMatchData: [],
+      playByplayData: [],
       teamHome: '',
       teamAway: ''
     }
@@ -33,8 +35,31 @@ class MatchDetail extends React.Component {
           isLoading: true
         })
         this.getSingleMatchDetail(nextProps.currentUrl)
+        this.getSingleMatchPlayByPlay(nextProps.currentUrl)
       }
     }
+  }
+  getSingleMatchPlayByPlay(data) {
+    const that = this;
+    const postData = {
+      'url': data
+    }
+    $.ajax({
+      url: '/getSingleMatchPlayByPlay',
+      type: 'post',
+      dataType: 'json',
+      data: postData, // 传递json
+      success: data => {
+        this.setState({
+          playByplayData: data
+        }, () => {
+
+        })
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
   }
   getSingleMatchDetail(data) {
     const that = this;
@@ -66,12 +91,13 @@ class MatchDetail extends React.Component {
   render() {
     return (
       <div>
+      <BackTop />
         <Tabs defaultActiveKey="1" onChange={(key) => this.handleKey(key)}>
           <TabPane tab="新闻报道" key="1" forceRender={true}>
             {this.state.isLoading ? <MatchNews teamHome={this.state.teamHome} teamAway={this.state.teamAway} /> : <Skeleton />}
           </TabPane>
           <TabPane tab="数据统计" key="2" forceRender={true}>
-            {this.state.isLoading ? <MatchChart singleMatchData={this.state.singleMatchData} /> : <Skeleton />}
+            {this.state.isLoading ? <MatchChart singleMatchData={this.state.singleMatchData} playByplayData={this.state.playByplayData}/> : <Skeleton />}
           </TabPane>
           <TabPane tab="视频摘要" key="3" forceRender={true}>
             {this.state.isLoading ? <MatchAudio /> : <Skeleton />}

@@ -1,13 +1,17 @@
 import React from 'react';
 import Part1 from './part1/part1.js';
 import Part2 from './part2/part2.js';
+import Part3 from './part3/part3.js';
 
 class MatchChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       part1Data: [],
-      part2Data: []
+      part2Data: [],
+      part3Data: [],
+      team1Name: '',
+      team2Name: ''
     }
   }
   componentDidMount() {
@@ -19,15 +23,29 @@ class MatchChart extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.singleMatchData !== nextProps.singleMatchData) {
       if (nextProps.singleMatchData) {
-        this.handleProps(nextProps.singleMatchData)
+        this.handleSingleMatchProps(nextProps.singleMatchData)
+      }
+    }
+    if (this.props.playByplayData !== nextProps.playByplayData) {
+      if (nextProps.playByplayData) {
+        this.handleSingleMatchPlayByPlayProps(nextProps.playByplayData)
       }
     }
   }
-  handleProps(data) {
+  handleSingleMatchProps(data) {
     this.setState({
       // JSON对象截取，先不截了，全传过去用到啥是啥！
       part1Data: data,
-      part2Data: data
+      part2Data: data,
+      team1Name: data[0]['team1Info'][1],
+      team2Name: data[0]['team2Info'][1],
+    }, () => {
+
+    })
+  }
+  handleSingleMatchPlayByPlayProps(data) {
+    this.setState({
+      part3Data: data
     }, () => {
 
     })
@@ -35,12 +53,18 @@ class MatchChart extends React.Component {
   render() {
     const {
       part1Data,
-      part2Data
+      part2Data,
+      part3Data,
+      team1Name,
+      team2Name
     } = this.state
     return (
       <div>
         <div>
           <Part1 data={part1Data} />
+        </div>
+        <div>
+          <Part3 data={part3Data} team1Name={team1Name} team2Name={team2Name}/>
         </div>
         <div>
           <Part2 data={part2Data} />

@@ -47,8 +47,8 @@ class Part2Chart extends React.Component {
     echarts.dispose(document.getElementById("part2Main"))
     var myChart = echarts.init(document.getElementById('part2Main'));
     var labelData = ['投篮%', '三分%', '罚球%', '篮板', '助攻', '抢断', '盖帽', '失误', '犯规'];
-    var manData = team1SummaryChart;
-    var womanData =  team2SummaryChart;
+    var womanData = team1SummaryChart;
+    var manData =  team2SummaryChart;
     var option = {
       backgroundColor: '#fff',
       legend: {
@@ -83,6 +83,14 @@ class Part2Chart extends React.Component {
         formatter: function(a) {
           var v = a[0];
           return v.name + '<br/>' + v.marker + v.seriesName + '：' + Math.abs(v.value);
+        }
+      },
+      toolbox: {
+        show: true,
+        feature: {
+          saveAsImage: {
+            show: true
+          }
         }
       },
       xAxis: [{

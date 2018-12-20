@@ -34,9 +34,7 @@ class MatchNews extends React.Component {
     } = this.state
     return (
       <div>
-        <p>team1: {teamHome}</p>
-        <Test content={teamHome}/>
-        <p>team2: {teamAway}</p>
+        <p>news</p>
       </div>
     )
   }

@@ -2,19 +2,30 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
 	BrowserRouter as Router,
+	HashRouter,
 	Route,
-	Switch
+	Switch,
+	Link
 } from 'react-router-dom';
 import NewsVisualization from './index.js';
 
-// 定义Route ???
-/*const Element = () => (
-	<Switch>
-		<Route path="/home" component={NewsVisualization} />
-	</Switch>
-)*/
+export default class App extends React.Component {
+	constructor(props) {
+		super(props);
+	}
+
+	render() {
+		return (
+			<Router>
+				<div> 
+        		<Route path="/" component={NewsVisualization} />
+				</div>
+			</Router>
+		);
+	}
+}
 
 ReactDOM.render(
-	<NewsVisualization />,
+	<App />,
 	document.getElementById('app')
 );
