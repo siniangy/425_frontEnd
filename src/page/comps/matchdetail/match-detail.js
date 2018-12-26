@@ -18,8 +18,6 @@ class MatchDetail extends React.Component {
       isLoading: false,
       singleMatchData: [],
       playByplayData: [],
-      teamHome: '',
-      teamAway: ''
     }
   }
   componentDidMount() {
@@ -48,7 +46,7 @@ class MatchDetail extends React.Component {
       url: '/getSingleMatchPlayByPlay',
       type: 'post',
       dataType: 'json',
-      data: postData, // 传递json
+      data: postData,
       success: data => {
         this.setState({
           playByplayData: data
@@ -70,12 +68,10 @@ class MatchDetail extends React.Component {
       url: '/getSingleMatchDetail',
       type: 'post',
       dataType: 'json',
-      data: postData, // 传递json
+      data: postData,
       success: data => {
         this.setState({
           singleMatchData: data,
-          teamHome: data[0]['team1Info'][1].toString(),
-          teamAway: data[0]['team2Info'][1].toString()
         }, () => {
 
         })
@@ -94,7 +90,7 @@ class MatchDetail extends React.Component {
       <BackTop />
         <Tabs defaultActiveKey="1" onChange={(key) => this.handleKey(key)}>
           <TabPane tab="新闻报道" key="1" forceRender={true}>
-            {this.state.isLoading ? <MatchNews teamHome={this.state.teamHome} teamAway={this.state.teamAway} /> : <Skeleton />}
+            {this.state.isLoading ? <MatchNews /> : <Skeleton />}
           </TabPane>
           <TabPane tab="数据统计" key="2" forceRender={true}>
             {this.state.isLoading ? <MatchChart singleMatchData={this.state.singleMatchData} playByplayData={this.state.playByplayData}/> : <Skeleton />}

@@ -16,7 +16,7 @@ class Part1Table extends React.Component {
     }
   }
   componentDidMount() {
-    // console.log(this.props.team1Name)
+
   }
   componentWillMount() {}
 

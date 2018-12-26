@@ -1,10 +1,8 @@
 import React from 'react';
-// 引入 ECharts 主模块
 import echarts from 'echarts';
 // 引入graph
 // 报错的话修改为 import echarts from 'echarts'
 import 'echarts/lib/chart/graph';
-// 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 
@@ -37,7 +35,6 @@ class Part3Chart1 extends React.Component {
   getInitialChart(dataName, dataLink) {
     var myChart = echarts.init(document.getElementById('part3Chart1Main'));
     var data = {
-      // title: '球队助攻关系',
       dataName: dataName,
       dataLink: dataLink,
       color: [
@@ -56,7 +53,7 @@ class Part3Chart1 extends React.Component {
         '#458FF0',
         '#F5B751',
         '#70C6A2'
-      ] //颜色种类根据dataName长度定制
+      ]
     }
     var {
       title,
@@ -282,7 +279,7 @@ class Part3Chart1 extends React.Component {
       series: [{
         type: 'graph',
         layout: 'none',
-        symbolSize: symbolSize, //需要根据dataName多少进行调整
+        symbolSize: symbolSize,
         label: {
           normal: {
             show: true
@@ -306,7 +303,7 @@ class Part3Chart1 extends React.Component {
   render() {
     return (
       <div>
-        <div id="part3Chart1Main" style={{ width: 500, height: 500}}></div>
+        <div id="part3Chart1Main" style={{ width: 1000, height: 500}}></div>
       </div>
     )
   }

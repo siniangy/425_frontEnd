@@ -6,7 +6,7 @@ import {
 	Col
 } from 'antd'
 import Chart1 from './chart1.js';
-import Chart2 from './chart2.js';
+import Chart3 from './chart3.js';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -17,6 +17,8 @@ export default class Part3 extends React.Component {
 		this.state = {
 			pointDiff: [],
 			diffLength: [],
+			team1Name: '',
+			team2Name: '',
 			team1Players: [],
 			team1Relation: [],
 			team2Players: [],
@@ -34,6 +36,11 @@ export default class Part3 extends React.Component {
 		if (this.props.data !== nextProps.data) {
 			if (nextProps.data) {
 				this.handleProps(nextProps.data)
+			}
+		}
+		if (this.props.team1Name !== nextProps.team1Name && this.props.team2Name !== nextProps.team2Name) {
+			if (nextProps.team1Name && nextProps.team2Name) {
+				this.handleNameProps(nextProps.team1Name, nextProps.team2Name)
 			}
 		}
 	}
@@ -69,6 +76,14 @@ export default class Part3 extends React.Component {
 	}
 	changePlayers(data) {
 		return [...new Set(data)];
+	}
+	handleNameProps(data1, data2) {
+		this.setState({
+			team1Name: data1,
+			team2Name: data2
+		}, () => {
+
+		})
 	}
 	handleProps(data) {
 		let arr = data[0]['quarter1'].concat(data[0]['quarter2'], data[0]['quarter3'], data[0]['quarter4']);
@@ -153,8 +168,8 @@ export default class Part3 extends React.Component {
 						<Chart1 players={(defaultValue=='a') ? team1Players : team2Players} relation={(defaultValue=='a') ? team1Relation : team2Relation} />
 					</Col>
 					<Col span={8} style={{paddingRight: '20px',paddingTop: '20px'}}>
-						<h3>球队分差</h3>
-						<Chart2 pointDiff={pointDiff} diffLength={diffLength} />
+						<h3>投篮热点分析</h3>
+						<Chart3 teamName={this.state.team2Name} teamNum={defaultValue}/>
 					</Col>
 				</Row>
       </div>

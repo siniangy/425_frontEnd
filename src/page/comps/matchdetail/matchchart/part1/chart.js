@@ -1,9 +1,7 @@
 import React from 'react';
-// 引入 ECharts 主模块
+
 import echarts from 'echarts/dist/echarts.common';
-// 引入折线图
 import 'echarts/lib/chart/line';
-// 引入提示框和标题组件
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/title';
 
@@ -21,7 +19,7 @@ class Part1Chart extends React.Component {
     this.getInitialChart(this.props.team1Name, this.props.team2Name, this.props.team1Score, this.props.team2Score)
   }
   componentWillMount() {
-    // console.log(this.props.team1Name)
+
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.team1Name != nextProps.team1Name) {
@@ -32,7 +30,7 @@ class Part1Chart extends React.Component {
           team1Score: nextProps.team1Score,
           team2Score: nextProps.team2Score
         }, () => {
-          // this.getInitialChart(this.state.team1Name, this.state.team2Name, this.state.team1Score, this.state.team2Score)
+          this.getInitialChart(this.state.team1Name, this.state.team2Name, this.state.team1Score, this.state.team2Score)
         })
       }
     }
@@ -42,7 +40,7 @@ class Part1Chart extends React.Component {
     let team = [team1Name, team2Name];
     myChart.setOption({
       title: {
-        text: '单节比分对比'
+
       },
       tooltip: {
         trigger: 'axis'
@@ -95,7 +93,7 @@ class Part1Chart extends React.Component {
     } = this.state
     return (
       <div>
-        <div id="part1Main" style={{ width: 750, height: 300}}></div>
+        <div id="part1Main" style={{ width: 750, height: 250}}></div>
       </div>
     )
   }

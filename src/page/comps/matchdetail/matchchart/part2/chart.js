@@ -18,10 +18,10 @@ class Part2Chart extends React.Component {
     }
   }
   componentDidMount() {
-    // this.getInitialChart(this.props.team1Name, this.props.team2Name, this.props.team1SummaryChart, this.props.team2SummaryChart)
+
   }
   componentWillMount() {
-    // console.log(this.props.team1Name);
+
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.team1SummaryChart != nextProps.team1SummaryChart) {

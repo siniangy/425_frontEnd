@@ -2,10 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
 	BrowserRouter as Router,
-	HashRouter,
 	Route,
-	Switch,
-	Link
 } from 'react-router-dom';
 import NewsVisualization from './index.js';
 
@@ -13,7 +10,6 @@ export default class App extends React.Component {
 	constructor(props) {
 		super(props);
 	}
-
 	render() {
 		return (
 			<Router>

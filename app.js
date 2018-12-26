@@ -8,7 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var mongoose = require('mongoose');
-mongoose.connect("mongodb://localhost:27017/matchlist", {
+mongoose.connect("mongodb://127.0.0.1:27017/matchlist", {
 	useNewUrlParser: true
 }, function(err) {
 	if (err) {

@@ -1,13 +1,17 @@
 import React from 'react';
 import {
-  Table
+  Table,
+  Popover
 } from 'antd';
+import $ from 'jquery';
 
 class Part2Table extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      teamDetail: []
+      teamDetail: [],
+      modalTarget: '',
+      showData: ''
     }
   }
   componentDidMount() {
@@ -27,17 +31,62 @@ class Part2Table extends React.Component {
       }
     }
   }
+  getKnowledgeMapData(url) {
+    $.ajax({
+      url: url,
+      type: 'get',
+      dataType: 'json',
+      success: data => {
+        this.setState({
+          showData: data['data']['desc']
+        }, () => {
+
+        })
+      },
+      error: err => {
+        console.log(err);
+      }
+    })
+  }
+  handleModal(e) {
+    let a = ''
+    if (e.target.innerHTML.indexOf('-') != -1) {
+      a = e.target.innerHTML.split('-').join('·');
+    } else {
+      a = e.target.innerHTML
+    }
+    this.getKnowledgeMapData('https://api.ownthink.com/kg/knowledge?entity=' + a.toString())
+    this.setState({
+      modalTarget: e.target.innerHTML
+    }, () => {
+
+    });
+  }
   render() {
     const {
-      teamDetail
+      teamDetail,
+      modalTarget,
+      showData
     } = this.state
+    const content = (
+      <div>
+        <p style={{textIndent:'2em'}}>{this.state.showData}</p>
+      </div>
+    )
     const dataSource = teamDetail;
 
     const columns = [{
       title: '球员',
       dataIndex: '0',
       key: '0',
-      width: 200
+      width: 200,
+      render: text => (
+        <div>
+          <Popover content={content} title={modalTarget} placement="right"  trigger='click' overlayStyle={{width:'500px'}} onClick={(e) => this.handleModal(e)}>
+            <b style={{fontSize:'14px',color:'rgba(24,144,255,1)',cursor:'pointer'}}>{text}</b>
+          </Popover>
+        </div>
+      )
     }, {
       title: '首发',
       dataIndex: '1',
@@ -52,7 +101,10 @@ class Part2Table extends React.Component {
       title: '投篮%',
       dataIndex: '3',
       key: '3',
-      width: 100
+      width: 100,
+      render: a => (
+        <p  style={{marginTop:'13.5px'}}> {parseInt(a.toFixed(2).slice(2,4))+'%'} </p>
+      )
     }, {
       title: '命中',
       dataIndex: '4',
@@ -67,7 +119,10 @@ class Part2Table extends React.Component {
       title: '三分%',
       dataIndex: '6',
       key: '6',
-      width: 100
+      width: 100,
+      render: a => (
+        <p style={{marginTop:'13.5px'}}> {parseInt(a.toFixed(2).slice(2,4))+'%'} </p>
+      )
     }, {
       title: '命中',
       dataIndex: '7',
@@ -82,7 +137,10 @@ class Part2Table extends React.Component {
       title: '罚球%',
       dataIndex: '9',
       key: '9',
-      width: 100
+      width: 100,
+      render: a => (
+        <p style={{marginTop:'13.5px'}}> {parseInt(a.toFixed(2).slice(2,4))+'%'} </p>
+      )
     }, {
       title: '命中',
       dataIndex: '10',
@@ -97,7 +155,10 @@ class Part2Table extends React.Component {
       title: '真实命中%',
       dataIndex: '12',
       key: '12',
-      width: 100
+      width: 100,
+      render: a => (
+        <p style={{marginTop:'13.5px'}}> {parseInt(a.toFixed(2).slice(2,4))+'%'} </p>
+      )
     }, {
       title: '篮板',
       dataIndex: '13',

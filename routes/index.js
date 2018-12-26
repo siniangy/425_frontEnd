@@ -3,6 +3,7 @@ var router = express.Router();
 var MatchList = require('../src/module/matchlist');
 var MatchDetail = require('../src/module/matchdetail');
 var MatchPlay = require('../src/module/matchplay');
+var MatchShot = require('../src/module/matchshot');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -49,4 +50,18 @@ router.post('/getSingleMatchPlayByPlay', (req, res, next) => {
 		}
 	})
 })
+
+// 获取单场数据shot数据(数据库里是2015-01-01)两场比赛数据
+router.post('/getSingleMatchShot', (req, res, next) => {
+	let url = req.body;
+	MatchShot.find(url).exec((err, matchShot) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.json(matchShot);
+			console.log(matchShot)
+		}
+	})
+})
+
 module.exports = router;

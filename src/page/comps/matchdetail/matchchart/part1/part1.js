@@ -3,13 +3,12 @@ import {
   Row,
   Col,
   Radio,
-  Skeleton,
   Modal,
   Button
 } from 'antd';
 import Part1Table from './table.js';
 import Part1Chart from './chart.js';
-import Chart from '../knowledgeMap.js';
+import Chart from './knowledgeMap.js';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -83,10 +82,15 @@ class Part1 extends React.Component {
 
     })
   }
+  handleMapTarget(e) {
+    this.setState({
+      modalTarget: e
+    })
+  }
   handleModal(e) {
     this.setState({
       modalVisible: true,
-      modalTarget: e.target.innerHTML
+      modalTarget: e.target.innerHTML + '队'
     }, () => {
 
     });
@@ -125,24 +129,21 @@ class Part1 extends React.Component {
           <Col span={6} >
             <Row>
               <Col span={12} style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px'}}>
-                <h3><b onClick={(e) => this.handleModal(e)} style={{cursor: 'pointer',color:'rgba(135,206,250,1)'}}>{team1Name}</b></h3>
+                <h3><b onClick={(e) => this.handleModal(e)} style={{cursor: 'pointer',color:'rgba(24,144,255,1)'}}>{team1Name}</b></h3>
                 <Modal
-                  title="Basic Modal"
+                  title={modalTarget}
                   visible={this.state.modalVisible}
                   onOk={(e) => this.handleOk(e)}
                   onCancel={(e) => this.handleCancel(e)}
                   footer={null}
                 >
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                  <p>Some contents...</p>
-                  <Chart target={modalTarget} />
+                  <Chart target={modalTarget} handleMapTarget={this.handleMapTarget.bind(this)}/>
                 </Modal>
                 <h4 style={{margin:'20px 0'}}><b>{team1Home}</b></h4>
                 <h4><b>{team1NowRecord}</b></h4>
               </Col>
               <Col span={12} style={{padding: '0px 10px'}}>
-                <img src={team1Img} />
+                <img src={team1Img} style={{marginTop:'20px'}}/>
               </Col>
             </Row>
           </Col>
@@ -162,10 +163,10 @@ class Part1 extends React.Component {
           <Col span={6}>
             <Row>
               <Col span={12} style={{padding: '0px 10px'}}>
-                <img src={team2Img} />
+                <img src={team2Img} style={{marginTop:'20px'}}/>
               </Col>
               <Col span={12} style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px'}}>
-                <h3><b onClick={(e) => this.handleModal(e)} style={{cursor: 'pointer',color:'rgba(135,206,250,1)'}}>{team2Name}</b></h3>
+                <h3><b onClick={(e) => this.handleModal(e)} style={{cursor: 'pointer',color:'rgba(24,144,255,1)'}}>{team2Name}</b></h3>
                 <h4 style={{margin:'20px 0'}}><b>{team2Home}</b></h4>
                 <h4><b>{team2NowRecord}</b></h4>
               </Col>

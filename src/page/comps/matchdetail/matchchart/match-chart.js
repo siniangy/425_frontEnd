@@ -34,7 +34,6 @@ class MatchChart extends React.Component {
   }
   handleSingleMatchProps(data) {
     this.setState({
-      // JSON对象截取，先不截了，全传过去用到啥是啥！
       part1Data: data,
       part2Data: data,
       team1Name: data[0]['team1Info'][1],
