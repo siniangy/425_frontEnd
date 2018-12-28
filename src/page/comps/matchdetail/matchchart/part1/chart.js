@@ -12,7 +12,8 @@ class Part1Chart extends React.Component {
       team1Name: '',
       team2Name: '',
       team1Score: [],
-      team2Score: []
+      team2Score: [],
+      width: this.props.width
     }
   }
   componentDidMount() {
@@ -86,14 +87,18 @@ class Part1Chart extends React.Component {
         }
       }]
     })
+    window.addEventListener('resize', function() {
+      myChart.resize();
+    })
   }
   render() {
     const {
       team1Name
     } = this.state
+    const width = this.props.width
     return (
       <div>
-        <div id="part1Main" style={{ width: 750, height: 250}}></div>
+        <div id="part1Main" style={{ width: width, height: 250}}></div>
       </div>
     )
   }

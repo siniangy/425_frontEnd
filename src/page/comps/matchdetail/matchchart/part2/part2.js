@@ -30,14 +30,19 @@ class Part2 extends React.Component {
       team2Name: '',
       team1SummaryChart: [],
       team2SummaryChart: [],
-      defaultValue: 'a'
+      defaultValue: 'a',
+      width: -1,
     }
   }
   componentDidMount() {
-
+    this.handleReSize()
+    window.addEventListener('resize', this.handleReSize.bind(this))
   }
   componentWillMount() {
 
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleReSize.bind(this))
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.data !== nextProps.data) {
@@ -45,6 +50,12 @@ class Part2 extends React.Component {
         this.handleProps(nextProps.data)
       }
     }
+  }
+  handleReSize() {
+    let test = document.getElementById('part2');
+    this.setState({
+      width: test.clientWidth,
+    })
   }
   selectData(data) {
     let res = [];
@@ -248,9 +259,9 @@ class Part2 extends React.Component {
     return (
       <div style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px',marginTop: '20px'}}>
         <Row>
-          <Col span={16} style={{paddingRight: '20px',paddingTop: '20px'}}>
+          <Col span={16} id='part2' style={{paddingRight: '20px',paddingTop: '20px'}}>
             <h3>球队数据对比</h3>
-            <Part2Chart team1Name={team1Name} team2Name={team2Name} team1SummaryChart={team1SummaryChart} team2SummaryChart={team2SummaryChart}/>
+            <Part2Chart team1Name={team1Name} team2Name={team2Name} team1SummaryChart={team1SummaryChart} team2SummaryChart={team2SummaryChart} width={this.state.width}/>
           </Col>
           <Col span={8} style={{paddingTop: '20px'}}>
             <h3>各项最佳</h3>       

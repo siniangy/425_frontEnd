@@ -14,7 +14,8 @@ class Part2Chart extends React.Component {
       team1Name: '',
       team2Name: '',
       team1SummaryChart: [],
-      team2SummaryChart: []
+      team2SummaryChart: [],
+      width: this.props.width
     }
   }
   componentDidMount() {
@@ -43,9 +44,10 @@ class Part2Chart extends React.Component {
     // if (myChart != null && myChart != "" &&
     //   myChart != undefined) {
     //   myChart.dispose(); //销毁实例
-    // }
-    echarts.dispose(document.getElementById("part2Main"))
-    var myChart = echarts.init(document.getElementById('part2Main'));
+    // }   
+    var chart = document.getElementById('part2Main')
+    echarts.dispose(chart)
+    var myChart = echarts.init(chart);
     var labelData = ['投篮%', '三分%', '罚球%', '篮板', '助攻', '抢断', '盖帽', '失误', '犯规'];
     var womanData = team1SummaryChart;
     var manData =  team2SummaryChart;
@@ -226,11 +228,15 @@ class Part2Chart extends React.Component {
       ]
     };
     myChart.setOption(option);
+    window.addEventListener('resize', function() {
+      myChart.resize();
+    })
   }
   render() {
+    const width = this.props.width;
     return (
       <div>
-        <div id="part2Main" style={{ width: 1000, height: 400}}></div>
+        <div id="part2Main" style={{width: width,height: 400}}></div>
       </div>
     )
   }

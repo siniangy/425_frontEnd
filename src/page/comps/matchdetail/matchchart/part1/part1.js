@@ -31,14 +31,25 @@ class Part1 extends React.Component {
       defaultSwitchValue: 'a',
       modalVisible: false,
       modalTarget: '',
-      isLoading: false
+      isLoading: false,
+      width: -1
     }
   }
   componentDidMount() {
-
+    this.handleReSize()
+    window.addEventListener('resize', this.handleReSize.bind(this))
   }
   componentWillMount() {
 
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleReSize.bind(this))
+  }
+  handleReSize() {
+    let test = document.getElementById('part1');
+    this.setState({
+      width: test.clientWidth,
+    })
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.data !== nextProps.data) {
@@ -147,7 +158,7 @@ class Part1 extends React.Component {
               </Col>
             </Row>
           </Col>
-          <Col span={12} style={{paddingLeft:'20px'}}>
+          <Col span={12} style={{paddingLeft:'20px'}} id='part1'>
             <div style={{margin: '10px auto'}}>
               <RadioGroup onChange={(e) => this.handleButton(e)} defaultValue="a">
                 <RadioButton value="a">Table</RadioButton>
@@ -157,7 +168,7 @@ class Part1 extends React.Component {
             {(defaultSwitchValue=='a') ? 
               (<Part1Table team1Name={team1Name} team2Name={team2Name} team1Score={team1Score} team2Score={team2Score} team1Sum={team1Sum} team2Sum={team2Sum}/>)         
             :
-              (<Part1Chart team1Name={team1Name} team2Name={team2Name} team1Score={team1Score} team2Score={team2Score}/>)
+              (<Part1Chart team1Name={team1Name} team2Name={team2Name} team1Score={team1Score} team2Score={team2Score} width={this.state.width}/>)
             }
           </Col>
           <Col span={6}>

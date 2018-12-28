@@ -11,14 +11,22 @@ class Part3Chart1 extends React.Component {
     super(props);
     this.state = {
       players: [],
-      relation: []
+      relation: [],
+      width: this.props.width
     }
   }
   componentDidMount() {
-
+    // window.addEventListener('resize', () => {
+    //   this.myChart3.resize()
+    // })
   }
   componentWillMount() {
 
+  }
+  componentWillUnmount() {
+    // window.removeEventListener('resize', () => {
+    //   this.myChart3.resize()
+    // })
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.players != nextProps.players) {
@@ -299,11 +307,15 @@ class Part3Chart1 extends React.Component {
       }]
     };
     myChart.setOption(option);
+    window.addEventListener('resize', function() {
+      myChart.resize();
+    })
   }
   render() {
+    const width = this.props.width
     return (
       <div>
-        <div id="part3Chart1Main" style={{ width: 1000, height: 500}}></div>
+        <div id="part3Chart1Main" style={{ width: width, height: 500}}></div>
       </div>
     )
   }

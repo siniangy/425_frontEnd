@@ -23,14 +23,25 @@ export default class Part3 extends React.Component {
 			team1Relation: [],
 			team2Players: [],
 			team2Relation: [],
-			defaultValue: 'a'
+			defaultValue: 'a',
+			width: -1
 		}
 	}
 	componentDidMount() {
-
+		this.handleReSize()
+		window.addEventListener('resize', this.handleReSize.bind(this))
 	}
 	componentWillMount() {
 
+	}
+	componentWillUnmount() {
+		window.removeEventListener('resize', this.handleReSize.bind(this))
+	}
+	handleReSize() {
+		let test = document.getElementById('part3');
+		this.setState({
+			width: test.clientWidth,
+		})
 	}
 	componentWillReceiveProps(nextProps) {
 		if (this.props.data !== nextProps.data) {
@@ -157,7 +168,7 @@ export default class Part3 extends React.Component {
 		return (
 			<div style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px',marginTop: '20px'}}>
 				<Row>
-					<Col span={16} style={{paddingRight: '20px',paddingTop: '20px'}}>
+					<Col span={16} style={{paddingRight: '20px',paddingTop: '20px'}} id='part3'>
 						<h3>球队助攻关系</h3>
 						<span>
 							<RadioGroup onChange={(e) => this.handleButton(e)} defaultValue="a">
@@ -165,7 +176,7 @@ export default class Part3 extends React.Component {
 	            	<RadioButton value="b">{team2Name}</RadioButton>
 	          	</RadioGroup>
 						</span>
-						<Chart1 players={(defaultValue=='a') ? team1Players : team2Players} relation={(defaultValue=='a') ? team1Relation : team2Relation} />
+						<Chart1 players={(defaultValue=='a') ? team1Players : team2Players} relation={(defaultValue=='a') ? team1Relation : team2Relation} width={this.state.width}/>
 					</Col>
 					<Col span={8} style={{paddingRight: '20px',paddingTop: '20px'}}>
 						<h3>投篮热点分析</h3>
