@@ -1,17 +1,25 @@
 const webpack = require('webpack');
 const path = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CompressionWebpackPlugin = require('compression-webpack-plugin');
 
 module.exports = {
 	entry: {
 		app: './src/page/app.js',
 		vendor: ['react', 'react-dom']
 	},
+	devtool: false,
+	// externals: {
+	// 	"react": "window.React",
+	// 	"react-dom": "window.ReactDom",
+	// 	"echarts": "window.echarts",
+	// 	"jquery": "window.jQuery"
+	// },
 	output: {
 		path: path.join(__dirname, "./public/javascripts"),
 		filename: "[name].js",
 	},
-	mode: 'development',
+	mode: 'production',
 	module: {
 		rules: [{
 			test: /\.js$/,
@@ -48,9 +56,24 @@ module.exports = {
 					chunks: 'all'
 				}
 			}
-		}
+		},
+		minimizer: [
+			new UglifyJsPlugin({
+				uglifyOptions: {
+					compress: false
+				}
+			})
+		],
 	},
 	plugins: [
-		new BundleAnalyzerPlugin()
+		new CompressionWebpackPlugin({
+			filename: '[path].gz[query]',
+			algorithm: 'gzip',
+			test: new RegExp(
+				'\\.(js|css)$'
+			),
+			threshold: 0,
+			minRatio: 0.8
+		})
 	]
 };
