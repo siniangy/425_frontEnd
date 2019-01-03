@@ -130,13 +130,13 @@ class NewsVisualization extends React.Component {
               <Menu.Item style={{backgroundColor: 'rgba(0,21,41,1)'}}>
                   {/*<PandaIcon style={{ fontSize: '40px',marginRight: '30px'}} />*/}
                   <span>请选择日期： </span>
-                  <Select defaultValue={this.state.year} style={{ width: 240 }} onChange={(value) => this.handleYearChange(value)}>
+                  <Select defaultValue={this.state.year} style={{ maxWidth: 240 , minWidth:'120px' }} onChange={(value) => this.handleYearChange(value)}>
                   <Option value="2015">2015</Option>
                   <Option value="2016">2016</Option>
                   <Option value="2017">2017</Option>
                   </Select>
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <Select defaultValue={this.state.month} style={{ width: 240 }} onChange={(value) => this.handleMonthChange(value)}>
+                  <Select defaultValue={this.state.month} style={{ maxWidth: 240, minWidth: '120px' }} onChange={(value) => this.handleMonthChange(value)}>
                     <Option value="01">1</Option>
                     <Option value="02">2</Option>
                     <Option value="03">3</Option>
@@ -151,7 +151,7 @@ class NewsVisualization extends React.Component {
                     <Option value="12">12</Option>
                   </Select>
                   &nbsp;&nbsp;&nbsp;&nbsp;
-                  <Select defaultValue={this.state.day} style={{ width: 240 }} onChange={(value) => this.handleDayChange(value)}>
+                  <Select defaultValue={this.state.day} style={{ maxWidth: 240, minWidth: '120px' }} onChange={(value) => this.handleDayChange(value)}>
                     <Option value="01">1
                     </Option><Option value="02">2
                     </Option><Option value="03">3

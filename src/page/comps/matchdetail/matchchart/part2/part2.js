@@ -259,11 +259,11 @@ class Part2 extends React.Component {
     return (
       <div style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px',marginTop: '20px'}}>
         <Row>
-          <Col span={16} id='part2' style={{paddingRight: '20px',paddingTop: '20px'}}>
+          <Col span={16} id='part2' style={{paddingRight: '20px',paddingTop: '20px',minWidth:'550px'}}>
             <h3>球队数据对比</h3>
             <Part2Chart team1Name={team1Name} team2Name={team2Name} team1SummaryChart={team1SummaryChart} team2SummaryChart={team2SummaryChart} width={this.state.width}/>
           </Col>
-          <Col span={8} style={{paddingTop: '20px'}}>
+          <Col span={8} style={{paddingTop: '20px',minWidth:'300px'}}>
             <h3>各项最佳</h3>       
             <Table dataSource={dataSource} columns={columns} pagination={false}/>
           </Col>

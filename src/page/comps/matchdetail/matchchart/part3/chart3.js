@@ -137,7 +137,7 @@ class Part3Chart3 extends React.Component {
               <Option value="4th">4th Quarter</Option>
             </Select>
           </div>
-          <div style={{position:'absolute',margin:'10px 0 0 0'}}>
+          <div style={{position:'relative',margin:'10px 0 0 0'}}>
             <img src={team1Img} />
             {items}
           </div>

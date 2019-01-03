@@ -89,6 +89,7 @@ class Part2Chart extends React.Component {
       },
       toolbox: {
         show: true,
+        right: '10%',
         feature: {
           saveAsImage: {
             show: true
@@ -169,12 +170,13 @@ class Part2Chart extends React.Component {
       }],
       grid: [{
         top: 50,
-        width: '40%',
-        left: 35,
+        width: '46%',
+        left: 0,
         gridIndex: 0,
       }, {
         top: 50,
-        left: '50%',
+        left: '54%',
+        right: 0,
         gridIndex: 1,
       }],
       color: ['#2FACFA', '#F5A623'],
@@ -236,7 +238,7 @@ class Part2Chart extends React.Component {
     const width = this.props.width;
     return (
       <div>
-        <div id="part2Main" style={{width: width,height: 400}}></div>
+        <div id="part2Main" style={{width: width,height: 400,maxWidth:'800px'}}></div>
       </div>
     )
   }

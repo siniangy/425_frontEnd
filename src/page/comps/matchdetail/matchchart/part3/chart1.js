@@ -280,6 +280,7 @@ class Part3Chart1 extends React.Component {
         },
       },
       toolbox: {
+        right: '10%',
         feature: {
           saveAsImage: {}
         }

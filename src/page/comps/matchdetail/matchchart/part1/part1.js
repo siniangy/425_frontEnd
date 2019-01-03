@@ -154,7 +154,7 @@ class Part1 extends React.Component {
                 <h4><b>{team1NowRecord}</b></h4>
               </Col>
               <Col span={12} style={{padding: '0px 10px'}}>
-                <img src={team1Img} style={{marginTop:'20px'}}/>
+                <img src={team1Img} style={{width:'100%',marginTop:'20px'}}/>
               </Col>
             </Row>
           </Col>
@@ -174,7 +174,7 @@ class Part1 extends React.Component {
           <Col span={6}>
             <Row>
               <Col span={12} style={{padding: '0px 10px'}}>
-                <img src={team2Img} style={{marginTop:'20px'}}/>
+                <img src={team2Img} style={{marginTop:'20px',width:'100%'}}/>
               </Col>
               <Col span={12} style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px'}}>
                 <h3><b onClick={(e) => this.handleModal(e)} style={{cursor: 'pointer',color:'rgba(24,144,255,1)'}}>{team2Name}</b></h3>
