@@ -4,6 +4,7 @@ var MatchList = require('../src/module/matchlist');
 var MatchDetail = require('../src/module/matchdetail');
 var MatchPlay = require('../src/module/matchplay');
 var MatchShot = require('../src/module/matchshot');
+var MatchPlayer = require('../src/module/matchplayer');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -60,6 +61,19 @@ router.post('/getSingleMatchShot', (req, res, next) => {
 		} else {
 			res.json(matchShot);
 			console.log(matchShot)
+		}
+	})
+})
+
+// 获取球员场均数据
+router.post('/getSeasonAvg', (req, res, next) => {
+	let cnName = req.body;
+	MatchPlayer.find(cnName).exec((err, seasonAvg) => {
+		if (err) {
+			console.log(err);
+		} else {
+			res.json(seasonAvg);
+			console.log(seasonAvg)
 		}
 	})
 })

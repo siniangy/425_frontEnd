@@ -1,9 +1,13 @@
 import React from 'react';
 import {
   Table,
-  Popover
+  Popover,
+  Card,
+  message,
+  Icon
 } from 'antd';
 import $ from 'jquery';
+import Chart from './seasonAvg.js';
 
 class Part2Table extends React.Component {
   constructor(props) {
@@ -11,7 +15,8 @@ class Part2Table extends React.Component {
     this.state = {
       teamDetail: [],
       modalTarget: '',
-      showData: ''
+      showData: '',
+      cardData: []
     }
   }
   componentDidMount() {
@@ -24,7 +29,8 @@ class Part2Table extends React.Component {
     if (this.props.teamDetail != nextProps.teamDetail) {
       if (nextProps.teamDetail) {
         this.setState({
-          teamDetail: nextProps.teamDetail
+          teamDetail: nextProps.teamDetail,
+          cardData: []
         }, () => {
 
         })
@@ -48,6 +54,34 @@ class Part2Table extends React.Component {
       }
     })
   }
+  handleMessageInfo1() {
+    message.info('请不要重复输入')
+  }
+  handleMessageInfo12() {
+    message.info('展示卡片不要超过5个')
+  }
+  handleClick(e) {
+    const data = this.state.cardData;
+    if (data.indexOf(e.text) === -1 && data.length <= 4) {
+      data.push(e.text)
+    } else {
+      if (data.indexOf(e.text != -1) && data.length <= 4) {
+        this.handleMessageInfo1()
+      } else {
+        this.handleMessageInfo12()
+      }
+    }
+    this.setState({
+      cardData: data
+    })
+  }
+  handleDelete(e) {
+    let data = this.state.cardData;
+    data = data.filter((item) => item !== e.item);
+    this.setState({
+      cardData: data
+    })
+  }
   handleModal(e) {
     let a = ''
     if (e.target.innerHTML.indexOf('-') != -1) {
@@ -66,8 +100,24 @@ class Part2Table extends React.Component {
     const {
       teamDetail,
       modalTarget,
-      showData
+      showData,
+      cardData
     } = this.state
+    const cardItems = cardData.map((item, index) => {
+      const data = this.state.teamDetail.filter((t, i) => t['0'] == item)
+      return (
+        <div key={index} style={{display:'inline-block',marginLeft:'20px', marginBottom:'10px',border:'2px solid rgba(240,242,245,1)'}}>
+          <Card
+            title={item}
+            key={index}
+            extra={<Icon type="close" style={{cursor:'pointer'}} onClick={() => this.handleDelete({item})}/>}
+            style={{width:'300px',display:'inline-block',padding:'5px'}}
+          >
+            <Chart target={item} targetDetail={data} id={index}/>
+          </Card>
+        </div>
+      )
+    })
     const content = (
       <div>
         <p style={{textIndent:'2em'}}>{this.state.showData}</p>
@@ -80,11 +130,12 @@ class Part2Table extends React.Component {
       dataIndex: '0',
       key: '0',
       width: 200,
-      render: text => (
+      render: (text, record) => (
         <div>
           <Popover content={content} title={modalTarget} placement="right"  trigger='click' overlayStyle={{width:'500px'}} onClick={(e) => this.handleModal(e)}>
             <b style={{fontSize:'14px',color:'rgba(24,144,255,1)',cursor:'pointer'}}>{text}</b>
           </Popover>
+          <Icon type="radar-chart" style={{marginLeft:'3px',color:'rgb(24,144,255)',cursor:'pointer'}} onClick={() => this.handleClick({text})}/>
         </div>
       )
     }, {
@@ -207,6 +258,7 @@ class Part2Table extends React.Component {
     }];
     return (
       <div>
+        { cardItems }
         <Table dataSource={dataSource} columns={columns}  pagination={false} scroll={{ x: 2500, y: 500 }} bordered/>
       </div>
     )
