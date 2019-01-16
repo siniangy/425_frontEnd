@@ -60,9 +60,9 @@ class SeasonAvgChart extends React.Component {
         let seasonAvg = data[0]['seasonAvg'];
         let dataAvg = seasonAvg.map((item, index) => {
           if (item.indexOf('%') != -1) {
-            return parseInt(item) / 100
+            return parseFloat(item) / 100
           } else {
-            return parseInt(item)
+            return parseFloat(item)
           }
         });
         let data2 = [];

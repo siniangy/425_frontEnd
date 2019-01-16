@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www",
+    "start": "nodemon ./bin/www",
     "webpack": "webpack --watch --progress --color --config webpack.config.js",
     "build": "webpack -p --watch --progress --color --config webpack.pro.config.js"
   },

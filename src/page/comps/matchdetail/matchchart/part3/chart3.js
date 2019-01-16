@@ -138,7 +138,7 @@ class Part3Chart3 extends React.Component {
             </Select>
           </div>
           <div style={{position:'relative',margin:'10px 0 0 0'}}>
-            <img src={team1Img} />
+            <img src="/images/nbahalfcourt.png" />
             {items}
           </div>
         </div>
