@@ -4,7 +4,6 @@ import {
   Skeleton,
   BackTop
 } from 'antd';
-import $ from 'jquery';
 import MatchNews from './matchnews/match-news.js';
 import MatchChart from './matchchart/match-chart.js';
 import MatchAudio from './matchaudio/match-audio.js';

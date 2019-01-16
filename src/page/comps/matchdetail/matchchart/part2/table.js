@@ -6,7 +6,6 @@ import {
   message,
   Icon
 } from 'antd';
-import $ from 'jquery';
 import Chart from './seasonAvg.js';
 
 class Part2Table extends React.Component {

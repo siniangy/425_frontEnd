@@ -1,8 +1,4 @@
 import React from 'react';
-import echarts from 'echarts/dist/echarts.common';
-import 'echarts/lib/chart/line';
-import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/title';
 
 class Part3Chart2 extends React.Component {
   constructor(props) {

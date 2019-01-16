@@ -1,11 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
-import echarts from 'echarts';
-// 引入graph
-// 报错的话修改为 import echarts from 'echarts'
-import 'echarts/lib/chart/graph';
-import 'echarts/lib/component/tooltip';
-import 'echarts/lib/component/title';
 
 class SeasonAvgChart extends React.Component {
   constructor(props) {

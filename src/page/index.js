@@ -5,7 +5,6 @@ import {
   Layout,
   Menu
 } from 'antd';
-import $ from 'jquery';
 import {
   BrowserRouter as Router,
   Route,
