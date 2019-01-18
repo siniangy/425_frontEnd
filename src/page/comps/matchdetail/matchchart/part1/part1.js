@@ -136,10 +136,10 @@ class Part1 extends React.Component {
     } = this.state
     return (
       <div style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px'}}>
-        <Row>
-          <Col span={6} >
+        <Row style={{}}>
+          <Col span={6} style={{minWidth:'200px'}}>
             <Row>
-              <Col span={12} style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px'}}>
+              <Col span={12} style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px'}}>
                 <h3><b onClick={(e) => this.handleModal(e)} style={{cursor: 'pointer',color:'rgba(24,144,255,1)'}}>{team1Name}</b></h3>
                 <Modal
                   title={modalTarget}
@@ -153,12 +153,12 @@ class Part1 extends React.Component {
                 <h4 style={{margin:'20px 0'}}><b>{team1Home}</b></h4>
                 <h4><b>{team1NowRecord}</b></h4>
               </Col>
-              <Col span={12} style={{padding: '0px 10px'}}>
-                <img src={team1Img} style={{width:'100%',marginTop:'20px'}}/>
+              <Col span={12} style={{padding: '20px 10px'}}>
+                <img src={team1Img} style={{width:'100%',marginTop:'0px'}}/>
               </Col>
             </Row>
           </Col>
-          <Col span={12} style={{paddingLeft:'20px'}} id='part1'>
+          <Col span={12} style={{padding:'0px 20px',minWidth:'400px'}} id='part1'>
             <div style={{margin: '10px auto'}}>
               <RadioGroup onChange={(e) => this.handleButton(e)} defaultValue="a">
                 <RadioButton value="a">Table</RadioButton>
@@ -171,12 +171,12 @@ class Part1 extends React.Component {
               (<Part1Chart team1Name={team1Name} team2Name={team2Name} team1Score={team1Score} team2Score={team2Score} width={this.state.width}/>)
             }
           </Col>
-          <Col span={6}>
+          <Col span={6} style={{minWidth:'200px'}}>
             <Row>
               <Col span={12} style={{padding: '0px 10px'}}>
                 <img src={team2Img} style={{marginTop:'20px',width:'100%'}}/>
               </Col>
-              <Col span={12} style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px'}}>
+              <Col span={12} style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px'}}>
                 <h3><b onClick={(e) => this.handleModal(e)} style={{cursor: 'pointer',color:'rgba(24,144,255,1)'}}>{team2Name}</b></h3>
                 <h4 style={{margin:'20px 0'}}><b>{team2Home}</b></h4>
                 <h4><b>{team2NowRecord}</b></h4>

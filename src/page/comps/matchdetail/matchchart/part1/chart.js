@@ -46,7 +46,7 @@ class Part1Chart extends React.Component {
       },
       toolbox: {
         show: true,
-        right: '10%',
+        right: '35px',
         feature: {
           saveAsImage: {
             show: true
@@ -94,7 +94,7 @@ class Part1Chart extends React.Component {
     const width = this.props.width
     return (
       <div>
-        <div id="part1Main" style={{ width: width, height: 250}}></div>
+        <div id="part1Main" style={{ width: width, height: 200}}></div>
       </div>
     )
   }

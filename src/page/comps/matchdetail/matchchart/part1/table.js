@@ -67,6 +67,9 @@ class Part1Table extends React.Component {
       title: '球队',
       dataIndex: '球队',
       key: '0',
+      render: a => (
+        <b>{a}</b>
+      )
     }, {
       title: '1',
       dataIndex: '1',

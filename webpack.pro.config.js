@@ -9,7 +9,7 @@ module.exports = {
 		vendor: ['react', 'react-dom']
 	},
 	devtool: false,
-	// externals: {
+	// externals: { // 直接把echarts和jquery从package.json中去除了
 	// 	"react": "window.React",
 	// 	"react-dom": "window.ReactDom",
 	// 	"echarts": "window.echarts",

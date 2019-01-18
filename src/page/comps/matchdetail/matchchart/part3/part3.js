@@ -3,14 +3,16 @@ import {
 	Radio,
 	Divider,
 	Row,
-	Col
+	Col,
+	Icon,
+	Select
 } from 'antd'
 import Chart1 from './chart1.js';
 import Chart3 from './chart3.js';
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
-
+const Option = Select.Option;
 export default class Part3 extends React.Component {
 	constructor(props) {
 		super(props);
@@ -24,6 +26,8 @@ export default class Part3 extends React.Component {
 			team2Players: [],
 			team2Relation: [],
 			defaultValue: 'a',
+			defaultIconStyle: false,
+			defaultSelectedValue: 'quarter',
 			width: -1
 		}
 	}
@@ -151,6 +155,21 @@ export default class Part3 extends React.Component {
 
 		})
 	}
+	handleClick() {
+		const defaultIconStyle = !(this.state.defaultIconStyle)
+		this.setState({
+			defaultIconStyle: defaultIconStyle
+		}, () => {
+			// console.log(this.state.defaultIconStyle)
+		})
+	}
+	handleChange(e) {
+		this.setState({
+			defaultSelectedValue: e
+		}, () => {
+			// console.log(this.state.defaultSelectedValue)
+		})
+	}
 	render() {
 		const {
 			pointDiff,
@@ -159,19 +178,39 @@ export default class Part3 extends React.Component {
 			team1Relation,
 			team2Players,
 			team2Relation,
-			defaultValue
+			defaultValue,
+			defaultIconStyle,
+			defaultSelectedValue
 		} = this.state
 		const {
 			team1Name,
 			team2Name
 		} = this.props
+		let style = {
+			color: (defaultIconStyle === false) ? '#999' : 'rgb(24,144,255)',
+			cursor: 'pointer'
+		}
 		return (
 			<div style={{border: '2px solid rgba(240,242,245,1)',borderRadius: '10px',padding: '10px',minHeight:'150px',marginTop: '20px'}}>
 				<Row>
-					<Col span={12} style={{paddingRight: '20px',paddingTop: '20px',minWidth:'600px'}}>
-						<h3>投篮热点分析</h3>
+					<Col span={24} style={{paddingRight: '20px',paddingTop: '20px',minWidth:'1000px'}}>
+						<h3>投篮点分析  <Icon type="heat-map" style={style} onClick={() => this.handleClick()}/></h3>
+	          <div>
+	            <Select defaultValue="quarter" style={{ width: 120 }} onChange={(e) => this.handleChange(e)}>
+	              <Option value="quarter">All Quarters</Option>
+	              <Option value="1st">1st Quarter</Option>
+	              <Option value="2nd">2nd Quarter</Option>
+	              <Option value="3rd">3rd Quarter</Option>
+	              <Option value="4th">4th Quarter</Option>
+	            </Select>
+	          </div>
+						{/* 这里只选择传team2Name，展示全场的投篮分布
 						<Chart3 teamName={this.state.team2Name} teamNum={defaultValue}/>
+						*/}
+						<Chart3 teamName={this.state.team2Name} iconSelect={defaultIconStyle} quarterSelect={defaultSelectedValue}/>
 					</Col>
+				</Row>
+				<Row>
 					<Col span={12} style={{paddingRight: '20px',paddingTop: '20px',minWidth:'400px'}} id='part3'>
 						<h3 style={{}}>球队助攻关系</h3>
 						<span>
@@ -181,6 +220,9 @@ export default class Part3 extends React.Component {
 	          	</RadioGroup>
 						</span>
 						<Chart1 players={(defaultValue=='a') ? team1Players : team2Players} relation={(defaultValue=='a') ? team1Relation : team2Relation} width={this.state.width}/>
+					</Col>
+					<Col span={12} style={{paddingRight: '20px',paddingTop: '20px',minWidth:'400px'}} id="test">
+						<h1>设计组件？？</h1>
 					</Col>
 				</Row>
       </div>

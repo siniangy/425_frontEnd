@@ -82,7 +82,7 @@ class Part2Chart extends React.Component {
       },
       toolbox: {
         show: true,
-        right: '10%',
+        right: '35px',
         feature: {
           saveAsImage: {
             show: true

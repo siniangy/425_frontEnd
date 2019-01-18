@@ -1,21 +1,18 @@
 import React from 'react';
 import {
-  Popover,
-  Select
+  Popover
 } from 'antd';
-
-const Option = Select.Option;
 
 class Part3Chart3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      teamImg: '',
       teamName: '',
-      teamNum: '',
-      teamChartData: [],
-      chartData: [],
-      value: 'quarter',
+      // teamNum: '', 全场展示不需要Num
+      team1ChartData: [],
+      team2ChartData: [],
+      iconSelect: false,
+      quarterSelect: ''
     };
   }
   componentDidMount() {
@@ -25,26 +22,41 @@ class Part3Chart3 extends React.Component {
 
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.teamNum != nextProps.teamNum || this.props.teamName != nextProps.teamName) {
-      if (nextProps.teamNum) {
+    // if (this.props.teamNum != nextProps.teamNum || this.props.teamName != nextProps.teamName) {
+    //   if (nextProps.teamNum) {
+    //     this.setState({
+    //       teamNum: nextProps.teamNum,
+    //       teamName: nextProps.teamName
+    //     }, () => {
+    //       let num = this.changeNum(this.state.teamNum);
+    //       let name = this.changeName(this.state.teamName);
+    //       this.getSingleMatchShot('https://www.basketball-reference.com/boxscores/shot-chart/201501010' + name + '.html', num)
+    //     })
+    //   }
+    // }
+    if (this.props.teamName != nextProps.teamName || this.props.iconSelect != nextProps.iconSelect || this.props.quarterSelect != nextProps.quarterSelect) {
+      if (nextProps.teamName) {
         this.setState({
-          teamNum: nextProps.teamNum,
-          teamName: nextProps.teamName
+          teamName: nextProps.teamName,
+          iconSelect: nextProps.iconSelect,
+          quarterSelect: nextProps.quarterSelect
         }, () => {
-          let num = this.changeNum(this.state.teamNum);
           let name = this.changeName(this.state.teamName);
-          this.getSingleMatchShot('https://www.basketball-reference.com/boxscores/shot-chart/201501010' + name + '.html', num)
+          // console.log(name);
+          // console.log(this.state.iconSelect);
+          // console.log(this.state.quarterSelect)
+          this.getSingleMatchShot('https://www.basketball-reference.com/boxscores/shot-chart/201501010' + name + '.html', this.state.quarterSelect, this.state.iconSelect)
         })
       }
     }
   }
-  changeNum(data) {
-    let res = {
-      'a': 'team1ChartData',
-      'b': 'team2ChartData'
-    }
-    return res[data]
-  }
+  // changeNum(data) {
+  //   let res = {
+  //     'a': 'team1ChartData',
+  //     'b': 'team2ChartData'
+  //   }
+  //   return res[data]
+  // }
 
   changeName(data) {
     let res = {
@@ -53,7 +65,8 @@ class Part3Chart3 extends React.Component {
     }
     return res[data]
   }
-  getSingleMatchShot(data, num) {
+
+  getSingleMatchShot(data, quarter, icon) {
     const that = this;
     const postData = {
       'url': data
@@ -64,37 +77,131 @@ class Part3Chart3 extends React.Component {
       dataType: 'json',
       data: postData,
       success: data => {
-        this.setState({
-          team1Img: data[0]['team1Img'],
-          teamChartData: data[0][num],
-          chartData: data[0][num]
-        }, () => {
-
+        let chart1Data = data[0]['team1ChartData'];
+        let chart2Data = data[0]['team2ChartData'];
+        let data1 = chart1Data.filter((item, index) => {
+          return item[2].indexOf(quarter) != -1
         })
+        let data2 = chart2Data.filter((item, index) => {
+          return item[2].indexOf(quarter) != -1
+        })
+        if (icon === true) {
+          this.setState({
+            team1ChartData: [],
+            team2ChartData: []
+          })
+          this.getCourtLeftHeatmap(data1);
+          this.getCourtRightHeatmap(data2);
+        } else {
+          $('.heatmap-canvas').remove()
+          this.setState({
+            team1ChartData: data1,
+            team2ChartData: data2
+          })
+        }
       },
       error: err => {
         console.log(err);
       }
     })
   }
-  handleChange(e) {
-    const Data = this.state.teamChartData.filter((item, index) => {
-      return item[2].indexOf(e) != -1
-    })
-    this.setState({
-      value: e,
-      chartData: Data
-    }, () => {
-
-    })
+  getCourtLeftHeatmap(data) {
+    $(".heatmap-canvas").remove()
+    const team1ChartData = data.filter((item, index) => {
+      return item[2].indexOf('missed') === -1
+    });
+    var heatmapInstance = window.h337.create({
+      container: document.querySelector('#courtLeft'),
+      maxOpacity: .85,
+      minOpacity: 0,
+      blur: 1,
+      // gradient: {
+      //   '.5': 'blue',
+      //   '.8': 'green',
+      //   '.95': 'white'
+      // }
+    });
+    var points = [];
+    var len = team1ChartData.length;
+    while (len--) {
+      var point = {
+        x: (parseFloat(team1ChartData[len][1].split(';')[1].split(':')[1].split('p')[0])) + 4,
+        y: (parseFloat(team1ChartData[len][1].split(';')[0].split(':')[1].split('p')[0])) + 10.5,
+        value: 1 // 每个投篮点的value应该一样
+      };
+      points.push(point);
+    }
+    var max = 1;
+    var data = {
+      max: max,
+      data: points
+    };
+    heatmapInstance.setData(data);
   }
+  getCourtRightHeatmap(data) {
+    const team2ChartData = data.filter((item, index) => {
+      return item[2].indexOf('missed') === -1
+    });
+    var heatmapInstance = window.h337.create({
+      container: document.querySelector('#courtRight'),
+      maxOpacity: .85,
+      minOpacity: 0,
+      blur: 1
+    });
+    var points = [];
+    var len = team2ChartData.length;
+    while (len--) {
+      var point = {
+        x: (parseFloat(team2ChartData[len][1].split(';')[1].split(':')[1].split('p')[0])) + 4,
+        y: (parseFloat(team2ChartData[len][1].split(';')[0].split(':')[1].split('p')[0])) + 10.5,
+        value: 1
+      };
+      points.push(point);
+    }
+    var max = 1;
+    var data = {
+      max: max,
+      data: points
+    };
+    heatmapInstance.setData(data);
+  }
+
   render() {
     const {
-      team1Img,
       team1ChartData,
-      chartData
+      team2ChartData,
     } = this.state
-    const items = chartData.map((item, index) => {
+    const item1s = team1ChartData.map((item, index) => {
+      let color = {
+        color: 'lightblue'
+      };
+      let style1 = {
+        top: item[1].split(';')[0].split(':')[1],
+        left: item[1].split(';')[1].split(':')[1],
+        position: 'absolute'
+      };
+      let target = item[3];
+      let style2 = {
+        color: target == '×' ? 'red' : 'green',
+        cursor: 'pointer'
+      }
+      let p1 = item[2].split('<br>')[0];
+      let p2 = item[2].split('<br>')[1];
+      let content = (
+        <div>
+          <p style={{margin:'0px auto'}}>{p1}</p>
+          <p style={{margin:'0px auto'}}>{p2}</p>
+        </div>
+      )
+      return (
+        <Popover content={content} key={index}>
+          <div style={style1}>
+            <p style={style2}>{target}</p>
+          </div>
+        </Popover>
+      )
+    })
+    const item2s = team2ChartData.map((item, index) => {
       let color = {
         color: 'lightblue'
       };
@@ -127,18 +234,15 @@ class Part3Chart3 extends React.Component {
     return (
       <div>
         <div>
-          <div>
-            <Select defaultValue="quarter" style={{ width: 120 }} onChange={(e) => this.handleChange(e)}>
-              <Option value="quarter">All Quarters</Option>
-              <Option value="1st">1st Quarter</Option>
-              <Option value="2nd">2nd Quarter</Option>
-              <Option value="3rd">3rd Quarter</Option>
-              <Option value="4th">4th Quarter</Option>
-            </Select>
-          </div>
-          <div style={{position:'relative',margin:'10px 0 0 0'}}>
-            <img src="/images/nbahalfcourt.png" />
-            {items}
+          <div style={{marginTop:'20px'}}>
+            <div id="courtLeft" style={{width:'500px','height':'472px',position:'relative',display:'inline-block',transform:'rotate(-90deg)',marginRight:'-28px'}}>
+              <img src="/images/nbahalfcourt.png" style={{}} alt="team1Img" />
+              {item1s}
+            </div>
+            <div id="courtRight" style={{width:'500px','height':'472px',position:'relative',display:'inline-block',transform:'rotate(90deg)'}}>
+              <img src="/images/nbahalfcourt.png" style={{}} alt="team2Img" />
+              {item2s}
+            </div>
           </div>
         </div>
       </div>
