@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Popover
-} from 'antd';
+import {Popover} from 'antd';
 
 class Part3Chart3 extends React.Component {
   constructor(props) {
@@ -15,12 +13,8 @@ class Part3Chart3 extends React.Component {
       quarterSelect: ''
     };
   }
-  componentDidMount() {
-
-  }
-  componentWillMount() {
-
-  }
+  componentDidMount() {}
+  componentWillMount() {}
   componentWillReceiveProps(nextProps) {
     // if (this.props.teamNum != nextProps.teamNum || this.props.teamName != nextProps.teamName) {
     //   if (nextProps.teamNum) {
@@ -86,18 +80,12 @@ class Part3Chart3 extends React.Component {
           return item[2].indexOf(quarter) != -1
         })
         if (icon === true) {
-          this.setState({
-            team1ChartData: [],
-            team2ChartData: []
-          })
+          this.setState({team1ChartData: [], team2ChartData: []})
           this.getCourtLeftHeatmap(data1);
           this.getCourtRightHeatmap(data2);
         } else {
           $('.heatmap-canvas').remove()
-          this.setState({
-            team1ChartData: data1,
-            team2ChartData: data2
-          })
+          this.setState({team1ChartData: data1, team2ChartData: data2})
         }
       },
       error: err => {
@@ -111,10 +99,7 @@ class Part3Chart3 extends React.Component {
       return item[2].indexOf('missed') === -1
     });
     var heatmapInstance = window.h337.create({
-      container: document.querySelector('#courtLeft'),
-      maxOpacity: .85,
-      minOpacity: 0,
-      blur: 1,
+      container: document.querySelector('#courtLeft'), maxOpacity: .85, minOpacity: 0, blur: 1,
       // gradient: {
       //   '.5': 'blue',
       //   '.8': 'green',
@@ -142,12 +127,7 @@ class Part3Chart3 extends React.Component {
     const team2ChartData = data.filter((item, index) => {
       return item[2].indexOf('missed') === -1
     });
-    var heatmapInstance = window.h337.create({
-      container: document.querySelector('#courtRight'),
-      maxOpacity: .85,
-      minOpacity: 0,
-      blur: 1
-    });
+    var heatmapInstance = window.h337.create({container: document.querySelector('#courtRight'), maxOpacity: .85, minOpacity: 0, blur: 1});
     var points = [];
     var len = team2ChartData.length;
     while (len--) {
@@ -167,10 +147,7 @@ class Part3Chart3 extends React.Component {
   }
 
   render() {
-    const {
-      team1ChartData,
-      team2ChartData,
-    } = this.state
+    const {team1ChartData, team2ChartData} = this.state
     const item1s = team1ChartData.map((item, index) => {
       let color = {
         color: 'lightblue'
@@ -182,24 +159,30 @@ class Part3Chart3 extends React.Component {
       };
       let target = item[3];
       let style2 = {
-        color: target == '×' ? 'red' : 'green',
-        cursor: 'pointer'
+        background: target == '×'
+          ? 'rgb(245,22,56)'
+          : 'rgb(106,212,29)',
+        cursor: 'pointer',
+        width: '10px',
+        height: '10px',
+        borderRadius: '50%',
+        marginTop: '5px' // 修正div
       }
       let p1 = item[2].split('<br>')[0];
       let p2 = item[2].split('<br>')[1];
-      let content = (
-        <div>
-          <p style={{margin:'0px auto'}}>{p1}</p>
-          <p style={{margin:'0px auto'}}>{p2}</p>
+      let content = (<div>
+        <p style={{
+            margin: '0px auto'
+          }}>{p1}</p>
+        <p style={{
+            margin: '0px auto'
+          }}>{p2}</p>
+      </div>)
+      return (<Popover content={content} key={index}>
+        <div style={style1}>
+          <div style={style2}></div>
         </div>
-      )
-      return (
-        <Popover content={content} key={index}>
-          <div style={style1}>
-            <p style={style2}>{target}</p>
-          </div>
-        </Popover>
-      )
+      </Popover>)
     })
     const item2s = team2ChartData.map((item, index) => {
       let color = {
@@ -212,41 +195,60 @@ class Part3Chart3 extends React.Component {
       };
       let target = item[3];
       let style2 = {
-        color: target == '×' ? 'red' : 'green',
-        cursor: 'pointer'
+        background: target == '×'
+          ? 'rgb(245,22,56)'
+          : 'rgb(106,212,29)',
+        cursor: 'pointer',
+        width: '10px',
+        height: '10px',
+        borderRadius: '50%',
+        marginTop: '5px' // 修正div
       }
       let p1 = item[2].split('<br>')[0];
       let p2 = item[2].split('<br>')[1];
-      let content = (
-        <div>
-          <p style={{margin:'0px auto'}}>{p1}</p>
-          <p style={{margin:'0px auto'}}>{p2}</p>
+      let content = (<div>
+        <p style={{
+            margin: '0px auto'
+          }}>{p1}</p>
+        <p style={{
+            margin: '0px auto'
+          }}>{p2}</p>
+      </div>)
+      return (<Popover content={content} key={index}>
+        <div style={style1}>
+          <p style={style2}></p>
         </div>
-      )
-      return (
-        <Popover content={content} key={index}>
-          <div style={style1}>
-            <p style={style2}>{target}</p>
-          </div>
-        </Popover>
-      )
+      </Popover>)
     })
-    return (
+    return (<div>
       <div>
-        <div>
-          <div style={{marginTop:'20px'}}>
-            <div id="courtLeft" style={{width:'500px','height':'472px',position:'relative',display:'inline-block',transform:'rotate(-90deg)',marginRight:'-28px'}}>
-              <img src="/images/nbahalfcourt.png" style={{}} alt="team1Img" />
-              {item1s}
-            </div>
-            <div id="courtRight" style={{width:'500px','height':'472px',position:'relative',display:'inline-block',transform:'rotate(90deg)'}}>
-              <img src="/images/nbahalfcourt.png" style={{}} alt="team2Img" />
-              {item2s}
-            </div>
+        <div style={{
+            width: '1000px',
+            height: '500px',
+            margin: '0px auto'
+          }}>
+          <div id="courtLeft" style={{
+              width: '500px',
+              height: '472px',
+              position: 'relative',
+              display: 'inline-block',
+              transform: 'rotate(-90deg)',
+              marginRight: '-28px'
+            }}>
+            <img src="/images/nbahalfcourt.png" style={{}} alt="team1Img"/> {item1s}
+          </div>
+          <div id="courtRight" style={{
+              width: '500px',
+              height: '472px',
+              position: 'relative',
+              display: 'inline-block',
+              transform: 'rotate(90deg)'
+            }}>
+            <img src="/images/nbahalfcourt.png" style={{}} alt="team2Img"/> {item2s}
           </div>
         </div>
       </div>
-    )
+    </div>)
   }
 }
 

@@ -264,7 +264,7 @@ class Part2 extends React.Component {
             <Part2Chart team1Name={team1Name} team2Name={team2Name} team1SummaryChart={team1SummaryChart} team2SummaryChart={team2SummaryChart} width={this.state.width}/>
           </Col>
           <Col span={12} style={{paddingTop: '20px',minWidth:'550px'}}>
-            <h3>各项最佳</h3>       
+            <h3>各项最佳</h3>
             <Table dataSource={dataSource} columns={columns} pagination={false}/>
           </Col>
         </Row>
