@@ -1,52 +1,61 @@
-import React from 'react';
+import React from "react";
 
 class Part1Chart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      team1Name: '',
-      team2Name: '',
+      team1Name: "",
+      team2Name: "",
       team1Score: [],
       team2Score: [],
       width: this.props.width
-    }
+    };
   }
   componentDidMount() {
-    this.getInitialChart(this.props.team1Name, this.props.team2Name, this.props.team1Score, this.props.team2Score)
+    this.getInitialChart(
+      this.props.team1Name,
+      this.props.team2Name,
+      this.props.team1Score,
+      this.props.team2Score
+    );
   }
-  componentWillMount() {
-
-  }
+  componentWillMount() {}
   componentWillReceiveProps(nextProps) {
     if (this.props.team1Name != nextProps.team1Name) {
       if (nextProps.team1Name) {
-        this.setState({
-          team1Name: nextProps.team1Name,
-          team2Name: nextProps.team2Name,
-          team1Score: nextProps.team1Score,
-          team2Score: nextProps.team2Score
-        }, () => {
-          this.getInitialChart(this.state.team1Name, this.state.team2Name, this.state.team1Score, this.state.team2Score)
-        })
+        this.setState(
+          {
+            team1Name: nextProps.team1Name,
+            team2Name: nextProps.team2Name,
+            team1Score: nextProps.team1Score,
+            team2Score: nextProps.team2Score
+          },
+          () => {
+            this.getInitialChart(
+              this.state.team1Name,
+              this.state.team2Name,
+              this.state.team1Score,
+              this.state.team2Score
+            );
+          }
+        );
       }
     }
   }
   getInitialChart(team1Name, team2Name, team1Score, team2Score) {
-    var myChart = echarts.init(document.getElementById('part1Main'));
+    var myChart = echarts.init(document.getElementById("part1Main"));
     let team = [team1Name, team2Name];
     myChart.setOption({
-      title: {
-
-      },
+      title: {},
       tooltip: {
-        trigger: 'axis'
+        trigger: "axis"
       },
       legend: {
         data: team
       },
       toolbox: {
         show: true,
-        right: '35px',
+        right: "35px",
         feature: {
           saveAsImage: {
             show: true
@@ -54,49 +63,58 @@ class Part1Chart extends React.Component {
         }
       },
       calculable: true,
-      xAxis: [{
-        type: 'category',
-        data: ['第一节', '第二节', '第三节', '第四节']
-      }],
-      yAxis: [{
-        type: 'value'
-      }],
-      series: [{
-        name: team[0],
-        type: 'bar',
-        data: team1Score,
-        markLine: {
-          data: [{
-            type: 'average',
-            name: '平均值'
-          }]
+      xAxis: [
+        {
+          type: "category",
+          data: ["第一节", "第二节", "第三节", "第四节"]
         }
-      }, {
-        name: team[1],
-        type: 'bar',
-        data: team2Score,
-        markLine: {
-          data: [{
-            type: 'average',
-            name: '平均值'
-          }]
+      ],
+      yAxis: [
+        {
+          type: "value"
         }
-      }]
-    })
-    window.addEventListener('resize', function() {
+      ],
+      series: [
+        {
+          name: team[0],
+          type: "bar",
+          data: team1Score,
+          markLine: {
+            data: [
+              {
+                type: "average",
+                name: "平均值"
+              }
+            ]
+          }
+        },
+        {
+          name: team[1],
+          type: "bar",
+          data: team2Score,
+          markLine: {
+            data: [
+              {
+                type: "average",
+                name: "平均值"
+              }
+            ]
+          }
+        }
+      ]
+    });
+    window.addEventListener("resize", function() {
       myChart.resize();
-    })
+    });
   }
   render() {
-    const {
-      team1Name
-    } = this.state
-    const width = this.props.width
+    const { team1Name } = this.state;
+    const width = this.props.width;
     return (
       <div>
-        <div id="part1Main" style={{ width: width, height: 200}}></div>
+        <div id="part1Main" style={{ width: width, height: 200 }} />
       </div>
-    )
+    );
   }
 }
 

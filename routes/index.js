@@ -1,81 +1,81 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
-var MatchList = require('../src/module/matchlist');
-var MatchDetail = require('../src/module/matchdetail');
-var MatchPlay = require('../src/module/matchplay');
-var MatchShot = require('../src/module/matchshot');
-var MatchPlayer = require('../src/module/matchplayer');
+var MatchList = require("../src/module/matchlist");
+var MatchDetail = require("../src/module/matchdetail");
+var MatchPlay = require("../src/module/matchplay");
+var MatchShot = require("../src/module/matchshot");
+var MatchPlayer = require("../src/module/matchplayer");
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-	res.render('index', {
-		title: 'Express'
-	});
+router.get("/", function(req, res, next) {
+  res.render("index", {
+    title: "Express"
+  });
 });
 
 // 获取当前日期(数据库里是2015-2017年)的比赛列表
-router.post('/getMatchItems', (req, res, next) => {
-	let date = req.body;
-	MatchList.find(date).exec((err, matchItems) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.json(matchItems);
-			console.log(matchItems)
-		}
-	})
-})
+router.post("/getMatchItems", (req, res, next) => {
+  let date = req.body;
+  MatchList.find(date).exec((err, matchItems) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(matchItems);
+      console.log(matchItems);
+    }
+  });
+});
 
 // 获取单场比赛数据(数据库里2015年-2017年)的比赛数据
-router.post('/getSingleMatchDetail', (req, res, next) => {
-	let url = req.body;
-	MatchDetail.find(url).exec((err, matchDetail) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.json(matchDetail);
-			console.log(matchDetail)
-		}
-	})
-})
+router.post("/getSingleMatchDetail", (req, res, next) => {
+  let url = req.body;
+  MatchDetail.find(url).exec((err, matchDetail) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(matchDetail);
+      console.log(matchDetail);
+    }
+  });
+});
 
 // 获取单场数据play-by-play数据(数据库里是2015-01-01)两场比赛数据
-router.post('/getSingleMatchPlayByPlay', (req, res, next) => {
-	let url = req.body;
-	MatchPlay.find(url).exec((err, matchPlay) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.json(matchPlay);
-			console.log(matchPlay)
-		}
-	})
-})
+router.post("/getSingleMatchPlayByPlay", (req, res, next) => {
+  let url = req.body;
+  MatchPlay.find(url).exec((err, matchPlay) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(matchPlay);
+      console.log(matchPlay);
+    }
+  });
+});
 
 // 获取单场数据shot数据(数据库里是2015-01-01)两场比赛数据
-router.post('/getSingleMatchShot', (req, res, next) => {
-	let url = req.body;
-	MatchShot.find(url).exec((err, matchShot) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.json(matchShot);
-			console.log(matchShot)
-		}
-	})
-})
+router.post("/getSingleMatchShot", (req, res, next) => {
+  let url = req.body;
+  MatchShot.find(url).exec((err, matchShot) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(matchShot);
+      console.log(matchShot);
+    }
+  });
+});
 
 // 获取球员场均数据
-router.post('/getSeasonAvg', (req, res, next) => {
-	let cnName = req.body;
-	MatchPlayer.find(cnName).exec((err, seasonAvg) => {
-		if (err) {
-			console.log(err);
-		} else {
-			res.json(seasonAvg);
-			console.log(seasonAvg)
-		}
-	})
-})
+router.post("/getSeasonAvg", (req, res, next) => {
+  let cnName = req.body;
+  MatchPlayer.find(cnName).exec((err, seasonAvg) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(seasonAvg);
+      console.log(seasonAvg);
+    }
+  });
+});
 
 module.exports = router;

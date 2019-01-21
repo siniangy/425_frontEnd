@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 class Part3Chart2 extends React.Component {
   constructor(props) {
@@ -6,47 +6,46 @@ class Part3Chart2 extends React.Component {
     this.state = {
       pointDiff: [],
       diffLength: []
-    }
+    };
   }
-  componentDidMount() {
-
-  }
-  componentWillMount() {
-
-  }
+  componentDidMount() {}
+  componentWillMount() {}
   componentWillReceiveProps(nextProps) {
     if (this.props.pointDiff != nextProps.pointDiff) {
       if (nextProps.pointDiff) {
-        this.setState({
-          pointDiff: nextProps.pointDiff,
-          diffLength: nextProps.diffLength
-        }, () => {
-          this.getInitialChart(this.state.pointDiff, this.state.diffLength)
-        })
+        this.setState(
+          {
+            pointDiff: nextProps.pointDiff,
+            diffLength: nextProps.diffLength
+          },
+          () => {
+            this.getInitialChart(this.state.pointDiff, this.state.diffLength);
+          }
+        );
       }
     }
   }
   getInitialChart(target, length) {
-    echarts.dispose(document.getElementById("part3Chart2Main"))
-    var myChart = echarts.init(document.getElementById('part3Chart2Main'));
+    echarts.dispose(document.getElementById("part3Chart2Main"));
+    var myChart = echarts.init(document.getElementById("part3Chart2Main"));
     var option = {
       tooltip: {
-        trigger: 'axis',
+        trigger: "axis",
         position: function(pt) {
-          return [pt[0], '10%'];
+          return [pt[0], "10%"];
         },
         formatter: function(params, callback) {
           // console.log(params[0]['value'])
           let showHtml = "";
-          let value = params[0]['value']
+          let value = params[0]["value"];
           if (value > 0) {
-            showHtml = 'DEN' + ' leading by ' + value
+            showHtml = "DEN" + " leading by " + value;
           }
           if (value < 0) {
-            showHtml = 'DEN' + ' trailing by ' + value
+            showHtml = "DEN" + " trailing by " + value;
           }
           if (value == 0) {
-            showHtml = 'Game tied with point diff ' + value
+            showHtml = "Game tied with point diff " + value;
           }
           return showHtml;
         }
@@ -57,14 +56,14 @@ class Part3Chart2 extends React.Component {
         }
       },
       xAxis: {
-        type: 'category',
+        type: "category",
         boundaryGap: false,
         data: length,
         axisLine: {
           lineStyle: {
-            color: '#A0A0A0',
-            width: '2',
-            shadowColor: 'rgba(0, 0, 0, 0.5)',
+            color: "#A0A0A0",
+            width: "2",
+            shadowColor: "rgba(0, 0, 0, 0.5)",
             shadowBlur: 2
           }
         },
@@ -76,34 +75,36 @@ class Part3Chart2 extends React.Component {
         }
       },
       yAxis: {
-        type: 'value',
-        boundaryGap: [0, '100%'],
+        type: "value",
+        boundaryGap: [0, "100%"],
         show: false
       },
-      series: [{
-        name: 'Den',
-        type: 'line',
-        smooth: true,
-        symbol: 'none',
-        sampling: 'average',
-        itemStyle: {
-          normal: {
-            lineStyle: {
-              color: 'lightblue'
+      series: [
+        {
+          name: "Den",
+          type: "line",
+          smooth: true,
+          symbol: "none",
+          sampling: "average",
+          itemStyle: {
+            normal: {
+              lineStyle: {
+                color: "lightblue"
+              }
             }
-          }
-        },
-        data: target
-      }]
+          },
+          data: target
+        }
+      ]
     };
     myChart.setOption(option);
   }
   render() {
     return (
       <div>
-        <div id="part3Chart2Main" style={{ width: 500, height: 300}}></div>
+        <div id="part3Chart2Main" style={{ width: 500, height: 300 }} />
       </div>
-    )
+    );
   }
 }
 

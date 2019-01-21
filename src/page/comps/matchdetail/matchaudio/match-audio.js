@@ -1,24 +1,18 @@
-import React from 'react';
+import React from "react";
 
 class MatchAudio extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    }
+    this.state = {};
   }
-  componentDidMount() {
-
-  }
-  componentWillMount() {
-
-  }
+  componentDidMount() {}
+  componentWillMount() {}
   render() {
     return (
       <div>
         <p>Audio</p>
       </div>
-    )
+    );
   }
 }
 

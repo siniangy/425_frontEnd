@@ -1,14 +1,7 @@
-import React from 'react';
-import {
-  Radio,
-  Divider,
-  Row,
-  Col,
-  Icon,
-  Select
-} from 'antd'
-import Chart1 from './chart1.js';
-import Chart3 from './chart3.js';
+import React from "react";
+import { Radio, Divider, Row, Col, Icon, Select } from "antd";
+import Chart1 from "./chart1.js";
+import Chart3 from "./chart3.js";
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -19,56 +12,59 @@ export default class Part3 extends React.Component {
     this.state = {
       pointDiff: [],
       diffLength: [],
-      team1Name: '',
-      team2Name: '',
+      team1Name: "",
+      team2Name: "",
       team1Players: [],
       team1Relation: [],
       team2Players: [],
       team2Relation: [],
-      defaultValue: 'a',
+      defaultValue: "a",
       defaultIconStyle: false,
-      defaultQuarterSelectedValue: 'quarter',
-      defaultShotSelectedValue: 'all',
+      defaultQuarterSelectedValue: "quarter",
+      defaultShotSelectedValue: "all",
       width: -1
-    }
+    };
   }
   componentDidMount() {
-    this.handleReSize()
-    window.addEventListener('resize', this.handleReSize.bind(this))
+    this.handleReSize();
+    window.addEventListener("resize", this.handleReSize.bind(this));
   }
   componentWillMount() {}
   componentWillUnmount() {
-    window.removeEventListener('resize', this.handleReSize.bind(this))
+    window.removeEventListener("resize", this.handleReSize.bind(this));
   }
   handleReSize() {
-    let test = document.getElementById('part3');
-    this.setState({width: test.clientWidth})
+    let test = document.getElementById("part3");
+    this.setState({ width: test.clientWidth });
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.data !== nextProps.data) {
       if (nextProps.data) {
-        this.handleProps(nextProps.data)
+        this.handleProps(nextProps.data);
       }
     }
-    if (this.props.team1Name !== nextProps.team1Name && this.props.team2Name !== nextProps.team2Name) {
+    if (
+      this.props.team1Name !== nextProps.team1Name &&
+      this.props.team2Name !== nextProps.team2Name
+    ) {
       if (nextProps.team1Name && nextProps.team2Name) {
-        this.handleNameProps(nextProps.team1Name, nextProps.team2Name)
+        this.handleNameProps(nextProps.team1Name, nextProps.team2Name);
       }
     }
   }
   changePointDiff(array) {
     let target = [];
     for (let i = 0; i < array.length; i++) {
-      let a = parseInt(array[i][3].split('-')[0]);
-      let b = parseInt(array[i][3].split('-')[1]);
-      target.push(a - b)
+      let a = parseInt(array[i][3].split("-")[0]);
+      let b = parseInt(array[i][3].split("-")[1]);
+      target.push(a - b);
     }
-    return target
+    return target;
   }
   changeDiffLength(array) {
     let length = [];
     for (let i in array) {
-      length.push(i)
+      length.push(i);
     }
     return length;
   }
@@ -82,7 +78,7 @@ export default class Part3 extends React.Component {
         }
       }
       data[i].push(k, 1);
-      res.push(data[i])
+      res.push(data[i]);
     }
     return res;
   }
@@ -90,81 +86,100 @@ export default class Part3 extends React.Component {
     return [...new Set(data)];
   }
   handleNameProps(data1, data2) {
-    this.setState({
-      team1Name: data1,
-      team2Name: data2
-    }, () => {})
+    this.setState(
+      {
+        team1Name: data1,
+        team2Name: data2
+      },
+      () => {}
+    );
   }
   handleProps(data) {
-    let arr = data[0]['quarter1'].concat(data[0]['quarter2'], data[0]['quarter3'], data[0]['quarter4']);
+    let arr = data[0]["quarter1"].concat(
+      data[0]["quarter2"],
+      data[0]["quarter3"],
+      data[0]["quarter4"]
+    );
 
     let team1Info = arr.filter((item, index) => {
-      if (item[2].indexOf('助攻+1') != -1) {
-        return item
+      if (item[2].indexOf("助攻+1") != -1) {
+        return item;
       }
-    })
-    let m = []
+    });
+    let m = [];
     let n = [];
     for (let i in team1Info) {
-      let a1 = team1Info[i][1].split('命中')[0];
-      let b1 = team1Info[i][1].split('分')[1].split('助攻')[0];
+      let a1 = team1Info[i][1].split("命中")[0];
+      let b1 = team1Info[i][1].split("分")[1].split("助攻")[0];
       m.push(a1, b1);
-      n.push([b1, a1])
+      n.push([b1, a1]);
     }
     let team1Players = this.changePlayers(m);
     let team1Relation = this.changeRelation(n);
 
     let team2Info = arr.filter((item, index) => {
-      if (item[4].indexOf('助攻+1') != -1) {
-        return item
+      if (item[4].indexOf("助攻+1") != -1) {
+        return item;
       }
-    })
-    let k = []
+    });
+    let k = [];
     let j = [];
     for (let i in team2Info) {
-      let a2 = team2Info[i][5].split('命中')[0];
-      let b2 = team2Info[i][5].split('分')[1].split('助攻')[0];
+      let a2 = team2Info[i][5].split("命中")[0];
+      let b2 = team2Info[i][5].split("分")[1].split("助攻")[0];
       k.push(a2, b2);
-      j.push([b2, a2])
+      j.push([b2, a2]);
     }
     let team2Players = this.changePlayers(k);
     let team2Relation = this.changeRelation(j);
 
     let pointDiff = this.changePointDiff(arr);
-    let diffLength = this.changeDiffLength(arr)
-    this.setState({
-      pointDiff: pointDiff,
-      diffLength: diffLength,
-      team1Players: team1Players,
-      team1Relation: team1Relation,
-      team2Players: team2Players,
-      team2Relation: team2Relation
-    }, () => {})
+    let diffLength = this.changeDiffLength(arr);
+    this.setState(
+      {
+        pointDiff: pointDiff,
+        diffLength: diffLength,
+        team1Players: team1Players,
+        team1Relation: team1Relation,
+        team2Players: team2Players,
+        team2Relation: team2Relation
+      },
+      () => {}
+    );
   }
   handleButton(e) {
-    this.setState({
-      defaultValue: e.target.value
-    }, () => {})
+    this.setState(
+      {
+        defaultValue: e.target.value
+      },
+      () => {}
+    );
   }
   handleClick() {
-    const defaultIconStyle = !(this.state.defaultIconStyle)
-    this.setState({
-      defaultIconStyle: defaultIconStyle
-    }, () => {
-      // console.log(this.state.defaultIconStyle)
-    })
+    const defaultIconStyle = !this.state.defaultIconStyle;
+    this.setState(
+      {
+        defaultIconStyle: defaultIconStyle
+      },
+      () => {
+        // console.log(this.state.defaultIconStyle)
+      }
+    );
   }
   handleQuarterChange(e) {
-    this.setState({
-      defaultQuarterSelectedValue: e
-    }, () => {
-      // console.log(this.state.defaultQuarterSelectedValue)
-    })
+    this.setState(
+      {
+        defaultQuarterSelectedValue: e
+      },
+      () => {
+        // console.log(this.state.defaultQuarterSelectedValue)
+      }
+    );
   }
   handleShotChange(e) {
     this.setState({
       defaultShotSelectedValue: e
-    })
+    });
   }
   render() {
     const {
@@ -178,90 +193,127 @@ export default class Part3 extends React.Component {
       defaultIconStyle,
       defaultQuarterSelectedValue,
       defaultShotSelectedValue
-    } = this.state
-    const {team1Name, team2Name} = this.props
+    } = this.state;
+    const { team1Name, team2Name } = this.props;
     let style = {
-      color: (defaultIconStyle === false)
-        ? '#999'
-        : 'rgb(24,144,255)',
-      cursor: 'pointer',
-      marginLeft: '8px'
-    }
-    return (<div style={{
-        border: '2px solid rgba(240,242,245,1)',
-        borderRadius: '10px',
-        padding: '10px',
-        minHeight: '150px',
-        marginTop: '20px'
-      }}>
-      <Row style={{
-          overflowX: 'auto',
+      color: defaultIconStyle === false ? "#999" : "rgb(24,144,255)",
+      cursor: "pointer",
+      marginLeft: "8px"
+    };
+    return (
+      <div
+        style={{
+          border: "2px solid rgba(240,242,245,1)",
+          borderRadius: "10px",
+          padding: "10px",
+          minHeight: "150px",
+          marginTop: "20px"
+        }}
+      >
+        <Row
+          style={{
+            overflowX: "auto",
 
-          overflowY: 'hidden'
-        }}>
-        <Col span={24} style={{
-            paddingRight: '20px',
-            paddingTop: '20px'
-          }}>
-          <h3>投篮点分析
-            <Icon type="heat-map" style={style} onClick={() => this.handleClick()}/></h3>
-          <div style={{
-              marginBottom: '20px'
-            }}>
-            <Select defaultValue="quarter" style={{
-                width: 120
-              }} onChange={(e) => this.handleQuarterChange(e)}>
-              <Option value="quarter">All Quarters</Option>
-              <Option value="1st">1st Quarter</Option>
-              <Option value="2nd">2nd Quarter</Option>
-              <Option value="3rd">3rd Quarter</Option>
-              <Option value="4th">4th Quarter</Option>
-            </Select>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <Select defaultValue="all" style={{
-                width: 120
-              }} onChange={(e) => this.handleShotChange(e)}>
-              <Option value="all">All Shots</Option>
-              <Option value="made">Made Shots</Option>
-              <Option value="miss">Miss Shots</Option>
-            </Select>
-          </div>
-          {/* 这里只选择传team2Name，展示全场的投篮分布
+            overflowY: "hidden"
+          }}
+        >
+          <Col
+            span={24}
+            style={{
+              paddingRight: "20px",
+              paddingTop: "20px"
+            }}
+          >
+            <h3>
+              投篮点分析
+              <Icon
+                type="heat-map"
+                style={style}
+                onClick={() => this.handleClick()}
+              />
+            </h3>
+            <div
+              style={{
+                marginBottom: "20px"
+              }}
+            >
+              <Select
+                defaultValue="quarter"
+                style={{
+                  width: 120
+                }}
+                onChange={e => this.handleQuarterChange(e)}
+              >
+                <Option value="quarter">All Quarters</Option>
+                <Option value="1st">1st Quarter</Option>
+                <Option value="2nd">2nd Quarter</Option>
+                <Option value="3rd">3rd Quarter</Option>
+                <Option value="4th">4th Quarter</Option>
+              </Select>
+              &nbsp;&nbsp;&nbsp;&nbsp;
+              <Select
+                defaultValue="all"
+                style={{
+                  width: 120
+                }}
+                onChange={e => this.handleShotChange(e)}
+              >
+                <Option value="all">All Shots</Option>
+                <Option value="made">Made Shots</Option>
+                <Option value="miss">Miss Shots</Option>
+              </Select>
+            </div>
+            {/* 这里只选择传team2Name，展示全场的投篮分布
 						<Chart3 teamName={this.state.team2Name} teamNum={defaultValue}/>
-						*/
-          }
-          <Chart3 teamName={this.state.team2Name} iconSelect={defaultIconStyle} quarterSelect={defaultQuarterSelectedValue} shotSelect={defaultShotSelectedValue}/>
-        </Col>
-      </Row>
-      <Row>
-        <Col span={12} style={{
-            paddingRight: '20px',
-            paddingTop: '20px',
-            minWidth: '550px'
-          }} id='part3'>
-          <h3 style={{}}>球队助攻关系</h3>
-          <span>
-            <RadioGroup onChange={(e) => this.handleButton(e)} defaultValue="a" style={{}}>
-              <RadioButton value="a">{team1Name}</RadioButton>
-              <RadioButton value="b">{team2Name}</RadioButton>
-            </RadioGroup>
-          </span>
-          <Chart1 players={(
-              defaultValue == 'a')
-              ? team1Players
-              : team2Players} relation={(
-              defaultValue == 'a')
-              ? team1Relation
-              : team2Relation} width={this.state.width}/>
-        </Col>
-        <Col span={12} style={{
-            paddingRight: '20px',
-            paddingTop: '20px',
-            minWidth: '550px'
-          }} id="test">
-          <h1>设计组件？？</h1>
-        </Col>
-      </Row>
-    </div>);
+						*/}
+            <Chart3
+              teamName={this.state.team2Name}
+              iconSelect={defaultIconStyle}
+              quarterSelect={defaultQuarterSelectedValue}
+              shotSelect={defaultShotSelectedValue}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            span={12}
+            style={{
+              paddingRight: "20px",
+              paddingTop: "20px",
+              minWidth: "550px"
+            }}
+            id="part3"
+          >
+            <h3 style={{}}>球队助攻关系</h3>
+            <span>
+              <RadioGroup
+                onChange={e => this.handleButton(e)}
+                defaultValue="a"
+                style={{}}
+              >
+                <RadioButton value="a">{team1Name}</RadioButton>
+                <RadioButton value="b">{team2Name}</RadioButton>
+              </RadioGroup>
+            </span>
+            <Chart1
+              players={defaultValue == "a" ? team1Players : team2Players}
+              relation={defaultValue == "a" ? team1Relation : team2Relation}
+              width={this.state.width}
+            />
+          </Col>
+          <Col
+            span={12}
+            style={{
+              paddingRight: "20px",
+              paddingTop: "20px",
+              minWidth: "550px"
+            }}
+            id="test"
+          >
+            <h1>设计组件？？</h1>
+          </Col>
+        </Row>
+      </div>
+    );
   }
 }

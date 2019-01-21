@@ -1,15 +1,15 @@
-import React from 'react';
+import React from "react";
 
 class Part2Chart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      team1Name: '',
-      team2Name: '',
+      team1Name: "",
+      team2Name: "",
       team1SummaryChart: [],
       team2SummaryChart: [],
       width: this.props.width
-    }
+    };
   }
   componentDidMount() {}
 
@@ -18,14 +18,22 @@ class Part2Chart extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.team1SummaryChart != nextProps.team1SummaryChart) {
       if (nextProps.team1Name) {
-        this.setState({
-          team1Name: nextProps.team1Name,
-          team2Name: nextProps.team2Name,
-          team1SummaryChart: nextProps.team1SummaryChart,
-          team2SummaryChart: nextProps.team2SummaryChart
-        }, () => {
-          this.getInitialChart(this.state.team1Name, this.state.team2Name, this.state.team1SummaryChart, this.state.team2SummaryChart)
-        })
+        this.setState(
+          {
+            team1Name: nextProps.team1Name,
+            team2Name: nextProps.team2Name,
+            team1SummaryChart: nextProps.team1SummaryChart,
+            team2SummaryChart: nextProps.team2SummaryChart
+          },
+          () => {
+            this.getInitialChart(
+              this.state.team1Name,
+              this.state.team2Name,
+              this.state.team1SummaryChart,
+              this.state.team2SummaryChart
+            );
+          }
+        );
       }
     }
   }
@@ -36,63 +44,70 @@ class Part2Chart extends React.Component {
     //   myChart != undefined) {
     //   myChart.dispose(); 销毁实例
     // }
-    var chart = document.getElementById('part2Main')
-    echarts.dispose(chart)
+    var chart = document.getElementById("part2Main");
+    echarts.dispose(chart);
     var myChart = echarts.init(chart);
     var labelData = [
-      '投篮%',
-      '三分%',
-      '罚球%',
-      '篮板',
-      '助攻',
-      '抢断',
-      '盖帽',
-      '失误',
-      '犯规'
+      "投篮%",
+      "三分%",
+      "罚球%",
+      "篮板",
+      "助攻",
+      "抢断",
+      "盖帽",
+      "失误",
+      "犯规"
     ];
     var womanData = team1SummaryChart;
     var manData = team2SummaryChart;
     var option = {
-      backgroundColor: '#fff',
+      backgroundColor: "#fff",
       legend: {
-        orient: 'horizontal', // 'vertical'
-        x: '36%', // 'center' | 'left' | {number},
-        y: 'top', // 'center' | 'bottom' | {number}
+        orient: "horizontal", // 'vertical'
+        x: "36%", // 'center' | 'left' | {number},
+        y: "top", // 'center' | 'bottom' | {number}
         data: [
           {
             name: team1Name,
             textStyle: {
-              fontWeight: 'bolder',
+              fontWeight: "bolder",
               padding: [10, 100, 15, 0]
               // color:'#cccccc'
             }
-          }, {
+          },
+          {
             name: team2Name,
             textStyle: {
               fontSize: 12,
-              fontWeight: 'bolder'
+              fontWeight: "bolder"
             }
           }
         ]
-
       },
       // tooltip（提示框组件）
       tooltip: {
         //trigger(触发类型)，可选'item','axis','none'
-        trigger: 'axis',
+        trigger: "axis",
         axisPointer: {
           //指示器类型,可选'line','shadow','cross'
-          type: 'shadow'
+          type: "shadow"
         },
         // 自定义提示内容
         formatter: function(a) {
           var v = a[0];
-          return v.name + '<br/>' + v.marker + v.seriesName + '：' + Math.abs(v.value);
+          return (
+            v.name +
+            "<br/>" +
+            v.marker +
+            v.seriesName +
+            "：" +
+            Math.abs(v.value)
+          );
         }
       },
       toolbox: {
         show: true,
-        right: '35px',
+        right: "35px",
         feature: {
           saveAsImage: {
             show: true
@@ -101,7 +116,7 @@ class Part2Chart extends React.Component {
       },
       xAxis: [
         {
-          type: 'value',
+          type: "value",
           min: -100,
           max: 0,
           gridIndex: 0,
@@ -112,27 +127,30 @@ class Part2Chart extends React.Component {
           axisLabel: {
             show: false
           },
-          axisLine: { // Y轴轴线样式
+          axisLine: {
+            // Y轴轴线样式
             show: false,
             lineStyle: {
-              color: '#000'
+              color: "#000"
             }
           },
           splitLine: {
             show: false
           }
-        }, {
-          type: 'value',
+        },
+        {
+          type: "value",
           gridIndex: 1,
           min: 0,
           max: 100,
           axisTick: {
             show: false
           }, //是否显示刻度
-          axisLine: { // Y轴轴线样式
+          axisLine: {
+            // Y轴轴线样式
             show: false, // 是否显示X轴
             lineStyle: {
-              color: '#000'
+              color: "#000"
             }
           },
           axisLabel: {
@@ -145,7 +163,7 @@ class Part2Chart extends React.Component {
       ],
       yAxis: [
         {
-          type: 'category',
+          type: "category",
           gridIndex: 0,
           inverse: true,
           data: labelData,
@@ -155,14 +173,16 @@ class Part2Chart extends React.Component {
           axisLabel: {
             show: false
           },
-          axisLine: { // Y轴轴线样式
+          axisLine: {
+            // Y轴轴线样式
             show: false,
             lineStyle: {
-              color: '#000'
+              color: "#000"
             }
           }
-        }, {
-          type: 'category',
+        },
+        {
+          type: "category",
           gridIndex: 1,
           inverse: true,
           data: labelData,
@@ -178,58 +198,58 @@ class Part2Chart extends React.Component {
       grid: [
         {
           top: 50,
-          width: '46%',
+          width: "46%",
           left: 0,
           gridIndex: 0
-        }, {
+        },
+        {
           top: 50,
-          left: '54%',
+          left: "54%",
           right: 0,
           gridIndex: 1
         }
       ],
-      color: [
-        '#2FACFA', '#F5A623'
-      ],
+      color: ["#2FACFA", "#F5A623"],
       series: [
         {
           name: team1Name,
-          type: 'bar',
-          barWidth: '20',
+          type: "bar",
+          barWidth: "20",
           gridIndex: 0,
           itemStyle: {
             normal: {
               show: true,
-              color: '#5de3e1',
+              color: "#5de3e1",
               barBorderRadius: 50,
               borderWidth: 0,
-              borderColor: '#333',
+              borderColor: "#333",
               label: {
                 show: true,
-                position: 'left',
+                position: "left",
                 formatter: function(v) {
-                  return (v.value * -1);
+                  return v.value * -1;
                 }
               }
             }
           },
           data: womanData
-        }, {
+        },
+        {
           name: team2Name,
-          type: 'bar',
-          barWidth: '20',
+          type: "bar",
+          barWidth: "20",
           xAxisIndex: 1,
           yAxisIndex: 1,
           itemStyle: {
             normal: {
               show: true,
-              color: '#8A3EEB',
+              color: "#8A3EEB",
               barBorderRadius: 50,
               borderWidth: 0,
-              borderColor: '#333',
+              borderColor: "#333",
               label: {
                 show: true,
-                position: 'right',
+                position: "right",
                 formatter: function(v) {
                   return v.value;
                 }
@@ -238,24 +258,28 @@ class Part2Chart extends React.Component {
           },
           data: manData
         }
-
       ]
     };
     myChart.setOption(option);
-    window.addEventListener('resize', function() {
+    window.addEventListener("resize", function() {
       myChart.resize();
-    })
+    });
   }
 
   render() {
     const width = this.props.width;
-    return (<div>
-      <div id="part2Main" style={{
-          width: width,
-          height: 400,
-          maxWidth: '800px'
-        }}></div>
-    </div>)
+    return (
+      <div>
+        <div
+          id="part2Main"
+          style={{
+            width: width,
+            height: 400,
+            maxWidth: "800px"
+          }}
+        />
+      </div>
+    );
   }
 }
 
