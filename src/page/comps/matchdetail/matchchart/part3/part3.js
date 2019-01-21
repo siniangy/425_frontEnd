@@ -27,7 +27,8 @@ export default class Part3 extends React.Component {
       team2Relation: [],
       defaultValue: 'a',
       defaultIconStyle: false,
-      defaultSelectedValue: 'quarter',
+      defaultQuarterSelectedValue: 'quarter',
+      defaultShotSelectedValue: 'all',
       width: -1
     }
   }
@@ -153,11 +154,16 @@ export default class Part3 extends React.Component {
       // console.log(this.state.defaultIconStyle)
     })
   }
-  handleChange(e) {
+  handleQuarterChange(e) {
     this.setState({
-      defaultSelectedValue: e
+      defaultQuarterSelectedValue: e
     }, () => {
-      // console.log(this.state.defaultSelectedValue)
+      // console.log(this.state.defaultQuarterSelectedValue)
+    })
+  }
+  handleShotChange(e) {
+    this.setState({
+      defaultShotSelectedValue: e
     })
   }
   render() {
@@ -170,14 +176,16 @@ export default class Part3 extends React.Component {
       team2Relation,
       defaultValue,
       defaultIconStyle,
-      defaultSelectedValue
+      defaultQuarterSelectedValue,
+      defaultShotSelectedValue
     } = this.state
     const {team1Name, team2Name} = this.props
     let style = {
       color: (defaultIconStyle === false)
         ? '#999'
         : 'rgb(24,144,255)',
-      cursor: 'pointer'
+      cursor: 'pointer',
+      marginLeft: '8px'
     }
     return (<div style={{
         border: '2px solid rgba(240,242,245,1)',
@@ -188,6 +196,7 @@ export default class Part3 extends React.Component {
       }}>
       <Row style={{
           overflowX: 'auto',
+
           overflowY: 'hidden'
         }}>
         <Col span={24} style={{
@@ -201,19 +210,27 @@ export default class Part3 extends React.Component {
             }}>
             <Select defaultValue="quarter" style={{
                 width: 120
-              }} onChange={(e) => this.handleChange(e)}>
+              }} onChange={(e) => this.handleQuarterChange(e)}>
               <Option value="quarter">All Quarters</Option>
               <Option value="1st">1st Quarter</Option>
               <Option value="2nd">2nd Quarter</Option>
               <Option value="3rd">3rd Quarter</Option>
               <Option value="4th">4th Quarter</Option>
             </Select>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <Select defaultValue="all" style={{
+                width: 120
+              }} onChange={(e) => this.handleShotChange(e)}>
+              <Option value="all">All Shots</Option>
+              <Option value="made">Made Shots</Option>
+              <Option value="miss">Miss Shots</Option>
+            </Select>
           </div>
           {/* 这里只选择传team2Name，展示全场的投篮分布
 						<Chart3 teamName={this.state.team2Name} teamNum={defaultValue}/>
 						*/
           }
-          <Chart3 teamName={this.state.team2Name} iconSelect={defaultIconStyle} quarterSelect={defaultSelectedValue}/>
+          <Chart3 teamName={this.state.team2Name} iconSelect={defaultIconStyle} quarterSelect={defaultQuarterSelectedValue} shotSelect={defaultShotSelectedValue}/>
         </Col>
       </Row>
       <Row>
