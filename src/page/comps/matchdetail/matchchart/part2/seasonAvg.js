@@ -22,19 +22,22 @@ class SeasonAvgChart extends React.Component {
     // 处理球员场均数据在Avg方法里，div的id是index！！
     this.getSeasonAvgData(this.props.target, data1, this.props.id);
   }
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.target != nextProps.target) {
-  //     console.log('111')
-  //     if (nextProps.target) {
-  //       this.setState({
-  //         target: nextProps.target
-  //       }, () => {
-  //         console.log(this.state.target)
-  //         this.getSeasonAvgData(this.state.target)
-  //       })
-  //     }
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.target != nextProps.target) {
+      if (nextProps.target) {
+        // 处理球员本场数据
+        let dataMatch = nextProps.targetDetail[0];
+        let data1 = [];
+        for (let key in dataMatch) {
+          if (key == 3 || key == 13 || (key >= 16 && key <= 21)) {
+            data1.push(dataMatch[key]);
+          }
+        }
+        // 处理球员场均数据在Avg方法里，div的id是index！！
+        this.getSeasonAvgData(nextProps.target, data1, nextProps.id);
+      }
+    }
+  }
   getSeasonAvgData(data, data1, id) {
     const that = this;
     let postData =
@@ -71,7 +74,7 @@ class SeasonAvgChart extends React.Component {
         }
         let indicator = [
           {
-            name: "投篮",
+            name: "投篮%",
             max: 1
           },
           {

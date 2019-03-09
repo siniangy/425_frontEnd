@@ -1,10 +1,13 @@
 import React from "react";
-import { Radio, Row, Col, Table } from "antd";
+import { Radio, Row, Col, Table, Select, Icon, Tooltip } from "antd";
 import Part2Table from "./table.js";
-import Part2Chart from "./chart.js";
+import Part2BasicChart from "./basicChart.js";
+import Part2AdvansChart from "./advansChart.js";
+var nameChange = require("./playerName.js");
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
+const Option = Select.Option;
 class Part2 extends React.Component {
   constructor(props) {
     super(props);
@@ -25,7 +28,13 @@ class Part2 extends React.Component {
       team2Name: "",
       team1SummaryChart: [],
       team2SummaryChart: [],
-      defaultValue: "a",
+      teamDefaultValue: "a",
+      teamDataChangeDefaultValue: "basic", // 球队基础数据和进阶数据转换
+      playerDataChangeDefaultValue: "Pbasic", //球员基础数据和进阶数据转换
+      team1AdvansSummary: [], // teamA进阶数据
+      team2AdvansSummary: [], // teamB进阶数据
+      player1AdvansSummary: [], // playerA进阶数据
+      player2AdvansSummary: [], // playerB进阶数据
       width: -1
     };
   }
@@ -33,7 +42,11 @@ class Part2 extends React.Component {
     this.handleReSize();
     window.addEventListener("resize", this.handleReSize.bind(this));
   }
-  componentWillMount() {}
+  componentWillMount() {
+    this.getAdvansData(
+      "https://www.easy-mock.com/mock/5bf3713695d22b57c4fe73a6/example/advansdetailA"
+    );
+  }
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleReSize.bind(this));
   }
@@ -43,6 +56,63 @@ class Part2 extends React.Component {
         this.handleProps(nextProps.data);
       }
     }
+  }
+  // 本函数是测试函数，mock接口中只保留掘金对阵公牛一场比赛的Advans进阶数据
+  getAdvansData(url) {
+    $.ajax({
+      url: url,
+      type: "get",
+      dataType: "json",
+      success: res => {
+        let test1 = this.handleAdvansPlayerData(
+          res.data["team1AdvansDetail"]
+        ).map(item => {
+          return this.changeIntoJson(item);
+        });
+        let test2 = this.handleAdvansPlayerData(
+          res.data["team2AdvansDetail"]
+        ).map(item => {
+          return this.changeIntoJson(item);
+        });
+        this.setState(
+          {
+            team1AdvansSummary: this.handleAdvansTeamData(
+              res.data["team1AdvansSummary"][0]
+            ),
+            team2AdvansSummary: this.handleAdvansTeamData(
+              res.data["team2AdvansSummary"][0]
+            ),
+            player1AdvansSummary: test1,
+            player2AdvansSummary: test2
+          },
+          () => {
+            // console.log(this.state.player1AdvansSummary);
+          }
+        );
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
+  handleAdvansTeamData(data) {
+    let resA = [];
+    for (let i = 0; i < data.length; i++) {
+      if ((i >= 2 && i <= 5) || (i >= 12 && i <= 15)) {
+        resA.push(data[i]);
+      }
+    }
+    return resA;
+  }
+  handleAdvansPlayerData(data) {
+    let resB = [];
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].length >= 5) {
+        data[i][0] = nameChange[data[i][0]]; // 球员中英文转换
+        resB.push(data[i]);
+      }
+    }
+    return resB;
   }
   handleReSize() {
     let test = document.getElementById("part2");
@@ -208,8 +278,28 @@ class Part2 extends React.Component {
       () => {}
     );
   }
-  handleButton(e) {
-    this.setState({ defaultValue: e.target.value });
+  handleSelect(e) {
+    this.setState({ teamDefaultValue: e });
+  }
+  handleTeamDataChange(e) {
+    this.setState(
+      {
+        teamDataChangeDefaultValue: e.target.value
+      },
+      () => {
+        // console.log(this.state.teamDataChangeDefaultValue);
+      }
+    );
+  }
+  handlePlayerDataChange(e) {
+    this.setState(
+      {
+        playerDataChangeDefaultValue: e.target.value
+      },
+      () => {
+        // console.log(this.state.playerDataChangeDefaultValue);
+      }
+    );
   }
   render() {
     const {
@@ -219,7 +309,7 @@ class Part2 extends React.Component {
       team2Summary,
       team1Name,
       team2Name,
-      defaultValue,
+      teamDefaultValue,
       team1Max,
       team2Max,
       team1ScoreMax,
@@ -231,7 +321,102 @@ class Part2 extends React.Component {
       team1SummaryChart,
       team2SummaryChart
     } = this.state;
+    const advansContent = (
+      <div>
+        <div>
+          <b>Advanced Box Score Stats</b>
+        </div>
+        <br />
+        <div>
+          <b>MP -- Minutes Played</b>
+        </div>
+        <div>
+          <b>TS% -- True Shooting Percentage</b> <br />A measure of shooting
+          efficiency that takes into account 2-point field goals, 3-point field
+          goals, and free throws.
+        </div>
+        <div>
+          <b>eFG% -- Effective Field Goal Percentage</b> <br />
+          This statistic adjusts for the fact that a 3-point field goal is worth
+          one more point than a 2-point field goal.
+        </div>
+        <div>
+          <b>3PAr -- 3-Point Attempt Rate</b> <br />
+          Percentage of FG Attempts from 3-Point Range
+        </div>
+        <div>
+          <b>FTr -- Free Throw Attempt Rate</b> <br />
+          Number of FT Attempts Per FG Attempt
+        </div>
+        <div>
+          <b>ORB% -- Offensive Rebound Percentage</b> <br />
+          An estimate of the percentage of available offensive rebounds a player
+          grabbed while he was on the floor.
+        </div>
+        <div>
+          <b>DRB% -- Defensive Rebound Percentage</b> <br />
+          An estimate of the percentage of available defensive rebounds a player
+          grabbed while he was on the floor.
+        </div>
+        <div>
+          <b>TRB% -- Total Rebound Percentage</b> <br />
+          An estimate of the percentage of available rebounds a player grabbed
+          while he was on the floor.
+        </div>
+        <div>
+          <b>AST% -- Assist Percentage</b> <br />
+          An estimate of the percentage of teammate field goals a player
+          assisted while he was on the floor.
+        </div>
+        <div>
+          <b>STL% -- Steal Percentage</b> <br />
+          An estimate of the percentage of opponent possessions that end with a
+          steal by the player while he was on the floor.
+        </div>
+        <div>
+          <b>BLK% -- Block Percentage</b> <br />
+          An estimate of the percentage of opponent two-point field goal
+          attempts blocked by the player while he was on the floor.
+        </div>
+        <div>
+          <b>TOV% -- Turnover Percentage</b> <br />
+          An estimate of turnovers committed per 100 plays.
+        </div>
+        <div>
+          <b>USG% -- Usage Percentage</b> <br />
+          An estimate of the percentage of team plays used by a player while he
+          was on the floor.
+        </div>
+        <div>
+          <b>ORtg -- Offensive Rating</b> <br />
+          An estimate of points produced (players) or scored (teams) per 100
+          possessions
+        </div>
+        <div>
+          <b>DRtg -- Defensive Rating</b> <br />
+          An estimate of points allowed per 100 possessions
+        </div>
+      </div>
+    );
     const arr = team1Detail;
+    const chart =
+      this.state.teamDataChangeDefaultValue == "basic" ? (
+        <Part2BasicChart
+          team1Name={team1Name}
+          team2Name={team2Name}
+          team1SummaryChart={team1SummaryChart}
+          team2SummaryChart={team2SummaryChart}
+          width={this.state.width}
+        />
+      ) : (
+        <Part2AdvansChart
+          team1Name={team1Name}
+          team2Name={team2Name}
+          team1AdvansSummary={this.state.team1AdvansSummary}
+          team2AdvansSummary={this.state.team2AdvansSummary}
+          width={this.state.width}
+        />
+      );
     const dataSource = [
       {
         key: "0",
@@ -325,14 +510,23 @@ class Part2 extends React.Component {
               minWidth: "550px"
             }}
           >
-            <h3>球队数据对比</h3>
-            <Part2Chart
-              team1Name={team1Name}
-              team2Name={team2Name}
-              team1SummaryChart={team1SummaryChart}
-              team2SummaryChart={team2SummaryChart}
-              width={this.state.width}
-            />
+            <RadioGroup
+              onChange={e => this.handleTeamDataChange(e)}
+              defaultValue="basic"
+            >
+              <RadioButton value="basic">基础数据</RadioButton>
+              <RadioButton value="advans">进阶数据</RadioButton>
+            </RadioGroup>
+            <span style={{ marginLeft: "15px" }}>
+              <Tooltip title={advansContent} placement="right" overlayStyle={{maxWidth:"800px"}}>
+                <Icon
+                  type="question-circle"
+                  theme="twoTone"
+                  style={{ fontSize: "20px" }}
+                />
+              </Tooltip>
+            </span>
+            {chart}
           </Col>
           <Col
             span={12}
@@ -354,13 +548,32 @@ class Part2 extends React.Component {
             margin: "10px auto"
           }}
         >
-          <RadioGroup onChange={e => this.handleButton(e)} defaultValue="a">
-            <RadioButton value="a">{team1Name}</RadioButton>
-            <RadioButton value="b">{team2Name}</RadioButton>
+          <Select
+            onChange={e => this.handleSelect(e)}
+            defaultValue="a"
+            style={{ marginRight: "15px" }}
+          >
+            <Option value="a">{team1Name}</Option>
+            <Option value="b">{team2Name}</Option>
+          </Select>
+          <RadioGroup
+            onChange={e => this.handlePlayerDataChange(e)}
+            defaultValue="Pbasic"
+          >
+            <Radio value="Pbasic">基础数据</Radio>
+            <Radio value="Padvan">进阶数据</Radio>
           </RadioGroup>
         </div>
         <Part2Table
-          teamDetail={defaultValue == "a" ? team1Detail : team2Detail}
+          teamDetail={
+            teamDefaultValue == "a"
+              ? this.state.playerDataChangeDefaultValue == "Pbasic"
+                ? team1Detail
+                : this.state.player1AdvansSummary
+              : this.state.playerDataChangeDefaultValue == "Pbasic"
+              ? team2Detail
+              : this.state.player2AdvansSummary
+          }
         />
       </div>
     );

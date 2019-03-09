@@ -2,7 +2,6 @@ import React from "react";
 import { Tabs, Skeleton, BackTop } from "antd";
 import MatchNews from "./matchnews/match-news.js";
 import MatchChart from "./matchchart/match-chart.js";
-import MatchAudio from "./matchaudio/match-audio.js";
 
 const TabPane = Tabs.TabPane;
 
@@ -29,7 +28,6 @@ class MatchDetail extends React.Component {
     }
   }
   getSingleMatchPlayByPlay(data) {
-    const that = this;
     const postData = {
       url: data
     };
@@ -52,7 +50,6 @@ class MatchDetail extends React.Component {
     });
   }
   getSingleMatchDetail(data) {
-    const that = this;
     const postData = {
       url: data
     };
@@ -92,9 +89,6 @@ class MatchDetail extends React.Component {
             ) : (
               <Skeleton />
             )}
-          </TabPane>
-          <TabPane tab="视频摘要" key="3" forceRender={true}>
-            {this.state.isLoading ? <MatchAudio /> : <Skeleton />}
           </TabPane>
         </Tabs>
       </div>

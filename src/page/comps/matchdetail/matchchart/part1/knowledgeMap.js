@@ -105,6 +105,7 @@ export default class knowledgeMap extends React.Component {
       dataType: "json",
       success: res => {
         let data = res.data.avp;
+        console.log(data);
         if (data) {
           this.setState(
             {

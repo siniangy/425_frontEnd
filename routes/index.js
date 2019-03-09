@@ -13,7 +13,7 @@ router.get("/", function(req, res, next) {
   });
 });
 
-// 获取当前日期(数据库里是2015-2017年)的比赛列表
+// 获取当前日期(数据库里是2015-2017年)的比赛列表 中文数据来源stat-nba
 router.post("/getMatchItems", (req, res, next) => {
   let date = req.body;
   MatchList.find(date).exec((err, matchItems) => {
@@ -26,7 +26,7 @@ router.post("/getMatchItems", (req, res, next) => {
   });
 });
 
-// 获取单场比赛数据(数据库里2015年-2017年)的比赛数据
+// 获取单场比赛数据(数据库里2015年-2017年)的比赛数据 中文数据来源stat-nba
 router.post("/getSingleMatchDetail", (req, res, next) => {
   let url = req.body;
   MatchDetail.find(url).exec((err, matchDetail) => {
@@ -39,7 +39,7 @@ router.post("/getSingleMatchDetail", (req, res, next) => {
   });
 });
 
-// 获取单场数据play-by-play数据(数据库里是2015-01-01)两场比赛数据
+// 获取单场数据play-by-play数据(数据库里是2015-01-01)两场比赛数据 中文数据来源stat-nba
 router.post("/getSingleMatchPlayByPlay", (req, res, next) => {
   let url = req.body;
   MatchPlay.find(url).exec((err, matchPlay) => {
@@ -52,7 +52,7 @@ router.post("/getSingleMatchPlayByPlay", (req, res, next) => {
   });
 });
 
-// 获取单场数据shot数据(数据库里是2015-01-01)两场比赛数据
+// 获取单场数据shot数据(数据库里是2015-01-01)两场比赛数据 数据来源Basketball-reference
 router.post("/getSingleMatchShot", (req, res, next) => {
   let url = req.body;
   MatchShot.find(url).exec((err, matchShot) => {
@@ -65,7 +65,7 @@ router.post("/getSingleMatchShot", (req, res, next) => {
   });
 });
 
-// 获取球员场均数据
+// 获取球员生涯场均数据 数据来源Stat-nba
 router.post("/getSeasonAvg", (req, res, next) => {
   let cnName = req.body;
   MatchPlayer.find(cnName).exec((err, seasonAvg) => {

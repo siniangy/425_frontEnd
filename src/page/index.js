@@ -71,7 +71,6 @@ class NewsVisualization extends React.Component {
     );
   }
   handleClick() {
-    // const that = this;
     this.setState(
       {
         dateParams:
@@ -132,7 +131,6 @@ class NewsVisualization extends React.Component {
                   backgroundColor: "rgba(0,21,41,1)"
                 }}
               >
-                {/*<PandaIcon style={{ fontSize: '40px',marginRight: '30px'}} />*/}
                 <span>请选择日期：</span>
                 <Select
                   defaultValue={this.state.year}

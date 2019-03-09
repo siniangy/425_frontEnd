@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Radio, Modal, Button } from "antd";
-import Part1Table from "./table.js";
-import Part1Chart from "./chart.js";
+import Part1Table from "./scoreTable.js";
+import Part1Chart from "./scoreChart.js";
 import Chart from "./knowledgeMap.js";
 
 const RadioButton = Radio.Button;
@@ -166,6 +166,7 @@ class Part1 extends React.Component {
                   onOk={e => this.handleOk(e)}
                   onCancel={e => this.handleCancel(e)}
                   footer={null}
+                  bodyStyle={{ background: "rgba(255,255,180,0.1)" }}
                 >
                   <Chart
                     target={modalTarget}

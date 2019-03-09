@@ -1,7 +1,10 @@
 import React from "react";
 import { Radio, Divider, Row, Col, Icon, Select } from "antd";
-import Chart1 from "./chart1.js";
-import Chart3 from "./chart3.js";
+import { Player } from "video-react";
+import Chart1 from "./assistChart.js";
+import Chart2 from "./eventsChart.js";
+import Chart3 from "./positionChart.js";
+import "./video.css";
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -20,10 +23,19 @@ export default class Part3 extends React.Component {
       team2Relation: [],
       defaultValue: "a",
       defaultIconStyle: false,
+      defaultEventsSelectValue: "All",
       defaultQuarterSelectedValue: "quarter",
       defaultShotSelectedValue: "all",
+      playbyplayData: [],
+      templateEventsData: [],
+      videoSrc: "",
       width: -1
     };
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.videoSrc != prevState.videoSrc) {
+      this.refs.player.load();
+    }
   }
   componentDidMount() {
     this.handleReSize();
@@ -137,6 +149,8 @@ export default class Part3 extends React.Component {
     let diffLength = this.changeDiffLength(arr);
     this.setState(
       {
+        playbyplayData: arr,
+        templateEventsData: arr,
         pointDiff: pointDiff,
         diffLength: diffLength,
         team1Players: team1Players,
@@ -181,6 +195,52 @@ export default class Part3 extends React.Component {
       defaultShotSelectedValue: e
     });
   }
+  changeEvents(array, value) {
+    var changeJson = {
+      Assit: "助攻",
+      Rebound: "篮板",
+      Score: "得分",
+      Iron: "打铁"
+    };
+    let target = changeJson[value];
+    let res = [];
+    if (value == "All") {
+      res = array;
+    } else {
+      res = array.filter((item, index) => {
+        return item[2].indexOf(target) != -1 || item[4].indexOf(target) != -1;
+      });
+    }
+    let pointDiff = this.changePointDiff(res);
+    let diffLength = this.changeDiffLength(res);
+    this.setState({
+      playbyplayData: res,
+      pointDiff: pointDiff,
+      diffLength: diffLength
+    });
+  }
+  handleEventsChange(e) {
+    const array = this.state.templateEventsData;
+    this.setState(
+      {
+        defaultEventsSelectValue: e
+      },
+      () => {
+        this.changeEvents(array, this.state.defaultEventsSelectValue);
+      }
+    );
+  }
+  handleImage(index) {
+    let src = "/videos/" + (index["index"] + 1).toString() + ".mp4";
+    this.setState(
+      {
+        videoSrc: src
+      },
+      () => {
+        console.log(this.state.videoSrc);
+      }
+    );
+  }
   render() {
     const {
       pointDiff,
@@ -195,11 +255,24 @@ export default class Part3 extends React.Component {
       defaultShotSelectedValue
     } = this.state;
     const { team1Name, team2Name } = this.props;
+    const eventsLength = this.state.playbyplayData.length;
     let style = {
       color: defaultIconStyle === false ? "#999" : "rgb(24,144,255)",
       cursor: "pointer",
       marginLeft: "8px"
     };
+    const imageData = ["1", "2", "3"].map((item, index) => {
+      let src = "/images/" + item + ".jpg";
+      return (
+        <span
+          key={index}
+          style={{ marginLeft: "20px" }}
+          onClick={() => this.handleImage({ index })}
+        >
+          <img src={src} style={{ width: "130px", height: "85px" }} />
+        </span>
+      );
+    });
     return (
       <div
         style={{
@@ -210,10 +283,38 @@ export default class Part3 extends React.Component {
           marginTop: "20px"
         }}
       >
+        <Row>
+          <h3>
+            时序事件过滤
+            <span style={{ marginLeft: "15px" }}>
+              <Select
+                defaultValue="All Events"
+                style={{
+                  width: 120
+                }}
+                onChange={e => this.handleEventsChange(e)}
+              >
+                <Option value="All">All Events</Option>
+                <Option value="Assit">Assit Events</Option>
+                <Option value="Rebound">Rebound Events</Option>
+                <Option value="Score">Score Events</Option>
+                <Option value="Iron">Iron Events</Option>
+              </Select>
+            </span>
+            <span style={{ float: "right" }}>
+              {eventsLength} Events Lighted
+            </span>
+          </h3>
+          <Chart2
+            pointDiff={this.state.pointDiff}
+            diffLength={this.state.diffLength}
+            eventDetail={this.state.playbyplayData}
+            width={this.state.width}
+          />
+        </Row>
         <Row
           style={{
             overflowX: "auto",
-
             overflowY: "hidden"
           }}
         >
@@ -263,9 +364,6 @@ export default class Part3 extends React.Component {
                 <Option value="miss">Miss Shots</Option>
               </Select>
             </div>
-            {/* 这里只选择传team2Name，展示全场的投篮分布
-						<Chart3 teamName={this.state.team2Name} teamNum={defaultValue}/>
-						*/}
             <Chart3
               teamName={this.state.team2Name}
               iconSelect={defaultIconStyle}
@@ -284,17 +382,19 @@ export default class Part3 extends React.Component {
             }}
             id="part3"
           >
-            <h3 style={{}}>球队助攻关系</h3>
-            <span>
-              <RadioGroup
-                onChange={e => this.handleButton(e)}
-                defaultValue="a"
-                style={{}}
-              >
-                <RadioButton value="a">{team1Name}</RadioButton>
-                <RadioButton value="b">{team2Name}</RadioButton>
-              </RadioGroup>
-            </span>
+            <h3 style={{}}>
+              球队助攻关系
+              <span style={{ marginLeft: "15px" }}>
+                <RadioGroup
+                  onChange={e => this.handleButton(e)}
+                  defaultValue="a"
+                  style={{}}
+                >
+                  <RadioButton value="a">{team1Name}</RadioButton>
+                  <RadioButton value="b">{team2Name}</RadioButton>
+                </RadioGroup>
+              </span>
+            </h3>
             <Chart1
               players={defaultValue == "a" ? team1Players : team2Players}
               relation={defaultValue == "a" ? team1Relation : team2Relation}
@@ -310,7 +410,11 @@ export default class Part3 extends React.Component {
             }}
             id="test"
           >
-            <h1>设计组件？？</h1>
+            <h3>视频测试</h3>
+            <div style={{ marginBottom: "10px" }}>{imageData}</div>
+            <Player ref="player" videoId="video-1">
+              <source src={this.state.videoSrc} />
+            </Player>
           </Col>
         </Row>
       </div>
