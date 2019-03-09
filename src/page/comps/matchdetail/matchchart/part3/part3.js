@@ -232,8 +232,8 @@ export default class Part3 extends React.Component {
     );
   }
   handleImage(index) {
-    let src = "/videos/" + (index["index"] + 1).toString() + ".mp4";
-    // let src = "https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
+    // let src = "/videos/" + (index["index"] + 1).toString() + ".mp4";
+    let src = "https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
     this.setState(
       {
         videoSrc: src
