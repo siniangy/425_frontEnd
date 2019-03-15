@@ -28,7 +28,8 @@ export default class Part3 extends React.Component {
       defaultShotSelectedValue: "all",
       playbyplayData: [],
       templateEventsData: [],
-      videoSrc: "",
+      index: -1,
+      videoSrc: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
       width: -1
     };
   }
@@ -231,17 +232,17 @@ export default class Part3 extends React.Component {
       }
     );
   }
-  handleImage(index) {
-    // let src = "/videos/" + (index["index"] + 1).toString() + ".mp4";
-    let src = "https://media.w3.org/2010/05/sintel/trailer_hd.mp4"
-    this.setState(
-      {
-        videoSrc: src
-      },
-      () => {
-        console.log(this.state.videoSrc);
-      }
-    );
+  handleIndex(e) {
+    let src = "";
+    if (e == 43) {
+      src = "/testVideos/2.mp4";
+    } else if (e == 7) {
+      src = "/testVideos/3.mp4";
+    }
+    this.setState({
+      index: e,
+      videoSrc: src
+    });
   }
   render() {
     const {
@@ -263,18 +264,6 @@ export default class Part3 extends React.Component {
       cursor: "pointer",
       marginLeft: "8px"
     };
-    const imageData = ["1", "2", "3"].map((item, index) => {
-      let src = "/images/" + item + ".jpg";
-      return (
-        <span
-          key={index}
-          style={{ marginLeft: "20px" }}
-          onClick={() => this.handleImage({ index })}
-        >
-          <img src={src} style={{ width: "130px", height: "85px" }} />
-        </span>
-      );
-    });
     return (
       <div
         style={{
@@ -371,6 +360,7 @@ export default class Part3 extends React.Component {
               iconSelect={defaultIconStyle}
               quarterSelect={defaultQuarterSelectedValue}
               shotSelect={defaultShotSelectedValue}
+              handleIndex={this.handleIndex.bind(this)}
             />
           </Col>
         </Row>
@@ -413,10 +403,11 @@ export default class Part3 extends React.Component {
             id="test"
           >
             <h3>视频测试</h3>
-            <div style={{ marginBottom: "10px" }}>{imageData}</div>
-            <Player ref="player" videoId="video-1">
-              <source src={this.state.videoSrc} />
-            </Player>
+            <div style={{ marginTop: "30px", minWidth: "400px" }}>
+              <Player ref="player" videoId="video-1">
+                <source src={this.state.videoSrc} />
+              </Player>
+            </div>
           </Col>
         </Row>
       </div>

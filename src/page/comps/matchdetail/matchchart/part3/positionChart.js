@@ -93,7 +93,9 @@ class Part3Chart3 extends React.Component {
       data: postData,
       success: data => {
         let chart1Data = data[0]["team1ChartData"];
+        // console.log(chart1Data);
         let chart2Data = data[0]["team2ChartData"];
+        // console.log(chart2Data);
         let team1ImgFlag = chart1Data[1][2].split("<br>")[2].split(" ")[0];
         let team2ImgFlag = chart2Data[1][2].split("<br>")[2].split(" ")[0];
         let team1Img =
@@ -234,7 +236,16 @@ class Part3Chart3 extends React.Component {
     };
     heatmapInstance.setData(data);
   }
-
+  handle1Index(index) {
+    if (index == 43) {
+      this.props.handleIndex(index);
+    }
+  }
+  handle2Index(index) {
+    if (index == 7) {
+      this.props.handleIndex(index);
+    }
+  }
   render() {
     const { team1ChartData, team2ChartData, team1Img, team2Img } = this.state;
     const item1s = team1ChartData.map((item, index) => {
@@ -247,11 +258,18 @@ class Part3Chart3 extends React.Component {
         position: "absolute"
       };
       let target = item[3];
+      let num = [43];
+      let flag = num.indexOf(index) != -1 ? true : false;
       let style2 = {
-        background: target == "×" ? "rgb(245,22,56)" : "rgb(106,212,29)",
+        background:
+          target == "×"
+            ? "rgb(245,22,56)"
+            : flag == true
+            ? "rgb(112,100,154)"
+            : "rgb(106,212,29)",
         cursor: "pointer",
-        width: "10px",
-        height: "10px",
+        width: flag == true ? "20px" : "10px",
+        height: flag == true ? "20px" : "10px",
         borderRadius: "50%",
         marginTop: "5px" // 修正div
       };
@@ -278,7 +296,7 @@ class Part3Chart3 extends React.Component {
       return (
         <Popover content={content} key={index}>
           <div style={style1}>
-            <div style={style2} />
+            <div style={style2} onClick={() => this.handle1Index(index)} />
           </div>
         </Popover>
       );
@@ -293,11 +311,18 @@ class Part3Chart3 extends React.Component {
         position: "absolute"
       };
       let target = item[3];
+      let num = [7];
+      let flag = num.indexOf(index) != -1 ? true : false;
       let style2 = {
-        background: target == "×" ? "rgb(245,22,56)" : "rgb(106,212,29)",
+        background:
+          target == "×"
+            ? "rgb(245,22,56)"
+            : flag == true
+            ? "rgb(112,100,154)"
+            : "rgb(106,212,29)",
         cursor: "pointer",
-        width: "10px",
-        height: "10px",
+        width: flag == true ? "20px" : "10px",
+        height: flag == true ? "20px" : "10px",
         borderRadius: "50%",
         marginTop: "5px" // 修正div
       };
@@ -324,7 +349,7 @@ class Part3Chart3 extends React.Component {
       return (
         <Popover content={content} key={index}>
           <div style={style1}>
-            <p style={style2} />
+            <div style={style2} onClick={() => this.handle2Index(index)} />
           </div>
         </Popover>
       );
