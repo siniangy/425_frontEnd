@@ -6,7 +6,8 @@ export default class NewsMap extends React.Component {
     super(props);
     this.state = {
       target: this.props.target,
-      showData: []
+      showData: [],
+      showFilterData: []
     };
   }
   componentWillMount() {
@@ -15,7 +16,7 @@ export default class NewsMap extends React.Component {
       this.props.target
     );
   }
-  componentDidMount() {}
+  componentDidMount() { }
 
   handleShowData(url, string) {
     const changeJson = {
@@ -31,16 +32,18 @@ export default class NewsMap extends React.Component {
       dataType: "json",
       success: res => {
         const data = this.handleMapData(res.data[target]["data"][0]["row"]);
+        const data2 = data.filter((item, index) => { return item[0] != "主页" });
         this.setState(
           {
-            showData: data
+            showData: data,
+            showFilterData: data2
           },
           () => {
-            // console.log(this.state.showData);
+            // console.log(this.changeLink(this.state.showFilterData))
             this.getInitialChart(
-              this.changeData(this.state.showData),
-              this.changeLink(this.state.showData),
-              this.changeCategories(this.state.showData),
+              this.changeData(this.state.showFilterData),
+              this.changeLink(this.state.showFilterData),
+              this.changeCategories(this.state.showFilterData),
               string,
               this.state.showData
             );
@@ -104,7 +107,6 @@ export default class NewsMap extends React.Component {
         }
       };
       d.name = array[i][1];
-      d.value = array[i][0];
       d.category = array[i][i];
       d.x = i * 10;
       d.y = y[Math.ceil(Math.random() * 3)];
@@ -119,6 +121,7 @@ export default class NewsMap extends React.Component {
         source: array[0][1]
       };
       d.target = array[i][1];
+      d.value = array[i][0];
       link.push(d);
     }
     return link;
@@ -148,27 +151,27 @@ export default class NewsMap extends React.Component {
           type: "graph",
           layout: "force",
           force: {
-            repulsion: 80,
-            gravity: 0.2,
+            repulsion: 60,
+            gravity: 0.1,
             edgeLength: 30,
             layoutAnimation: true
           },
           data: data,
           links: link,
-          // categories: categories,
+          categories: categories,
           roam: false,
-          // edgeLabel: {
-          //   normal: {
-          //     show: true,
-          //     textStyle: {
-          //       fontSize: 20
-          //     },
-          //     formatter: function(params) {
-          //       console.log(params)
-          //       // return '123'+params
-          //     }
-          //   }
-          // },
+          edgeLabel: {
+            normal: {
+              show: true,
+              textStyle: {
+                fontSize: 10
+              },
+              formatter: function (params) {
+                // console.log(params)
+                return params.data.value
+              }
+            }
+          },
           label: {
             normal: {
               show: true,
@@ -177,10 +180,6 @@ export default class NewsMap extends React.Component {
               fontSize: 12,
               fontStyle: "600"
             }
-          },
-          animationDelay: function(idx) {
-            // 越往后的数据延迟越大
-            return idx * 100;
           },
           lineStyle: {
             normal: {
@@ -194,11 +193,11 @@ export default class NewsMap extends React.Component {
       ]
     };
     myChart.setOption(option);
-    myChart.on("click", function(params) {
-      let url = showData[2][1];
-      console.log(url)
-      if (params.data.value == "姓名") {
-        window.open(url);
+    myChart.on("click", function (params) {
+      let url = showData.filter((item, index) => { return item[0] === "主页" });
+      if (params.data.category == "姓名") {
+        // console.log(url[0][1])
+        window.open(url[0][1]);
       }
     });
   }
@@ -207,7 +206,7 @@ export default class NewsMap extends React.Component {
       <div>
         <div
           id={this.props.target}
-          style={{ width: "400px", height: "400px" }}
+          style={{ width: "460px", height: "400px" }}
         />
       </div>
     );

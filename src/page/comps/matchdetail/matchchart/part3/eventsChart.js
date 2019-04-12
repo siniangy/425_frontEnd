@@ -10,8 +10,8 @@ class Part3Chart2 extends React.Component {
       width: this.props.width
     };
   }
-  componentDidMount() {}
-  componentWillMount() {}
+  componentDidMount() { }
+  componentWillMount() { }
   componentWillReceiveProps(nextProps) {
     if (this.props.pointDiff != nextProps.pointDiff) {
       if (nextProps.pointDiff) {
@@ -38,10 +38,10 @@ class Part3Chart2 extends React.Component {
     var option = {
       tooltip: {
         trigger: "axis",
-        position: function(pt) {
-          return [pt[0], "10%"];
+        position: function (pt) {
+          return [pt[0], "2%"];
         },
-        formatter: function(params, callback) {
+        formatter: function (params, callback) {
           let data = [];
           if (parseInt(params[0]["axisValue"]) >= 0) {
             data = array[parseInt(params[0]["axisValue"])];
@@ -123,7 +123,7 @@ class Part3Chart2 extends React.Component {
           type: "bar",
           itemStyle: {
             normal: {
-              color: function(params) {
+              color: function (params) {
                 let data = array[parseInt(params["dataIndex"])];
                 if (data[1] != "") {
                   return new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -151,7 +151,7 @@ class Part3Chart2 extends React.Component {
     const width = this.props.width * 2;
     return (
       <div>
-        <div id="part3Chart2Main" style={{ width: width, height: 300 }} />
+        <div id="part3Chart2Main" style={{ width: 1000, height: 300, margin: "0px auto" }} />
       </div>
     );
   }

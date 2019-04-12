@@ -1,19 +1,20 @@
 var express = require("express");
 var router = express.Router();
 var MatchList = require("../src/module/matchlist");
-var MatchDetail = require("../src/module/matchdetail");
-var MatchPlay = require("../src/module/matchplay");
-var MatchShot = require("../src/module/matchshot");
-var MatchPlayer = require("../src/module/matchplayer");
+var BasicMatchDetail = require("../src/module/basicmatchdetail");
+var AdvansMatchDetail = require("../src/module/advansmatchdetail");
+var PlayerAverageData = require("../src/module/playeraveragedata");
+var MatchPlayByPlaycn = require("../src/module/matchplaybyplaycn");
+var MatchShotChart = require("../src/module/matchshotchart");
 
 /* GET home page. */
-router.get("/", function(req, res, next) {
+router.get("/", function (req, res, next) {
   res.render("index", {
     title: "Express"
   });
 });
 
-// 获取当前日期(数据库里是2015-2017年)的比赛列表 中文数据来源stat-nba
+// 获取当前日期的比赛列表 中文数据来源stat-nba
 router.post("/getMatchItems", (req, res, next) => {
   let date = req.body;
   MatchList.find(date).exec((err, matchItems) => {
@@ -26,54 +27,67 @@ router.post("/getMatchItems", (req, res, next) => {
   });
 });
 
-// 获取单场比赛数据(数据库里2015年-2017年)的比赛数据 中文数据来源stat-nba
-router.post("/getSingleMatchDetail", (req, res, next) => {
+// 获取单场比赛的常规统计数据 中文数据来源stat-nba
+router.post("/getSingleMatchBasicDetail", (req, res, next) => {
   let url = req.body;
-  MatchDetail.find(url).exec((err, matchDetail) => {
+  BasicMatchDetail.find(url).exec((err, basicMatchDetail) => {
     if (err) {
       console.log(err);
     } else {
-      res.json(matchDetail);
-      console.log(matchDetail);
+      res.json(basicMatchDetail);
+      console.log(basicMatchDetail);
     }
   });
 });
 
-// 获取单场数据play-by-play数据(数据库里是2015-01-01)两场比赛数据 中文数据来源stat-nba
-router.post("/getSingleMatchPlayByPlay", (req, res, next) => {
+// 获取单场比赛的进阶统计数据 英文数据来源basketball-reference
+router.post("/getSingleMatchAdvansDetail", (req, res, next) => {
   let url = req.body;
-  MatchPlay.find(url).exec((err, matchPlay) => {
+  AdvansMatchDetail.find(url).exec((err, advansMatchDetail) => {
     if (err) {
       console.log(err);
     } else {
-      res.json(matchPlay);
-      console.log(matchPlay);
+      res.json(advansMatchDetail);
+      console.log(advansMatchDetail);
     }
   });
 });
 
-// 获取单场数据shot数据(数据库里是2015-01-01)两场比赛数据 数据来源Basketball-reference
-router.post("/getSingleMatchShot", (req, res, next) => {
-  let url = req.body;
-  MatchShot.find(url).exec((err, matchShot) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.json(matchShot);
-      console.log(matchShot);
-    }
-  });
-});
-
-// 获取球员生涯场均数据 数据来源Stat-nba
-router.post("/getSeasonAvg", (req, res, next) => {
+// 获取球员生涯场均数据做雷达图渲染 中文数据来源stat-nba
+router.post("/getSinglePlayerSeasonAvg", (req, res, next) => {
   let cnName = req.body;
-  MatchPlayer.find(cnName).exec((err, seasonAvg) => {
+  PlayerAverageData.find(cnName).exec((err, PlayerAverageData) => {
     if (err) {
       console.log(err);
     } else {
-      res.json(seasonAvg);
-      console.log(seasonAvg);
+      res.json(PlayerAverageData);
+      console.log(PlayerAverageData);
+    }
+  });
+});
+
+// 获取单场比赛的play-by-play时序数据 中文数据来源stat-nba
+router.post("/getSingleMatchPlayByPlaycn", (req, res, next) => {
+  let url = req.body;
+  MatchPlayByPlaycn.find(url).exec((err, MatchPlayByPlaycn) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(MatchPlayByPlaycn);
+      console.log(MatchPlayByPlaycn);
+    }
+  });
+});
+
+// 获取单场比赛的shotchart数据 英文数据来源basketball-reference
+router.post("/getSingleMatchShotChart", (req, res, next) => {
+  let url = req.body;
+  MatchShotChart.find(url).exec((err, matchShotChart) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json(matchShotChart);
+      console.log(matchShotChart);
     }
   });
 });

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-let Matchlist = new Schema(
+let matchList = new Schema(
   {
     date: {
       type: String,
@@ -21,4 +21,4 @@ let Matchlist = new Schema(
   }
 );
 
-module.exports = Matchlist;
+module.exports = matchList;

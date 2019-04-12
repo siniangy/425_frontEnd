@@ -5,8 +5,8 @@ class MatchItem extends React.Component {
     super(props);
     this.state = {};
   }
-  componentDidMount() {}
-  componentWillMount() {}
+  componentDidMount() { }
+  componentWillMount() { }
   render() {
     return (
       <div>

@@ -11,15 +11,15 @@ class MatchNews extends React.Component {
       showData: ""
     };
   }
-  componentDidMount() {}
-  componentWillMount() {}
-  componentWillReceiveProps(nextProps) {}
+  componentDidMount() { }
+  componentWillMount() { }
+  componentWillReceiveProps(nextProps) { }
   handleModal(e) {
     this.setState(
       {
         modalTarget: e.target.innerHTML
       },
-      () => {}
+      () => { }
     );
   }
   render() {
@@ -70,8 +70,7 @@ class MatchNews extends React.Component {
               <Tooltip title={team3Desc}>
                 <a href="#">上一次交手</a>
               </Tooltip>
-              中，湖人客场险胜开拓者。两队相比较，湖人最近五场
-              <a href="#">三胜两负</a>，开拓者最近五场<a href="#">四胜一负</a>
+              中，湖人客场险胜开拓者。两队相比较，湖人最近五场三胜两负，开拓者最近五场四胜一负
               ，开拓者状态更好些。期待今天的较量。
             </p>
             <br />

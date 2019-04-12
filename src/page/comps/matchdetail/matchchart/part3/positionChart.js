@@ -1,13 +1,13 @@
 import React from "react";
 import { Popover } from "antd";
-var nameData = require("./teamName.js");
 
 class Part3Chart3 extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      teamName: "",
-      // teamNum: '', 全场展示不需要Num
+      dataUrl: "",
+      team1Name: "",
+      team2Name: "",
       team1ChartData: [],
       team2ChartData: [],
       team1Img: "",
@@ -17,45 +17,30 @@ class Part3Chart3 extends React.Component {
       shotSelect: ""
     };
   }
-  componentDidMount() {}
-  componentWillMount() {}
+  componentDidMount() { }
+  componentWillMount() { }
   componentWillReceiveProps(nextProps) {
-    // if (this.props.teamNum != nextProps.teamNum || this.props.teamName != nextProps.teamName) {
-    //   if (nextProps.teamNum) {
-    //     this.setState({
-    //       teamNum: nextProps.teamNum,
-    //       teamName: nextProps.teamName
-    //     }, () => {
-    //       let num = this.changeNum(this.state.teamNum);
-    //       let name = this.changeName(this.state.teamName);
-    //       this.getSingleMatchShot('https://www.basketball-reference.com/boxscores/shot-chart/201501010' + name + '.html', num)
-    //     })
-    //   }
-    // }
     if (
-      this.props.teamName != nextProps.teamName ||
+      this.props.dataUrl != nextProps.dataUrl ||
       this.props.iconSelect != nextProps.iconSelect ||
       this.props.quarterSelect != nextProps.quarterSelect ||
       this.props.shotSelect != nextProps.shotSelect
     ) {
-      if (nextProps.teamName) {
+      if (nextProps.dataUrl) {
         this.setState(
           {
-            teamName: nextProps.teamName,
+            team1Name: nextProps.team1Name,
+            team2Name: nextProps.team2Name,
+            dataUrl: nextProps.dataUrl,
             iconSelect: nextProps.iconSelect,
             quarterSelect: nextProps.quarterSelect,
             shotSelect: nextProps.shotSelect
           },
           () => {
-            let name = this.changeName(this.state.teamName);
-            // console.log(name);
-            // console.log(this.state.iconSelect);
-            // console.log(this.state.shotSelect);
-            // console.log(this.state.quarterSelect);
             this.getSingleMatchShot(
-              "https://www.basketball-reference.com/boxscores/shot-chart/201501010" +
-                name +
-                ".html",
+              this.state.team1Name,
+              this.state.team2Name,
+              this.state.dataUrl,
               this.state.quarterSelect,
               this.state.shotSelect,
               this.state.iconSelect
@@ -65,49 +50,59 @@ class Part3Chart3 extends React.Component {
       }
     }
   }
-  // changeNum(data) {
-  //   let res = {
-  //     'a': 'team1ChartData',
-  //     'b': 'team2ChartData'
-  //   }
-  //   return res[data]
-  // }
 
-  changeName(data) {
-    let res = {
-      芝加哥公牛: "CHI",
-      明尼苏达森林狼: "MIN"
-    };
-    return res[data];
-  }
-
-  getSingleMatchShot(data, quarter, shot, icon) {
-    const that = this;
+  getSingleMatchShot(team1Name, team2Name, data, quarter, shot, icon) {
+    const changeImgurl = {
+      '布鲁克林篮网': 'BKN',
+      '奥兰多魔术': 'ORL',
+      '波士顿凯尔特人': 'BOS',
+      '圣安东尼奥马刺': 'SAS',
+      '克里夫兰骑士': 'CLE',
+      '夏洛特黄蜂': 'CHA',
+      '底特律活塞': 'DET',
+      '洛杉矶快船': 'LAC',
+      '金州勇士': 'GSW',
+      '菲尼克斯太阳': 'PHO',
+      '休斯顿火箭': 'HOU',
+      '印第安纳步行者': 'IND',
+      '犹他爵士': 'UTA',
+      '洛杉矶湖人': 'LAL',
+      '达拉斯独行侠': 'DAL',
+      '孟菲斯灰熊': 'MEM',
+      '亚特兰大老鹰': 'ATL',
+      '密尔沃基雄鹿': 'MIL',
+      '俄克拉荷马雷霆': 'OKC',
+      '明尼苏达森林狼': 'MIN',
+      '华盛顿奇才': 'WAS',
+      '纽约尼克斯': 'NYK',
+      '丹佛掘金': 'DEN',
+      '波特兰开拓者': 'POR',
+      '新奥尔良鹈鹕': 'NOH',
+      '萨克拉门托国王': 'SAC',
+      '迈阿密热火': 'MIA',
+      '多伦多猛龙': 'TOR',
+      '费城76人': 'PHI',
+      '芝加哥公牛': 'CHI'
+    }
     const postData = {
       url: data
     };
     $.ajax({
-      url: "/getSingleMatchShot",
+      url: "/getSingleMatchShotChart",
       type: "post",
       dataType: "json",
       data: postData,
       success: data => {
         let chart1Data = data[0]["team1ChartData"];
-        // console.log(chart1Data);
         let chart2Data = data[0]["team2ChartData"];
-        // console.log(chart2Data);
-        let team1ImgFlag = chart1Data[1][2].split("<br>")[2].split(" ")[0];
-        let team2ImgFlag = chart2Data[1][2].split("<br>")[2].split(" ")[0];
         let team1Img =
           "http://www.stat-nba.com/image/teamImage/" +
-          nameData[team1ImgFlag].split(" ")[1].toString() +
-          ".gif"; // stat-nba 队标不好看!!
+          changeImgurl[team1Name] +
+          ".gif";
         let team2Img =
           "http://www.stat-nba.com/image/teamImage/" +
-          nameData[team2ImgFlag].split(" ")[1].toString() +
+          changeImgurl[team2Name] +
           ".gif";
-        // console.log(team1Img);
-        // console.log(team2Img);
         let data1 = chart1Data.filter((item, index) => {
           return item[2].indexOf(quarter) != -1;
         });
@@ -265,8 +260,8 @@ class Part3Chart3 extends React.Component {
           target == "×"
             ? "rgb(245,22,56)"
             : flag == true
-            ? "rgb(112,100,154)"
-            : "rgb(106,212,29)",
+              ? "rgb(112,100,154)"
+              : "rgb(106,212,29)",
         cursor: "pointer",
         width: flag == true ? "20px" : "10px",
         height: flag == true ? "20px" : "10px",
@@ -318,8 +313,8 @@ class Part3Chart3 extends React.Component {
           target == "×"
             ? "rgb(245,22,56)"
             : flag == true
-            ? "rgb(112,100,154)"
-            : "rgb(106,212,29)",
+              ? "rgb(112,100,154)"
+              : "rgb(106,212,29)",
         cursor: "pointer",
         width: flag == true ? "20px" : "10px",
         height: flag == true ? "20px" : "10px",

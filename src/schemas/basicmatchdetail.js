@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-let MatchDetail = new Schema(
+let basicMatchDetail = new Schema(
   {
     url: {
       type: String,
@@ -49,8 +49,8 @@ let MatchDetail = new Schema(
     }
   },
   {
-    collection: "matchdetail"
+    collection: "basicmatchdetail"
   }
 );
 
-module.exports = MatchDetail;
+module.exports = basicMatchDetail;

@@ -28,8 +28,9 @@ export default class Part3 extends React.Component {
       defaultShotSelectedValue: "all",
       playbyplayData: [],
       templateEventsData: [],
+      dataUrl: '', // 拼接url传参
       index: -1,
-      videoSrc: "https://media.w3.org/2010/05/sintel/trailer_hd.mp4",
+      videoSrc: "",
       width: -1
     };
   }
@@ -43,7 +44,7 @@ export default class Part3 extends React.Component {
     this.handleReSize();
     window.addEventListener("resize", this.handleReSize.bind(this));
   }
-  componentWillMount() {}
+  componentWillMount() { }
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleReSize.bind(this));
   }
@@ -56,6 +57,11 @@ export default class Part3 extends React.Component {
       if (nextProps.data) {
         this.handleProps(nextProps.data);
       }
+      this.setState({
+        dataUrl: this.getAdvansDataUrl(nextProps.dateParams, nextProps.homeTeam)
+      }, () => {
+        // console.log(this.state.dataUrl)
+      })
     }
     if (
       this.props.team1Name !== nextProps.team1Name &&
@@ -65,6 +71,12 @@ export default class Part3 extends React.Component {
         this.handleNameProps(nextProps.team1Name, nextProps.team2Name);
       }
     }
+  }
+  getAdvansDataUrl(date, team) {
+    // https://www.basketball-reference.com/boxscores/shot-chart/201903010BRK.html
+    let res = '';
+    res = 'https://www.basketball-reference.com/boxscores/shot-chart/' + date.split('-').join('') + '0' + team + '.html';
+    return res.toString();
   }
   changePointDiff(array) {
     let target = [];
@@ -105,10 +117,11 @@ export default class Part3 extends React.Component {
         team1Name: data1,
         team2Name: data2
       },
-      () => {}
+      () => { }
     );
   }
   handleProps(data) {
+    // console.log(data)
     let arr = data[0]["quarter1"].concat(
       data[0]["quarter2"],
       data[0]["quarter3"],
@@ -160,7 +173,7 @@ export default class Part3 extends React.Component {
         team2Players: team2Players,
         team2Relation: team2Relation
       },
-      () => {}
+      () => { }
     );
   }
   handleButton(e) {
@@ -168,7 +181,7 @@ export default class Part3 extends React.Component {
       {
         defaultValue: e.target.value
       },
-      () => {}
+      () => { }
     );
   }
   handleClick() {
@@ -246,8 +259,6 @@ export default class Part3 extends React.Component {
   }
   render() {
     const {
-      pointDiff,
-      diffLength,
       team1Players,
       team1Relation,
       team2Players,
@@ -274,7 +285,11 @@ export default class Part3 extends React.Component {
           marginTop: "20px"
         }}
       >
-        <Row>
+        <Row
+          style={{
+            overflowX: "auto",
+            overflowY: "hidden"
+          }}>
           <h3>
             时序事件过滤
             <span style={{ marginLeft: "15px" }}>
@@ -356,11 +371,13 @@ export default class Part3 extends React.Component {
               </Select>
             </div>
             <Chart3
-              teamName={this.state.team2Name}
               iconSelect={defaultIconStyle}
               quarterSelect={defaultQuarterSelectedValue}
               shotSelect={defaultShotSelectedValue}
               handleIndex={this.handleIndex.bind(this)}
+              dataUrl={this.state.dataUrl}
+              team1Name={this.state.team1Name}
+              team2Name={this.state.team2Name}
             />
           </Col>
         </Row>
@@ -403,7 +420,7 @@ export default class Part3 extends React.Component {
             id="test"
           >
             <h3>视频测试</h3>
-            <div style={{ marginTop: "30px", minWidth: "400px" }}>
+            <div style={{ marginTop: "30px", minHeight: "400px" }}>
               <Player ref="player" videoId="video-1">
                 <source src={this.state.videoSrc} />
               </Player>

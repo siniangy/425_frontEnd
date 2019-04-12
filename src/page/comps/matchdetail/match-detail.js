@@ -10,17 +10,21 @@ class MatchDetail extends React.Component {
     super(props);
     this.state = {
       isLoading: false,
+      dateParams: '',
       singleMatchData: [],
       playByplayData: []
     };
   }
-  componentDidMount() {}
-  componentWillMount() {}
+  componentDidMount() { }
+  componentWillMount() { }
   componentWillReceiveProps(nextProps) {
     if (this.props.currentUrl !== nextProps.currentUrl) {
       if (nextProps.currentUrl) {
         this.setState({
-          isLoading: true
+          isLoading: true,
+          dateParams: nextProps.dateParams
+        }, () => {
+
         });
         this.getSingleMatchDetail(nextProps.currentUrl);
         this.getSingleMatchPlayByPlay(nextProps.currentUrl);
@@ -32,7 +36,7 @@ class MatchDetail extends React.Component {
       url: data
     };
     $.ajax({
-      url: "/getSingleMatchPlayByPlay",
+      url: "/getSingleMatchPlayByPlaycn",
       type: "post",
       dataType: "json",
       data: postData,
@@ -41,7 +45,7 @@ class MatchDetail extends React.Component {
           {
             playByplayData: data
           },
-          () => {}
+          () => { }
         );
       },
       error: err => {
@@ -54,7 +58,7 @@ class MatchDetail extends React.Component {
       url: data
     };
     $.ajax({
-      url: "/getSingleMatchDetail",
+      url: "/getSingleMatchBasicDetail",
       type: "post",
       dataType: "json",
       data: postData,
@@ -63,7 +67,7 @@ class MatchDetail extends React.Component {
           {
             singleMatchData: data
           },
-          () => {}
+          () => { }
         );
       },
       error: err => {
@@ -71,7 +75,7 @@ class MatchDetail extends React.Component {
       }
     });
   }
-  handleKey(key) {}
+  handleKey(key) { }
   render() {
     return (
       <div>
@@ -85,10 +89,11 @@ class MatchDetail extends React.Component {
               <MatchChart
                 singleMatchData={this.state.singleMatchData}
                 playByplayData={this.state.playByplayData}
+                dateParams={this.state.dateParams}
               />
             ) : (
-              <Skeleton />
-            )}
+                <Skeleton />
+              )}
           </TabPane>
         </Tabs>
       </div>

@@ -1,40 +1,32 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-let MatchPlayer = new Schema(
+let matchShotChart = new Schema(
   {
     url: {
       type: String,
       required: true
     },
-    cnName: {
+    team1Img: {
       type: String,
       required: true
     },
-    engName: {
+    team2Img: {
       type: String,
       required: true
     },
-    img: {
-      type: String,
+    team1ChartData: {
+      type: Array,
       required: true
     },
-    baidu: {
-      type: String,
-      required: true
-    },
-    wiki: {
-      type: String,
-      required: true
-    },
-    seasonAvg: {
+    team2ChartData: {
       type: Array,
       required: true
     }
   },
   {
-    collection: "matchplayer"
+    collection: "matchshotchart"
   }
 );
 
-module.exports = MatchPlayer;
+module.exports = matchShotChart;

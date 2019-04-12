@@ -49,7 +49,7 @@ class SeasonAvgChart extends React.Component {
             cnName: data
           };
     $.ajax({
-      url: "/getSeasonAvg",
+      url: "/getSinglePlayerSeasonAvg",
       type: "post",
       dataType: "json",
       data: postData,

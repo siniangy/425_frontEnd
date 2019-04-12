@@ -3,7 +3,7 @@ import { Radio, Row, Col, Table, Select, Icon, Tooltip } from "antd";
 import Part2Table from "./table.js";
 import Part2BasicChart from "./basicChart.js";
 import Part2AdvansChart from "./advansChart.js";
-var nameChange = require("./playerName.js");
+// var nameChange = require("./playerName.js");
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -43,9 +43,6 @@ class Part2 extends React.Component {
     window.addEventListener("resize", this.handleReSize.bind(this));
   }
   componentWillMount() {
-    this.getAdvansData(
-      "https://www.easy-mock.com/mock/5bf3713695d22b57c4fe73a6/example/advansdetailA"
-    );
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleReSize.bind(this));
@@ -54,33 +51,45 @@ class Part2 extends React.Component {
     if (this.props.data !== nextProps.data) {
       if (nextProps.data) {
         this.handleProps(nextProps.data);
+        // console.log(this.getAdvansDataUrl(nextProps.dateParams, nextProps.homeTeam))
+        this.getAdvansData(this.getAdvansDataUrl(nextProps.dateParams, nextProps.homeTeam))
       }
     }
   }
-  // 本函数是测试函数，mock接口中只保留掘金对阵公牛一场比赛的Advans进阶数据
-  getAdvansData(url) {
+  getAdvansDataUrl(date, team) {
+    // https://www.basketball-reference.com/boxscores/201903010ATL.html
+    let res = '';
+    res = 'https://www.basketball-reference.com/boxscores/' + date.split('-').join('') + '0' + team + '.html';
+    return res.toString();
+  }
+  // 获取进阶数据
+  getAdvansData(data) {
+    const postData = {
+      url: data
+    }
     $.ajax({
-      url: url,
-      type: "get",
+      url: '/getSingleMatchAdvansDetail',
+      type: "post",
       dataType: "json",
+      data: postData,
       success: res => {
         let test1 = this.handleAdvansPlayerData(
-          res.data["team1AdvansDetail"]
+          res[0]["team1AdvansDetail"]
         ).map(item => {
           return this.changeIntoJson(item);
         });
         let test2 = this.handleAdvansPlayerData(
-          res.data["team2AdvansDetail"]
+          res[0]["team2AdvansDetail"]
         ).map(item => {
           return this.changeIntoJson(item);
         });
         this.setState(
           {
             team1AdvansSummary: this.handleAdvansTeamData(
-              res.data["team1AdvansSummary"][0]
+              res[0]["team1AdvansSummary"][0]
             ),
             team2AdvansSummary: this.handleAdvansTeamData(
-              res.data["team2AdvansSummary"][0]
+              res[0]["team2AdvansSummary"][0]
             ),
             player1AdvansSummary: test1,
             player2AdvansSummary: test2
@@ -108,7 +117,7 @@ class Part2 extends React.Component {
     let resB = [];
     for (let i = 0; i < data.length; i++) {
       if (data[i].length >= 5) {
-        data[i][0] = nameChange[data[i][0]]; // 球员中英文转换
+        // data[i][0] = nameChange[data[i][0]]; // 球员中英文转换
         resB.push(data[i]);
       }
     }
@@ -232,6 +241,7 @@ class Part2 extends React.Component {
         return this.changeIntoNumber(this.changeIntoAll(item));
       })
     );
+
     let team1SummaryChart = this.selectData(
       this.changeIntoSummaryNumber(data[0]["team1Summary"][0])
     );
@@ -249,33 +259,35 @@ class Part2 extends React.Component {
         team1Max: team1Max,
         team2Max: team2Max,
         team1ScoreMax: [
-          team1Detail[team1Max[0]][0],
-          team1Detail[team1Max[0]][21]
+          team1Detail[team1Max[0]]['0'],
+          team1Detail[team1Max[0]]['21']
         ],
         team1ReboundMax: [
-          team1Detail[team1Max[1]][0],
-          team1Detail[team1Max[0]][13]
+          team1Detail[team1Max[1]]['0'],
+          team1Detail[team1Max[1]]['13']
         ],
         team1AssistMax: [
-          team1Detail[team1Max[2]][0],
-          team1Detail[team1Max[0]][16]
+          team1Detail[team1Max[2]]['0'],
+          team1Detail[team1Max[2]]['16']
         ],
         team2ScoreMax: [
-          team2Detail[team2Max[0]][0],
-          team2Detail[team2Max[0]][21]
+          team2Detail[team2Max[0]]['0'],
+          team2Detail[team2Max[0]]['21']
         ],
         team2ReboundMax: [
-          team2Detail[team2Max[1]][0],
-          team2Detail[team2Max[0]][13]
+          team2Detail[team2Max[1]]['0'],
+          team2Detail[team2Max[1]]['13']
         ],
         team2AssistMax: [
-          team2Detail[team2Max[2]][0],
-          team2Detail[team2Max[0]][16]
+          team2Detail[team2Max[2]]['0'],
+          team2Detail[team2Max[2]]['16']
         ],
         team1SummaryChart: team1SummaryChart,
         team2SummaryChart: team2SummaryChart
       },
-      () => {}
+      () => {
+
+      }
     );
   }
   handleSelect(e) {
@@ -409,14 +421,14 @@ class Part2 extends React.Component {
           width={this.state.width}
         />
       ) : (
-        <Part2AdvansChart
-          team1Name={team1Name}
-          team2Name={team2Name}
-          team1AdvansSummary={this.state.team1AdvansSummary}
-          team2AdvansSummary={this.state.team2AdvansSummary}
-          width={this.state.width}
-        />
-      );
+          <Part2AdvansChart
+            team1Name={team1Name}
+            team2Name={team2Name}
+            team1AdvansSummary={this.state.team1AdvansSummary}
+            team2AdvansSummary={this.state.team2AdvansSummary}
+            width={this.state.width}
+          />
+        );
     const dataSource = [
       {
         key: "0",
@@ -518,7 +530,7 @@ class Part2 extends React.Component {
               <RadioButton value="advans">进阶数据</RadioButton>
             </RadioGroup>
             <span style={{ marginLeft: "15px" }}>
-              <Tooltip title={advansContent} placement="right" overlayStyle={{maxWidth:"800px"}}>
+              <Tooltip title={advansContent} placement="right" overlayStyle={{ maxWidth: "800px" }}>
                 <Icon
                   type="question-circle"
                   theme="twoTone"
@@ -571,8 +583,8 @@ class Part2 extends React.Component {
                 ? team1Detail
                 : this.state.player1AdvansSummary
               : this.state.playerDataChangeDefaultValue == "Pbasic"
-              ? team2Detail
-              : this.state.player2AdvansSummary
+                ? team2Detail
+                : this.state.player2AdvansSummary
           }
         />
       </div>

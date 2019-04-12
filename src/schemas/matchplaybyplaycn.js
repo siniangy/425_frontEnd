@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-let MatchPlay = new Schema(
+let matchPlayByPlaycn = new Schema(
   {
     url: {
       type: String,
@@ -25,8 +25,8 @@ let MatchPlay = new Schema(
     }
   },
   {
-    collection: "matchplay"
+    collection: "matchplaybyplaycn"
   }
 );
 
-module.exports = MatchPlay;
+module.exports = matchPlayByPlaycn;

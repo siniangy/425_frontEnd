@@ -8,8 +8,8 @@ class MatchList extends React.Component {
     super(props);
     this.state = {};
   }
-  componentDidMount() {}
-  componentWillMount() {}
+  componentDidMount() { }
+  componentWillMount() { }
   render() {
     let matchContent = this.props.matchContent;
     let matchUrl = this.props.matchUrl;

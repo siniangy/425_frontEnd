@@ -13,8 +13,8 @@ class Part2Table extends React.Component {
       jsonLength: 0 // 判断渲染是advans还是basic
     };
   }
-  componentDidMount() {}
-  componentWillMount() {}
+  componentDidMount() { }
+  componentWillMount() { }
   componentWillReceiveProps(nextProps) {
     if (this.props.teamDetail != nextProps.teamDetail) {
       if (nextProps.teamDetail) {
@@ -42,7 +42,7 @@ class Part2Table extends React.Component {
           {
             showData: data["data"]["desc"]
           },
-          () => {}
+          () => { }
         );
       },
       error: err => {
@@ -97,7 +97,7 @@ class Part2Table extends React.Component {
       {
         modalTarget: e.target.innerHTML
       },
-      () => {}
+      () => { }
     );
   }
   render() {
@@ -195,10 +195,11 @@ class Part2Table extends React.Component {
         key: "3",
         width: 82,
         render: a => (
-          <p style={{ marginTop: "13.5px" }}>
-            {" "}
-            {parseInt(a.toFixed(2).slice(2, 4)) + "%"}{" "}
-          </p>
+          // <p style={{ marginTop: "13.5px" }}>
+          //   {" "}
+          //   {parseInt(a.toFixed(2).slice(2, 4)) + "%"}{" "}
+          // </p>
+          parseInt(a.toFixed(2).slice(2, 4)) + "%"
         )
       },
       {
@@ -219,10 +220,11 @@ class Part2Table extends React.Component {
         key: "6",
         width: 82,
         render: a => (
-          <p style={{ marginTop: "13.5px" }}>
-            {" "}
-            {parseInt(a.toFixed(2).slice(2, 4)) + "%"}{" "}
-          </p>
+          // <p style={{ marginTop: "13.5px" }}>
+          //   {" "}
+          //   {parseInt(a.toFixed(2).slice(2, 4)) + "%"}{" "}
+          // </p>
+          parseInt(a.toFixed(2).slice(2, 4)) + "%"
         )
       },
       {
@@ -243,7 +245,8 @@ class Part2Table extends React.Component {
         key: "9",
         width: 94,
         render: a => (
-          <p style={{ marginTop: "13.5px" }}> {parseFloat(a) * 100 + "%"}</p>
+          // <p style={{ marginTop: "13.5px" }}> {parseFloat(a) * 100 + "%"}</p>
+          parseFloat(a) * 100 + "%"
         )
       },
       {
@@ -264,10 +267,11 @@ class Part2Table extends React.Component {
         key: "12",
         width: 82,
         render: a => (
-          <p style={{ marginTop: "13.5px" }}>
-            {" "}
-            {parseInt(a.toFixed(2).slice(2, 4)) + "%"}{" "}
-          </p>
+          // <p style={{ marginTop: "13.5px" }}>
+          //   {" "}
+          //   {parseInt(a.toFixed(2).slice(2, 4)) + "%"}{" "}
+          // </p>
+          parseInt(a.toFixed(2).slice(2, 4)) + "%"
         )
       },
       {
@@ -457,13 +461,13 @@ class Part2Table extends React.Component {
             scroll={{ x: 1500, y: 500 }}
           />
         ) : (
-          <Table
-            dataSource={dataSource}
-            columns={advansColumns}
-            pagination={false}
-            scroll={{ x: 1300, y: 500 }}
-          />
-        )}
+            <Table
+              dataSource={dataSource}
+              columns={advansColumns}
+              pagination={false}
+              scroll={{ x: 1300, y: 500 }}
+            />
+          )}
       </div>
     );
   }

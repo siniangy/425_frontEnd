@@ -1,32 +1,32 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-let MatchShot = new Schema(
+let advansMatchDetail = new Schema(
   {
     url: {
       type: String,
       required: true
     },
-    team1Img: {
-      type: String,
-      required: true
-    },
-    team2Img: {
-      type: String,
-      required: true
-    },
-    team1ChartData: {
+    team1AdvansDetail: {
       type: Array,
       required: true
     },
-    team2ChartData: {
+    team1AdvansSummary: {
+      type: Array,
+      required: true
+    },
+    team2AdvansDetail: {
+      type: Array,
+      required: true
+    },
+    team2AdvansSummary: {
       type: Array,
       required: true
     }
   },
   {
-    collection: "matchshot"
+    collection: "advansmatchdetail"
   }
 );
 
-module.exports = MatchShot;
+module.exports = advansMatchDetail;

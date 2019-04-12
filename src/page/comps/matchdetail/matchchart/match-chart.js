@@ -15,12 +15,14 @@ class MatchChart extends React.Component {
       part3Data: [],
       team1Name: "",
       team2Name: "",
+      homeTeam: "", // 主队拼接basketball-reference的url
+      dateParams: "", // 日期拼接basketball-reference的url
       drawerVisible: false, // 问答系统
       systemSearchValue: "", // 问答系统
       systemShowData: "" // 问答系统
     };
   }
-  componentDidMount() {}
+  componentDidMount() { }
   componentWillMount() {
     // this.show(); 测试Segmentit
   }
@@ -30,6 +32,11 @@ class MatchChart extends React.Component {
       if (nextProps.singleMatchData) {
         this.handleSingleMatchProps(nextProps.singleMatchData);
       }
+      this.setState({
+        dateParams: nextProps.dateParams
+      }, () => {
+
+      })
     }
     if (this.props.playByplayData !== nextProps.playByplayData) {
       if (nextProps.playByplayData) {
@@ -37,11 +44,11 @@ class MatchChart extends React.Component {
       }
     }
   }
-  show() {
-    const segmentit = useDefault(new Segment());
-    const result = segmentit.doSegment("詹姆斯·哈登的本场表现");
-    console.log(result);
-  }
+  // show() {
+  //   const segmentit = useDefault(new Segment());
+  //   const result = segmentit.doSegment("詹姆斯·哈登的本场表现");
+  //   console.log(result);
+  // }
   getKnowledgeMapData(url) {
     $.ajax({
       url: url,
@@ -52,7 +59,7 @@ class MatchChart extends React.Component {
           {
             systemShowData: data["data"]["desc"]
           },
-          () => {}
+          () => { }
         );
       },
       error: err => {
@@ -66,17 +73,64 @@ class MatchChart extends React.Component {
         part1Data: data,
         part2Data: data,
         team1Name: data[0]["team1Info"][1],
-        team2Name: data[0]["team2Info"][1]
+        team2Name: data[0]["team2Info"][1],
+        homeTeam: this.getHomeTeam(data)
       },
-      () => {}
+      () => {
+
+      }
     );
+  }
+  getHomeTeam(data) {
+    let homeTeam = '';
+    const changeDataUrl = {
+      '布鲁克林篮网': 'BRK',
+      '奥兰多魔术': 'ORL',
+      '波士顿凯尔特人': 'BOS',
+      '圣安东尼奥马刺': 'SAS',
+      '克里夫兰骑士': 'CLE',
+      '夏洛特黄蜂': 'CHO',
+      '底特律活塞': 'DET',
+      '洛杉矶快船': 'LAC',
+      '犹他爵士': 'GSW',
+      '菲尼克斯太阳': 'PHO',
+      '休斯顿火箭': 'HOU',
+      '印第安纳步行者': 'IND',
+      '犹他爵士': 'UTA',
+      '洛杉矶湖人': 'LAL',
+      '达拉斯独行侠': 'DAL',
+      '孟菲斯灰熊': 'MEM',
+      '亚特兰大老鹰': 'ATL',
+      '密尔沃基雄鹿': 'MIL',
+      '俄克拉荷马雷霆': 'OKC',
+      '明尼苏达森林狼': 'MIN',
+      '华盛顿奇才': 'WAS',
+      '纽约尼克斯': 'NYK',
+      '丹佛掘金': 'DEN',
+      '波特兰开拓者': 'POR',
+      '新奥尔良鹈鹕': 'NOP',
+      '萨克拉门托国王': 'SAC',
+      '迈阿密热火': 'MIA',
+      '多伦多猛龙': 'TOR',
+      '费城76人': 'PHI',
+      '芝加哥公牛': 'CHI'
+    }
+
+    if (data[0]['team1Home'][1] === '客场') {
+      homeTeam = changeDataUrl[data[0]['team2Info'][1]];
+    } else {
+      homeTeam = changeDataUrl[data[0]['team1Info'][1]];
+    }
+    return homeTeam;
   }
   handleSingleMatchPlayByPlayProps(data) {
     this.setState(
       {
         part3Data: data
       },
-      () => {}
+      () => { 
+        console.log(this.state.part3Data)
+      }
     );
   }
   handleQASystem() {
@@ -84,7 +138,7 @@ class MatchChart extends React.Component {
       {
         drawerVisible: true
       },
-      () => {}
+      () => { }
     );
   }
   handleQASystemClose() {
@@ -92,7 +146,7 @@ class MatchChart extends React.Component {
       {
         drawerVisible: false
       },
-      () => {}
+      () => { }
     );
   }
   handleSearchValue(value) {
@@ -163,10 +217,10 @@ class MatchChart extends React.Component {
           <Part1 data={part1Data} />
         </div>
         <div>
-          <Part2 data={part2Data} />
+          <Part2 data={part2Data} dateParams={this.state.dateParams} homeTeam={this.state.homeTeam} />
         </div>
         <div>
-          <Part3 data={part3Data} team1Name={team1Name} team2Name={team2Name} />
+          <Part3 data={part3Data} dateParams={this.state.dateParams} homeTeam={this.state.homeTeam} team1Name={team1Name} team2Name={team2Name} />
         </div>
       </div>
     );

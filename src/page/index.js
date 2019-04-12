@@ -13,8 +13,8 @@ class NewsVisualization extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      year: "2015",
-      month: "01",
+      year: "2019",
+      month: "03",
       day: "01",
       dateParams: "",
       matchContent: [],
@@ -23,8 +23,8 @@ class NewsVisualization extends React.Component {
       currentUrl: ""
     };
   }
-  componentDidMount() {}
-  componentWillMount() {}
+  componentDidMount() { }
+  componentWillMount() { }
   getMatchItems(data) {
     const that = this;
     const postData = {
@@ -51,7 +51,7 @@ class NewsVisualization extends React.Component {
       {
         year: value
       },
-      () => {}
+      () => { }
     );
   }
   handleMonthChange(value) {
@@ -59,7 +59,7 @@ class NewsVisualization extends React.Component {
       {
         month: value
       },
-      () => {}
+      () => { }
     );
   }
   handleDayChange(value) {
@@ -67,7 +67,7 @@ class NewsVisualization extends React.Component {
       {
         day: value
       },
-      () => {}
+      () => { }
     );
   }
   handleClick() {
@@ -92,7 +92,9 @@ class NewsVisualization extends React.Component {
         currentUrl: e.target.innerHTML.split("</span>")[0].split('">')[1],
         currentMatch: e.target.innerHTML.split("</span>")[1]
       },
-      () => {}
+      () => {
+
+      }
     );
   }
 
@@ -143,6 +145,8 @@ class NewsVisualization extends React.Component {
                   <Option value="2015">2015</Option>
                   <Option value="2016">2016</Option>
                   <Option value="2017">2017</Option>
+                  <Option value="2018">2018</Option>
+                  <Option value="2019">2019</Option>
                 </Select>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <Select
@@ -265,6 +269,7 @@ class NewsVisualization extends React.Component {
                 <MatchDetail
                   currentUrl={this.state.currentUrl}
                   currentMatch={this.state.currentMatch}
+                  dateParams={this.state.dateParams}
                 />
               </Content>
             </Layout>
