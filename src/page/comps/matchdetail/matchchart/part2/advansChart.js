@@ -303,7 +303,7 @@ class Part2AdvansChart extends React.Component {
           style={{
             width: width,
             height: 400,
-            maxWidth: "800px"
+            // maxWidth: "800px"
           }}
         />
       </div>

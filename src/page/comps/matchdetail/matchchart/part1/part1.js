@@ -33,7 +33,7 @@ class Part1 extends React.Component {
     this.handleReSize();
     window.addEventListener("resize", this.handleReSize.bind(this));
   }
-  componentWillMount() {}
+  componentWillMount() { }
   componentWillUnmount() {
     window.removeEventListener("resize", this.handleReSize.bind(this));
   }
@@ -72,7 +72,7 @@ class Part1 extends React.Component {
         team1Sum: this.handleTeamSum(data[0]["team1Score"]),
         team2Sum: this.handleTeamSum(data[0]["team2Score"])
       },
-      () => {}
+      () => { }
     );
   }
   handleButton(e) {
@@ -80,7 +80,7 @@ class Part1 extends React.Component {
       {
         defaultSwitchValue: e.target.value
       },
-      () => {}
+      () => { }
     );
   }
   handleMapTarget(e) {
@@ -92,7 +92,7 @@ class Part1 extends React.Component {
         modalVisible: true,
         modalTarget: e.target.innerHTML + "队"
       },
-      () => {}
+      () => { }
     );
   }
   handleOk(e) {
@@ -228,14 +228,14 @@ class Part1 extends React.Component {
                 team2Sum={team2Sum}
               />
             ) : (
-              <Part1Chart
-                team1Name={team1Name}
-                team2Name={team2Name}
-                team1Score={team1Score}
-                team2Score={team2Score}
-                width={this.state.width}
-              />
-            )}
+                <Part1Chart
+                  team1Name={team1Name}
+                  team2Name={team2Name}
+                  team1Score={team1Score}
+                  team2Score={team2Score}
+                  width={this.state.width}
+                />
+              )}
           </Col>
           <Col
             span={6}

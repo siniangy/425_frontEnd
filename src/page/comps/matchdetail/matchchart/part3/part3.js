@@ -121,13 +121,11 @@ export default class Part3 extends React.Component {
     );
   }
   handleProps(data) {
-    // console.log(data)
     let arr = data[0]["quarter1"].concat(
       data[0]["quarter2"],
       data[0]["quarter3"],
       data[0]["quarter4"]
     );
-
     let team1Info = arr.filter((item, index) => {
       if (item[2].indexOf("助攻+1") != -1) {
         return item;
@@ -136,10 +134,17 @@ export default class Part3 extends React.Component {
     let m = [];
     let n = [];
     for (let i in team1Info) {
-      let a1 = team1Info[i][1].split("命中")[0];
-      let b1 = team1Info[i][1].split("分")[1].split("助攻")[0];
-      m.push(a1, b1);
-      n.push([b1, a1]);
+      if (team1Info[i][1].indexOf('命中') !== -1) {
+        let a1 = team1Info[i][1].split("命中")[0];
+        let b1 = team1Info[i][1].split("分")[1].split("助攻")[0];
+        m.push(a1, b1);
+        n.push([b1, a1]);
+      } else {    // 处理“尼古拉-乌切维奇助攻队友”这种非常规字段，自己助攻自己吧！！
+        let a1 = team1Info[i][1].split('助攻')[0];
+        let b1 = team1Info[i][1].split('助攻')[0];
+        m.push(a1, b1);
+        n.push([b1, a1]);
+      }
     }
     let team1Players = this.changePlayers(m);
     let team1Relation = this.changeRelation(n);

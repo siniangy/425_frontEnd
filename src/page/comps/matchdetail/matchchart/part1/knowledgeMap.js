@@ -13,10 +13,10 @@ export default class knowledgeMap extends React.Component {
   componentWillMount() {
     this.getKnowledgeMapData(
       "https://api.ownthink.com/kg/knowledge?entity=" +
-        this.props.target.toString()
+      this.props.target.toString()
     );
   }
-  componentDidMount() {}
+  componentDidMount() { }
   componentWillReceiveProps(nextProps) {
     if (this.props.target !== nextProps.target) {
       if (nextProps.target) {
@@ -27,7 +27,7 @@ export default class knowledgeMap extends React.Component {
           () => {
             this.getKnowledgeMapData(
               "https://api.ownthink.com/kg/knowledge?entity=" +
-                this.state.target.toString()
+              this.state.target.toString()
             );
           }
         );
@@ -105,8 +105,12 @@ export default class knowledgeMap extends React.Component {
       dataType: "json",
       success: res => {
         let data = res.data.avp;
-        console.log(data);
         if (data) {
+          for (let i = 1; i < data.length; i++) {
+            if (data[i][0] == '台湾地区译名') {
+              data[i][1] = data[i][1] + '.'
+            }
+          }
           this.setState(
             {
               mapCategories: this.changeCategories(data),
@@ -172,7 +176,7 @@ export default class knowledgeMap extends React.Component {
       ]
     };
     myChart.setOption(option);
-    myChart.on("click", function(params) {
+    myChart.on("click", function (params) {
       handleMapTarget(params.data.name);
     });
   }

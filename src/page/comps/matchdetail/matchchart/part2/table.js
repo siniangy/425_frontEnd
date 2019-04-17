@@ -338,24 +338,14 @@ class Part2Table extends React.Component {
         fixed: 'left',
         render: (text, record) => (
           <div>
-            <Popover
-              content={content}
-              title={modalTarget}
-              placement="right"
-              trigger="click"
-              overlayStyle={{ width: "500px" }}
-              onClick={e => this.handleModal(e)}
+            <b
+              style={{
+                fontSize: "14px",
+                color: "rgba(24,144,255,1)",
+              }}
             >
-              <b
-                style={{
-                  fontSize: "14px",
-                  color: "rgba(24,144,255,1)",
-                  cursor: "pointer"
-                }}
-              >
-                {text}
-              </b>
-            </Popover>
+              {text}
+            </b>
           </div>
         )
       },

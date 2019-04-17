@@ -128,8 +128,7 @@ class MatchChart extends React.Component {
       {
         part3Data: data
       },
-      () => { 
-        console.log(this.state.part3Data)
+      () => {
       }
     );
   }

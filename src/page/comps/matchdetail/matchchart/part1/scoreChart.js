@@ -19,7 +19,7 @@ class Part1Chart extends React.Component {
       this.props.team2Score
     );
   }
-  componentWillMount() {}
+  componentWillMount() { }
   componentWillReceiveProps(nextProps) {
     if (this.props.team1Name != nextProps.team1Name) {
       if (nextProps.team1Name) {
@@ -45,6 +45,19 @@ class Part1Chart extends React.Component {
   getInitialChart(team1Name, team2Name, team1Score, team2Score) {
     var myChart = echarts.init(document.getElementById("part1Main"));
     let team = [team1Name, team2Name];
+    let X = [];
+    // 最多4个加时差不多了吧
+    if (team1Score.length == 5) {
+      X = ['第一节', '第二节', '第三节', '第四节', '加时一'];
+    } else if (team1Score.length == 6) {
+      X = ['第一节', '第二节', '第三节', '第四节', '加时一', '加时二'];
+    } else if (team1Score.length == 7) {
+      X = ['第一节', '第二节', '第三节', '第四节', '加时一', '加时二', '加时三'];
+    } else if (team1Score.length == 8) {
+      X = ['第一节', '第二节', '第三节', '第四节', '加时一', '加时二', '加时三', '加时四'];
+    } else {
+      X = ['第一节', '第二节', '第三节', '第四节'];
+    }
     myChart.setOption({
       title: {},
       tooltip: {
@@ -66,7 +79,7 @@ class Part1Chart extends React.Component {
       xAxis: [
         {
           type: "category",
-          data: ["第一节", "第二节", "第三节", "第四节"]
+          data: X
         }
       ],
       yAxis: [
@@ -103,7 +116,7 @@ class Part1Chart extends React.Component {
         }
       ]
     });
-    window.addEventListener("resize", function() {
+    window.addEventListener("resize", function () {
       myChart.resize();
     });
   }

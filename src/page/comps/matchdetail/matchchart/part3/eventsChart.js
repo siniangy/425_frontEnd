@@ -90,32 +90,33 @@ class Part3Chart2 extends React.Component {
         axisLine: {
           show: false
         },
-        show: false
+        // show: false
+        show: true
       },
       dataZoom: [
         {
           type: "slider",
           show: true,
           start: 0,
-          end: 30,
+          end: 100,
           handleSize: 8
         },
-        {
-          type: "inside",
-          start: 0,
-          end: 30
-        },
-        {
-          type: "slider",
-          show: true,
-          yAxisIndex: 0,
-          filterMode: "empty",
-          width: 12,
-          height: "70%",
-          handleSize: 8,
-          showDataShadow: false,
-          left: "93%"
-        }
+        // {
+        //   type: "inside",
+        //   start: 0,
+        //   end: 30
+        // },
+        // {
+        //   type: "slider",
+        //   show: true,
+        //   yAxisIndex: 0,
+        //   filterMode: "empty",
+        //   width: 12,
+        //   height: "70%",
+        //   handleSize: 8,
+        //   showDataShadow: false,
+        //   left: "93%"
+        // }
       ],
       series: [
         {
@@ -142,6 +143,15 @@ class Part3Chart2 extends React.Component {
             }
           },
           data: target
+        }, {
+          name: "1",
+          type: "line",
+          data: target,
+          symbol: "none",
+          lineStyle: {
+            color: '#c2565a'
+          },
+          smooth: true
         }
       ]
     };

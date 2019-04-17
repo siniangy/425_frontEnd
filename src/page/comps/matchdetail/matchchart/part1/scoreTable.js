@@ -13,8 +13,8 @@ class Part1Table extends React.Component {
       team2Sum: 0
     };
   }
-  componentDidMount() {}
-  componentWillMount() {}
+  componentDidMount() { }
+  componentWillMount() { }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.team1Name != nextProps.team1Name) {
@@ -28,7 +28,9 @@ class Part1Table extends React.Component {
             team1Sum: nextProps.team1Sum,
             team2Sum: nextProps.team2Sum
           },
-          () => {}
+          () => {
+            // console.log(this.state.team1Score)
+          }
         );
       }
     }
@@ -61,8 +63,7 @@ class Part1Table extends React.Component {
         "4": team2Score[3],
         "5": team2Sum
       }
-    ];
-
+    ]
     const columns = [
       {
         title: "球队",
@@ -95,7 +96,7 @@ class Part1Table extends React.Component {
         dataIndex: "5",
         key: "5"
       }
-    ];
+    ] 
     return (
       <div>
         <Table

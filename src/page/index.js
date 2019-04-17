@@ -1,6 +1,6 @@
 import React from "react";
 import { Select, Button, Layout, Menu } from "antd";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Link } from "react-router-dom";
 import MatchList from "./comps/matchlist/match-list.js";
 import MatchDetail from "./comps/matchdetail/match-detail.js";
 import "./style/index.less";
@@ -26,7 +26,6 @@ class NewsVisualization extends React.Component {
   componentDidMount() { }
   componentWillMount() { }
   getMatchItems(data) {
-    const that = this;
     const postData = {
       date: data
     };
@@ -142,9 +141,6 @@ class NewsVisualization extends React.Component {
                   }}
                   onChange={value => this.handleYearChange(value)}
                 >
-                  <Option value="2015">2015</Option>
-                  <Option value="2016">2016</Option>
-                  <Option value="2017">2017</Option>
                   <Option value="2018">2018</Option>
                   <Option value="2019">2019</Option>
                 </Select>

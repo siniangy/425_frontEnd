@@ -11,6 +11,7 @@ class MatchDetail extends React.Component {
     this.state = {
       isLoading: false,
       dateParams: '',
+      currentUrl: '',
       singleMatchData: [],
       playByplayData: []
     };
@@ -22,7 +23,8 @@ class MatchDetail extends React.Component {
       if (nextProps.currentUrl) {
         this.setState({
           isLoading: true,
-          dateParams: nextProps.dateParams
+          dateParams: nextProps.dateParams,
+          currentUrl: nextProps.currentUrl
         }, () => {
 
         });
@@ -82,7 +84,7 @@ class MatchDetail extends React.Component {
         <BackTop />
         <Tabs defaultActiveKey="1" onChange={key => this.handleKey(key)}>
           <TabPane tab="新闻报道" key="1" forceRender={true}>
-            {this.state.isLoading ? <MatchNews /> : <Skeleton />}
+            {this.state.isLoading ? <MatchNews currentUrl={this.state.currentUrl} /> : <Skeleton />}
           </TabPane>
           <TabPane tab="数据统计" key="2" forceRender={true}>
             {this.state.isLoading ? (
