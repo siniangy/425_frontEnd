@@ -37,7 +37,7 @@ class Iframe extends Component {
                     sandbox="allow-scripts allow-forms allow-same-origin"
                     scrolling="auto"
                     id="iframe"
-                    src='/html/lunbo.html'
+                    src='/iframe/lunbo.html'
                 />
             </div>
         );
