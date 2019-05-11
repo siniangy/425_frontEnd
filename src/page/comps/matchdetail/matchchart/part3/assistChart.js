@@ -14,7 +14,7 @@ class Part3Chart1 extends React.Component {
     //   this.myChart3.resize()
     // })
   }
-  componentWillMount() {}
+  componentWillMount() { }
   componentWillUnmount() {
     // window.removeEventListener('resize', () => {
     //   this.myChart3.resize()
@@ -335,7 +335,7 @@ class Part3Chart1 extends React.Component {
               textStyle: {
                 // fontSize: 20
               },
-              formatter: function(params) {
+              formatter: function (params) {
                 let txt = "助攻";
                 if (parseInt(params.data.value) > 1) {
                   return txt + params.data.value;
@@ -351,8 +351,8 @@ class Part3Chart1 extends React.Component {
       ]
     };
     myChart.setOption(option);
-    myChart.on("click", function(params) {});
-    window.addEventListener("resize", function() {
+    myChart.on("click", function (params) { });
+    window.addEventListener("resize", function () {
       myChart.resize();
     });
   }

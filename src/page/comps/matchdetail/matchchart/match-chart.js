@@ -92,7 +92,7 @@ class MatchChart extends React.Component {
       '夏洛特黄蜂': 'CHO',
       '底特律活塞': 'DET',
       '洛杉矶快船': 'LAC',
-      '犹他爵士': 'GSW',
+      '金州勇士': 'GSW',
       '菲尼克斯太阳': 'PHO',
       '休斯顿火箭': 'HOU',
       '印第安纳步行者': 'IND',

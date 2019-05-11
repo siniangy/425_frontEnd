@@ -1,11 +1,8 @@
 import React from "react";
-import { Row, Col, Radio, Modal, Button } from "antd";
-import Part1Table from "./scoreTable.js";
+import { Row, Col, Modal } from "antd";
 import Part1Chart from "./scoreChart.js";
 import Chart from "./knowledgeMap.js";
 
-const RadioButton = Radio.Button;
-const RadioGroup = Radio.Group;
 class Part1 extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +19,6 @@ class Part1 extends React.Component {
       team2Score: "",
       team1Sum: 0,
       team2Sum: 0,
-      defaultSwitchValue: "a",
       modalVisible: false,
       modalTarget: "",
       isLoading: false,
@@ -75,14 +71,6 @@ class Part1 extends React.Component {
       () => { }
     );
   }
-  handleButton(e) {
-    this.setState(
-      {
-        defaultSwitchValue: e.target.value
-      },
-      () => { }
-    );
-  }
   handleMapTarget(e) {
     this.setState({ modalTarget: e });
   }
@@ -115,9 +103,7 @@ class Part1 extends React.Component {
       team2Score,
       team1Sum,
       team2Sum,
-      defaultSwitchValue,
       modalTarget,
-      isLoading
     } = this.state;
     return (
       <div
@@ -208,34 +194,13 @@ class Part1 extends React.Component {
             }}
             id="part1"
           >
-            <div
-              style={{
-                margin: "10px auto"
-              }}
-            >
-              <RadioGroup onChange={e => this.handleButton(e)} defaultValue="a">
-                <RadioButton value="a">Table</RadioButton>
-                <RadioButton value="b">Chart</RadioButton>
-              </RadioGroup>
-            </div>
-            {defaultSwitchValue == "a" ? (
-              <Part1Table
-                team1Name={team1Name}
-                team2Name={team2Name}
-                team1Score={team1Score}
-                team2Score={team2Score}
-                team1Sum={team1Sum}
-                team2Sum={team2Sum}
-              />
-            ) : (
-                <Part1Chart
-                  team1Name={team1Name}
-                  team2Name={team2Name}
-                  team1Score={team1Score}
-                  team2Score={team2Score}
-                  width={this.state.width}
-                />
-              )}
+            <Part1Chart
+              team1Name={team1Name}
+              team2Name={team2Name}
+              team1Score={team1Score}
+              team2Score={team2Score}
+              width={this.state.width}
+            />
           </Col>
           <Col
             span={6}

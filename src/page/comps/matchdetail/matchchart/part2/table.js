@@ -246,7 +246,8 @@ class Part2Table extends React.Component {
         width: 94,
         render: a => (
           // <p style={{ marginTop: "13.5px" }}> {parseFloat(a) * 100 + "%"}</p>
-          parseFloat(a) * 100 + "%"
+          // parseFloat(a) * 100 + "%"
+          parseInt(a.toFixed(2).slice(2, 4)) + "%"
         )
       },
       {

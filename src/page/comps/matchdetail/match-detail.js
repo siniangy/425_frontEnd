@@ -10,6 +10,7 @@ class MatchDetail extends React.Component {
     super(props);
     this.state = {
       isLoading: false,
+      emptyState: false,
       dateParams: '',
       currentUrl: '',
       singleMatchData: [],
@@ -21,6 +22,16 @@ class MatchDetail extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.currentUrl !== nextProps.currentUrl) {
       if (nextProps.currentUrl) {
+        let urlNumber = parseInt(nextProps.currentUrl.split('//')[1].split('/')[2].split('.')[0]);
+        if (urlNumber <= 43531 && urlNumber >= 43526 && urlNumber !== 43530) {
+          this.setState({
+            emptyState: true
+          })
+        } else {
+          this.setState({
+            emptyState: false
+          })
+        }
         this.setState({
           isLoading: true,
           dateParams: nextProps.dateParams,
@@ -82,9 +93,9 @@ class MatchDetail extends React.Component {
     return (
       <div>
         <BackTop />
-        <Tabs defaultActiveKey="1" onChange={key => this.handleKey(key)}>
+        <Tabs defaultActiveKey="2" onChange={key => this.handleKey(key)}>
           <TabPane tab="新闻报道" key="1" forceRender={true}>
-            {this.state.isLoading ? <MatchNews currentUrl={this.state.currentUrl} /> : <Skeleton />}
+            {(this.state.isLoading && this.state.emptyState) ? <MatchNews currentUrl={this.state.currentUrl} /> : <Skeleton />}
           </TabPane>
           <TabPane tab="数据统计" key="2" forceRender={true}>
             {this.state.isLoading ? (

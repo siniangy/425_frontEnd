@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal } from "antd";
-import Chart from "./newsInfo.js";
-import Iframe from "./iframe.js";
+import Info from "./newsInfo.js";
+import Iframe from "./newsIframe.js";
 import "./news.css";
 
 class MatchNews extends React.Component {
@@ -10,7 +10,8 @@ class MatchNews extends React.Component {
     this.state = {
       modalTarget: "",
       currentUrl: this.props.currentUrl,
-      showData: "",
+      showNewsData: "",
+      showInfoData: "",
       visible: false
     };
   }
@@ -32,23 +33,21 @@ class MatchNews extends React.Component {
     })
   }
   getUrlTestNews(id) {
-    $.ajax({
-      url: "https://www.easy-mock.com/mock/5bf3713695d22b57c4fe73a6/example/news2",
-      type: "get",
-      dataType: "json",
-      success: res => {
+    fetch("/newsdata/news.json")
+      .then(response => response.json())
+      .then(res => {
         let data = res.data[id]
         this.setState(
           {
-            showData: data
+            showNewsData: data['news'],
+            showInfoData: data
           },
-          () => { }
+          () => {
+            // console.log(this.state.showInfoData)
+          }
         );
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
+      })
+      .catch(err => console.log(err))
   }
   handleTagName(e) {
     if (e.target.nodeName === 'A') {
@@ -70,21 +69,22 @@ class MatchNews extends React.Component {
     });
   }
   render() {
-    const content = <Chart target={this.state.modalTarget} />;
+    const content = <Info target={this.state.modalTarget} data={this.state.showInfoData} />;
     return (
       <div>
         <div>
           <Iframe currentUrl={this.state.currentUrl} />
         </div>
-        <div dangerouslySetInnerHTML={{ __html: this.state.showData }} style={{ fontSize: "18px", textIndent: "2em" }} onClick={(e) => { this.handleTagName(e) }}></div>
+        <div dangerouslySetInnerHTML={{ __html: this.state.showNewsData }} style={{ fontSize: "18px", textIndent: "2em" }} onClick={(e) => { this.handleTagName(e) }}></div>
         <Modal
           title={this.state.modalTarget}
           visible={this.state.visible}
           onOk={(e) => { this.handleOk(e) }}
           onCancel={(e) => { this.handleCancel(e) }}
+          footer={null}
+          bodyStyle={{ background: "rgba(255,255,180,0.1)" }}
         >
-          {this.state.modalTarget}
-          {/* {content} */}
+          {content}
         </Modal>
       </div>
     );

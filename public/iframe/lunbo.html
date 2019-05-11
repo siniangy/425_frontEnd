@@ -127,8 +127,6 @@
 	<script src="../vendorResource/jQuery.js"></script>
 	<script src="../vendorResource/jquery.easing.min.js"></script>
 	<script>
-		// 外链视频
-		// var imgArr = ["http://ppzoimsv9.bkt.clouddn.com/testH1.mp4", "http://ppzoimsv9.bkt.clouddn.com/testJ2.mp4", "http://ppzoimsv9.bkt.clouddn.com/testJ1.mp4", "http://ppzoimsv9.bkt.clouddn.com/testH2.mp4"];
 		function getVideoArr(data) {
 			var baseUrl = '/415/' + data
 			var imgArr = [baseUrl + '-1.mp4', baseUrl + '-2.mp4', baseUrl + '-3.mp4', baseUrl + '-4.mp4'];
@@ -266,8 +264,9 @@
 			}
 			manager.init(imgArr);
 		}
+		getVideoArr('43526'); // 给一个默认值！！（不好吧！！）
 		function receiveMessageFromIndex(event) {
-			console.log('我是iframe,我接受到了：', event.data);
+			// console.log('我是iframe,我接受到了：', event.data);
 			getVideoArr(event.data)
 		}
 		window.addEventListener("message", receiveMessageFromIndex, false);

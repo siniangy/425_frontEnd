@@ -47,14 +47,16 @@ class Part1Chart extends React.Component {
     let team = [team1Name, team2Name];
     let X = [];
     // 最多4个加时差不多了吧
-    if (team1Score.length == 5) {
+    if (team1Score.length === 5) {
       X = ['第一节', '第二节', '第三节', '第四节', '加时一'];
-    } else if (team1Score.length == 6) {
+    } else if (team1Score.length === 6) {
       X = ['第一节', '第二节', '第三节', '第四节', '加时一', '加时二'];
-    } else if (team1Score.length == 7) {
+    } else if (team1Score.length === 7) {
       X = ['第一节', '第二节', '第三节', '第四节', '加时一', '加时二', '加时三'];
-    } else if (team1Score.length == 8) {
+    } else if (team1Score.length === 8) {
       X = ['第一节', '第二节', '第三节', '第四节', '加时一', '加时二', '加时三', '加时四'];
+    } else if (team1Score.length === 9) {
+      X = ['第一节', '第二节', '第三节', '第四节', '加时一', '加时二', '加时三', '加时四', '加时五'];
     } else {
       X = ['第一节', '第二节', '第三节', '第四节'];
     }
@@ -91,6 +93,11 @@ class Part1Chart extends React.Component {
         {
           name: team[0],
           type: "bar",
+          itemStyle: {
+            normal: {
+              color: 'rgba(93, 227, 225, 1)'
+            }
+          },
           data: team1Score,
           markLine: {
             data: [
@@ -104,6 +111,11 @@ class Part1Chart extends React.Component {
         {
           name: team[1],
           type: "bar",
+          itemStyle: {
+            normal: {
+              color: 'rgba(138, 62, 235, 1)'
+            }
+          },
           data: team2Score,
           markLine: {
             data: [

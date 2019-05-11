@@ -30,7 +30,7 @@ export default class Part3 extends React.Component {
       templateEventsData: [],
       dataUrl: '', // 拼接url传参
       index: -1,
-      videoSrc: "",
+      videoSrc: "", // 测试地址
       width: -1
     };
   }
@@ -58,7 +58,8 @@ export default class Part3 extends React.Component {
         this.handleProps(nextProps.data);
       }
       this.setState({
-        dataUrl: this.getAdvansDataUrl(nextProps.dateParams, nextProps.homeTeam)
+        dataUrl: this.getAdvansDataUrl(nextProps.dateParams, nextProps.homeTeam),
+        videoSrc: ""
       }, () => {
         // console.log(this.state.dataUrl)
       })
@@ -135,10 +136,17 @@ export default class Part3 extends React.Component {
     let n = [];
     for (let i in team1Info) {
       if (team1Info[i][1].indexOf('命中') !== -1) {
-        let a1 = team1Info[i][1].split("命中")[0];
-        let b1 = team1Info[i][1].split("分")[1].split("助攻")[0];
-        m.push(a1, b1);
-        n.push([b1, a1]);
+        if (team1Info[i][1].indexOf('篮板') !== -1) { // 处理“xxx抢到进攻篮板xxx命中三分xxx助攻队友”这种非常规字段
+          let a1 = team1Info[i][1].split('篮板')[1].split("命中")[0];
+          let b1 = team1Info[i][1].split('篮板')[1].split("分")[1].split("助攻")[0];
+          m.push(a1, b1);
+          n.push([b1, a1]);
+        } else {
+          let a1 = team1Info[i][1].split("命中")[0];
+          let b1 = team1Info[i][1].split("分")[1].split("助攻")[0];
+          m.push(a1, b1);
+          n.push([b1, a1]);
+        }
       } else {    // 处理“尼古拉-乌切维奇助攻队友”这种非常规字段，自己助攻自己吧！！
         let a1 = team1Info[i][1].split('助攻')[0];
         let b1 = team1Info[i][1].split('助攻')[0];
@@ -157,10 +165,24 @@ export default class Part3 extends React.Component {
     let k = [];
     let j = [];
     for (let i in team2Info) {
-      let a2 = team2Info[i][5].split("命中")[0];
-      let b2 = team2Info[i][5].split("分")[1].split("助攻")[0];
-      k.push(a2, b2);
-      j.push([b2, a2]);
+      if (team2Info[i][5].indexOf('命中') !== -1) {
+        if (team2Info[i][5].indexOf('篮板') !== -1) { // 处理“xxx抢到进攻篮板xxx命中三分xxx助攻队友”这种非常规字段
+          let a2 = team2Info[i][5].split('篮板')[1].split("命中")[0];
+          let b2 = team2Info[i][5].split('篮板')[1].split("分")[1].split("助攻")[0];
+          k.push(a2, b2);
+          j.push([b2, a2]);
+        } else {
+          let a2 = team2Info[i][5].split("命中")[0];
+          let b2 = team2Info[i][5].split("分")[1].split("助攻")[0];
+          k.push(a2, b2);
+          j.push([b2, a2]);
+        }
+      } else {    // 处理“尼古拉-乌切维奇助攻队友”这种非常规字段，自己助攻自己吧！！
+        let a2 = team2Info[i][5].split('助攻')[0];
+        let b2 = team2Info[i][5].split('助攻')[0];
+        k.push(a2, b2);
+        j.push([b2, a2]);
+      }
     }
     let team2Players = this.changePlayers(k);
     let team2Relation = this.changeRelation(j);
@@ -426,7 +448,7 @@ export default class Part3 extends React.Component {
           >
             <h3>视频测试</h3>
             <div style={{ marginTop: "30px", minHeight: "400px" }}>
-              <Player ref="player" videoId="video-1">
+              <Player ref="player" videoId="video-1" poster="/images/news.jpg">
                 <source src={this.state.videoSrc} />
               </Player>
             </div>

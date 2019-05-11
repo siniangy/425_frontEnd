@@ -107,7 +107,9 @@ export default class knowledgeMap extends React.Component {
         let data = res.data.avp;
         if (data) {
           for (let i = 1; i < data.length; i++) {
-            if (data[i][0] == '台湾地区译名') {
+            if (data[i][0] === '台湾地区译名') {
+              data[i][1] = data[i][1] + '.'
+            } else if (data[i][0] === '加入NBA时间') {
               data[i][1] = data[i][1] + '.'
             }
           }

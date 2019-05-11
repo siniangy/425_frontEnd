@@ -9,7 +9,7 @@ class SeasonAvgChart extends React.Component {
       targetAvg: []
     };
   }
-  componentDidMount() {}
+  componentDidMount() { }
   componentWillMount() {
     // 处理球员本场数据
     let dataMatch = this.props.targetDetail[0];
@@ -43,11 +43,11 @@ class SeasonAvgChart extends React.Component {
     let postData =
       data == "科克-辛里奇"
         ? {
-            cnName: "柯克-辛里奇"
-          }
+          cnName: "柯克-辛里奇"
+        }
         : {
-            cnName: data
-          };
+          cnName: data
+        };
     $.ajax({
       url: "/getSinglePlayerSeasonAvg",
       type: "post",
@@ -55,13 +55,15 @@ class SeasonAvgChart extends React.Component {
       data: postData,
       success: data => {
         let seasonAvg = data[0]["seasonAvg"];
+        // console.log(seasonAvg)
         let dataAvg = seasonAvg.map((item, index) => {
           if (item.indexOf("%") != -1) {
-            return parseFloat(item) / 100;
+            return (parseFloat(item) / 100).toFixed(2);
           } else {
             return parseFloat(item);
           }
         });
+        // console.log(dataAvg);
         let data2 = [];
         for (let i in dataAvg) {
           if (i == 5 || i == 14 || (i <= 22 && i >= 17)) {
@@ -211,7 +213,7 @@ class SeasonAvgChart extends React.Component {
         }
       ]
     });
-    window.addEventListener("resize", function() {
+    window.addEventListener("resize", function () {
       myChart.resize();
     });
   }
