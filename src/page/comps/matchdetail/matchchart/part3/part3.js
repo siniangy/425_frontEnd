@@ -274,10 +274,17 @@ export default class Part3 extends React.Component {
   }
   handleIndex(e) {
     let src = "";
-    if (e == 43) {
-      src = "/testVideos/2.mp4";
-    } else if (e == 7) {
-      src = "/testVideos/3.mp4";
+    // console.log(e)
+    let num1 = [10, 12, 14]; // 公牛测试
+    let flag1 = num1.indexOf(e) != -1 ? true : false;
+    let num2 = [1, 8, 9]; // 老鹰测试
+    let flag2 = num2.indexOf(e) != -1 ? true : false;
+    if (flag1 === true) {
+      src = "/testVideos/1/1-" + e.toString() + ".webm"
+    } else if (flag2 === true) {
+      src = "/testVideos/2/2-" + e.toString() + ".webm"
+    } else {
+
     }
     this.setState({
       index: e,

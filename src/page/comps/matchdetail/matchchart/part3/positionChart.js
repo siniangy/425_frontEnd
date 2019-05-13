@@ -232,14 +232,10 @@ class Part3Chart3 extends React.Component {
     heatmapInstance.setData(data);
   }
   handle1Index(index) {
-    if (index == 43) {
-      this.props.handleIndex(index);
-    }
+    this.props.handleIndex(index);
   }
   handle2Index(index) {
-    if (index == 7) {
-      this.props.handleIndex(index);
-    }
+    this.props.handleIndex(index);
   }
   render() {
     const { team1ChartData, team2ChartData, team1Img, team2Img } = this.state;
@@ -253,14 +249,14 @@ class Part3Chart3 extends React.Component {
         position: "absolute"
       };
       let target = item[3];
-      let num = [43];
-      let flag = num.indexOf(index) != -1 ? true : false;
+      let num = [10, 12, 14];
+      let flag = (num.indexOf(index) != -1 && this.state.dataUrl === "https://www.basketball-reference.com/boxscores/shot-chart/201903010ATL.html" && this.state.quarterSelect === "quarter") ? true : false;
       let style2 = {
         background:
           target == "×"
             ? "rgb(245,22,56)"
             : flag == true
-              ? "rgb(112,100,154)"
+              ? "blue"
               : "rgb(106,212,29)",
         cursor: "pointer",
         width: flag == true ? "20px" : "10px",
@@ -306,14 +302,14 @@ class Part3Chart3 extends React.Component {
         position: "absolute"
       };
       let target = item[3];
-      let num = [7];
-      let flag = num.indexOf(index) != -1 ? true : false;
+      let num = [1, 8, 9];
+      let flag = (num.indexOf(index) != -1 && this.state.dataUrl === "https://www.basketball-reference.com/boxscores/shot-chart/201903010ATL.html" && this.state.quarterSelect === "quarter") ? true : false;
       let style2 = {
         background:
           target == "×"
             ? "rgb(245,22,56)"
             : flag == true
-              ? "rgb(112,100,154)"
+              ? "purple"
               : "rgb(106,212,29)",
         cursor: "pointer",
         width: flag == true ? "20px" : "10px",
