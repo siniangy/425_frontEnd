@@ -342,7 +342,7 @@ class Part2Table extends React.Component {
             <b
               style={{
                 fontSize: "14px",
-                color: "rgba(24,144,255,1)",
+                // color: "rgba(24,144,255,1)",
               }}
             >
               {text}
