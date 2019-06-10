@@ -336,7 +336,7 @@ class Part3Chart1 extends React.Component {
                 // fontSize: 20
               },
               formatter: function (params) {
-                let txt = "助攻";
+                let txt = "Assist ";
                 if (parseInt(params.data.value) > 1) {
                   return txt + params.data.value;
                 } else {

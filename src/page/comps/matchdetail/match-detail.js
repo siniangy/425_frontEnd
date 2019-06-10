@@ -94,10 +94,10 @@ class MatchDetail extends React.Component {
       <div>
         <BackTop />
         <Tabs defaultActiveKey="2" onChange={key => this.handleKey(key)}>
-          <TabPane tab="新闻报道" key="1" forceRender={true}>
+          <TabPane tab="NEWS" key="1" forceRender={true}>
             {(this.state.isLoading && this.state.emptyState) ? <MatchNews currentUrl={this.state.currentUrl} /> : <Skeleton />}
           </TabPane>
-          <TabPane tab="数据统计" key="2" forceRender={true}>
+          <TabPane tab="VISUAL" key="2" forceRender={true}>
             {this.state.isLoading ? (
               <MatchChart
                 singleMatchData={this.state.singleMatchData}

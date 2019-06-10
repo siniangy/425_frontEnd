@@ -432,19 +432,19 @@ class Part2 extends React.Component {
     const dataSource = [
       {
         key: "0",
-        0: "得分",
+        0: "Score",
         1: team1ScoreMax,
         2: team2ScoreMax
       },
       {
         key: "1",
-        0: "篮板",
+        0: "Rebound",
         1: team1ReboundMax,
         2: team2ReboundMax
       },
       {
         key: "2",
-        0: "助攻",
+        0: "Assist",
         1: team1AssistMax,
         2: team2AssistMax
       }
@@ -526,8 +526,8 @@ class Part2 extends React.Component {
               onChange={e => this.handleTeamDataChange(e)}
               defaultValue="basic"
             >
-              <RadioButton value="basic">基础数据</RadioButton>
-              <RadioButton value="advans">进阶数据</RadioButton>
+              <RadioButton value="basic">Basic Data</RadioButton>
+              <RadioButton value="advans">Advans Data</RadioButton>
             </RadioGroup>
             <span style={{ marginLeft: "15px" }}>
               <Tooltip title={advansContent} placement="right" overlayStyle={{ maxWidth: "800px" }}>
@@ -547,7 +547,7 @@ class Part2 extends React.Component {
               minWidth: "550px"
             }}
           >
-            <h3>各项最佳</h3>
+            <h3>MVP</h3>
             <Table
               dataSource={dataSource}
               columns={columns}
@@ -572,8 +572,8 @@ class Part2 extends React.Component {
             onChange={e => this.handlePlayerDataChange(e)}
             defaultValue="Pbasic"
           >
-            <Radio value="Pbasic">基础数据</Radio>
-            <Radio value="Padvan">进阶数据</Radio>
+            <Radio value="Pbasic">Basic Data</Radio>
+            <Radio value="Padvan">Advans Data</Radio>
           </RadioGroup>
         </div>
         <Part2Table

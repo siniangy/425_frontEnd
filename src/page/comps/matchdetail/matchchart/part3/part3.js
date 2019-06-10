@@ -302,6 +302,38 @@ export default class Part3 extends React.Component {
       defaultQuarterSelectedValue,
       defaultShotSelectedValue
     } = this.state;
+    const changeName = {
+      '布鲁克林篮网': 'BKN',
+      '奥兰多魔术': 'ORL',
+      '波士顿凯尔特人': 'BOS',
+      '圣安东尼奥马刺': 'SAS',
+      '克里夫兰骑士': 'CLE',
+      '夏洛特黄蜂': 'CHA',
+      '底特律活塞': 'DET',
+      '洛杉矶快船': 'LAC',
+      '金州勇士': 'GSW',
+      '菲尼克斯太阳': 'PHO',
+      '休斯顿火箭': 'HOU',
+      '印第安纳步行者': 'IND',
+      '犹他爵士': 'UTA',
+      '洛杉矶湖人': 'LAL',
+      '达拉斯独行侠': 'DAL',
+      '孟菲斯灰熊': 'MEM',
+      '亚特兰大老鹰': 'ATL',
+      '密尔沃基雄鹿': 'MIL',
+      '俄克拉荷马雷霆': 'OKC',
+      '明尼苏达森林狼': 'MIN',
+      '华盛顿奇才': 'WAS',
+      '纽约尼克斯': 'NYK',
+      '丹佛掘金': 'DEN',
+      '波特兰开拓者': 'POR',
+      '新奥尔良鹈鹕': 'NOH',
+      '萨克拉门托国王': 'SAC',
+      '迈阿密热火': 'MIA',
+      '多伦多猛龙': 'TOR',
+      '费城76人': 'PHI',
+      '芝加哥公牛': 'CHI'
+    }
     const { team1Name, team2Name } = this.props;
     const eventsLength = this.state.playbyplayData.length;
     let style = {
@@ -325,7 +357,7 @@ export default class Part3 extends React.Component {
             overflowY: "hidden"
           }}>
           <h3>
-            时序事件过滤
+            Time Events Filter
             <span style={{ marginLeft: "15px" }}>
               <Select
                 defaultValue="All Events"
@@ -366,7 +398,7 @@ export default class Part3 extends React.Component {
             }}
           >
             <h3>
-              投篮点分析
+              Spatial Events Analysis
               <Icon
                 type="heat-map"
                 style={style}
@@ -426,15 +458,15 @@ export default class Part3 extends React.Component {
             id="part3"
           >
             <h3 style={{}}>
-              球队助攻关系
+              Assisting Relationship
               <span style={{ marginLeft: "15px" }}>
                 <RadioGroup
                   onChange={e => this.handleButton(e)}
                   defaultValue="a"
                   style={{}}
                 >
-                  <RadioButton value="a">{team1Name}</RadioButton>
-                  <RadioButton value="b">{team2Name}</RadioButton>
+                  <RadioButton value="a">{changeName[team1Name]}</RadioButton>
+                  <RadioButton value="b">{changeName[team2Name]}</RadioButton>
                 </RadioGroup>
               </span>
             </h3>
@@ -453,7 +485,7 @@ export default class Part3 extends React.Component {
             }}
             id="test"
           >
-            <h3>视频测试</h3>
+            <h3>Video Link Component</h3>
             <div style={{ marginTop: "30px", minHeight: "400px" }}>
               <Player ref="player" videoId="video-1" poster="/images/news.jpg">
                 <source src={this.state.videoSrc} />
