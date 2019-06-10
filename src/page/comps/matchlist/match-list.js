@@ -50,7 +50,7 @@ class MatchList extends React.Component {
             marginLeft: 15
           }}
           onSearch={this.handleSearch}
-          placeholder="搜索比赛"
+          placeholder="Search MatchList"
         />
         {matchItems}
       </div>

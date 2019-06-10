@@ -132,7 +132,7 @@ class NewsVisualization extends React.Component {
                   backgroundColor: "rgba(0,21,41,1)"
                 }}
               >
-                <span>请选择日期：</span>
+                <span>Select Date：</span>
                 <Select
                   defaultValue={this.state.year}
                   style={{
