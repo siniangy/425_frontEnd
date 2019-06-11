@@ -53,38 +53,6 @@ class Part2BasicChart extends React.Component {
     //   myChart != undefined) {
     //   myChart.dispose(); 销毁实例
     // }
-    const changeTeam = {
-      '布鲁克林篮网': 'BKN',
-      '奥兰多魔术': 'ORL',
-      '波士顿凯尔特人': 'BOS',
-      '圣安东尼奥马刺': 'SAS',
-      '克里夫兰骑士': 'CLE',
-      '夏洛特黄蜂': 'CHA',
-      '底特律活塞': 'DET',
-      '洛杉矶快船': 'LAC',
-      '金州勇士': 'GSW',
-      '菲尼克斯太阳': 'PHO',
-      '休斯顿火箭': 'HOU',
-      '印第安纳步行者': 'IND',
-      '犹他爵士': 'UTA',
-      '洛杉矶湖人': 'LAL',
-      '达拉斯独行侠': 'DAL',
-      '孟菲斯灰熊': 'MEM',
-      '亚特兰大老鹰': 'ATL',
-      '密尔沃基雄鹿': 'MIL',
-      '俄克拉荷马雷霆': 'OKC',
-      '明尼苏达森林狼': 'MIN',
-      '华盛顿奇才': 'WAS',
-      '纽约尼克斯': 'NYK',
-      '丹佛掘金': 'DEN',
-      '波特兰开拓者': 'POR',
-      '新奥尔良鹈鹕': 'NOH',
-      '萨克拉门托国王': 'SAC',
-      '迈阿密热火': 'MIA',
-      '多伦多猛龙': 'TOR',
-      '费城76人': 'PHI',
-      '芝加哥公牛': 'CHI'
-    }
     var chart = document.getElementById("part2Main");
     echarts.dispose(chart);
     var myChart = echarts.init(chart);
@@ -118,7 +86,7 @@ class Part2BasicChart extends React.Component {
         y: "top", // 'center' | 'bottom' | {number}
         data: [
           {
-            name: changeTeam[team1Name],
+            name: team1Name,
             textStyle: {
               fontWeight: "bolder",
               padding: [10, 100, 15, 0]
@@ -126,7 +94,7 @@ class Part2BasicChart extends React.Component {
             }
           },
           {
-            name: changeTeam[team2Name],
+            name: team2Name,
             textStyle: {
               fontSize: 12,
               fontWeight: "bolder"
@@ -262,7 +230,7 @@ class Part2BasicChart extends React.Component {
       color: ["#2FACFA", "#F5A623"],
       series: [
         {
-          name: changeTeam[team1Name],
+          name: team1Name,
           type: "bar",
           barWidth: "20",
           gridIndex: 0,
@@ -285,7 +253,7 @@ class Part2BasicChart extends React.Component {
           data: womanData
         },
         {
-          name: changeTeam[team2Name],
+          name: team2Name,
           type: "bar",
           barWidth: "20",
           xAxisIndex: 1,

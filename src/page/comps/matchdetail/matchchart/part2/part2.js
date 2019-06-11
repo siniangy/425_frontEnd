@@ -3,7 +3,7 @@ import { Radio, Row, Col, Table, Select, Icon, Tooltip } from "antd";
 import Part2Table from "./table.js";
 import Part2BasicChart from "./basicChart.js";
 import Part2AdvansChart from "./advansChart.js";
-// var nameChange = require("./playerName.js");
+const nameChange = require("../playerToEng.js");
 
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -248,45 +248,95 @@ class Part2 extends React.Component {
     let team2SummaryChart = this.selectData2(
       this.changeIntoSummaryNumber(data[0]["team2Summary"][0])
     );
+    const teamChange = {
+      '布鲁克林篮网': 'BKN',
+      '奥兰多魔术': 'ORL',
+      '波士顿凯尔特人': 'BOS',
+      '圣安东尼奥马刺': 'SAS',
+      '克里夫兰骑士': 'CLE',
+      '夏洛特黄蜂': 'CHA',
+      '底特律活塞': 'DET',
+      '洛杉矶快船': 'LAC',
+      '金州勇士': 'GSW',
+      '菲尼克斯太阳': 'PHO',
+      '休斯顿火箭': 'HOU',
+      '印第安纳步行者': 'IND',
+      '犹他爵士': 'UTA',
+      '洛杉矶湖人': 'LAL',
+      '达拉斯独行侠': 'DAL',
+      '孟菲斯灰熊': 'MEM',
+      '亚特兰大老鹰': 'ATL',
+      '密尔沃基雄鹿': 'MIL',
+      '俄克拉荷马雷霆': 'OKC',
+      '明尼苏达森林狼': 'MIN',
+      '华盛顿奇才': 'WAS',
+      '纽约尼克斯': 'NYK',
+      '丹佛掘金': 'DEN',
+      '波特兰开拓者': 'POR',
+      '新奥尔良鹈鹕': 'NOH',
+      '萨克拉门托国王': 'SAC',
+      '迈阿密热火': 'MIA',
+      '多伦多猛龙': 'TOR',
+      '费城76人': 'PHI',
+      '芝加哥公牛': 'CHI'
+    }
     this.setState(
       {
         team1Detail: team1Detail,
         team2Detail: team2Detail,
         team1Summary: data[0]["team1Summary"],
         team2Summary: data[0]["team2Summary"],
-        team1Name: data[0]["team1Info"][1],
-        team2Name: data[0]["team2Info"][1],
+        team1Name: teamChange[data[0]["team1Info"][1]],
+        team2Name: teamChange[data[0]["team2Info"][1]],
         team1Max: team1Max,
         team2Max: team2Max,
-        team1ScoreMax: [
+        team1ScoreMax: (nameChange[team1Detail[team1Max[0]]['0']] === undefined) ? [
           team1Detail[team1Max[0]]['0'],
           team1Detail[team1Max[0]]['21']
-        ],
-        team1ReboundMax: [
+        ] : [
+            nameChange[team1Detail[team1Max[0]]['0']],
+            team1Detail[team1Max[0]]['21']
+          ],
+        team1ReboundMax: (nameChange[team1Detail[team1Max[1]]['0']] === undefined) ? [
           team1Detail[team1Max[1]]['0'],
           team1Detail[team1Max[1]]['13']
-        ],
-        team1AssistMax: [
+        ] : [
+            nameChange[team1Detail[team1Max[1]]['0']],
+            team1Detail[team1Max[1]]['13']
+          ],
+        team1AssistMax: (nameChange[team1Detail[team1Max[2]]['0']] === undefined) ? [
           team1Detail[team1Max[2]]['0'],
           team1Detail[team1Max[2]]['16']
-        ],
-        team2ScoreMax: [
+        ] : [
+            nameChange[team1Detail[team1Max[2]]['0']],
+            team1Detail[team1Max[2]]['16']
+          ],
+        team2ScoreMax: (nameChange[team2Detail[team2Max[0]]['0']] === undefined) ? [
           team2Detail[team2Max[0]]['0'],
           team2Detail[team2Max[0]]['21']
-        ],
-        team2ReboundMax: [
+        ] : [
+            nameChange[team2Detail[team2Max[0]]['0']],
+            team2Detail[team2Max[0]]['21']
+          ],
+        team2ReboundMax: (nameChange[team2Detail[team2Max[1]]['0']] === undefined) ? [
           team2Detail[team2Max[1]]['0'],
           team2Detail[team2Max[1]]['13']
-        ],
-        team2AssistMax: [
+        ] : [
+            nameChange[team2Detail[team2Max[1]]['0']],
+            team2Detail[team2Max[1]]['13']
+          ],
+        team2AssistMax: (nameChange[team2Detail[team2Max[2]]['0']] === undefined) ? [
           team2Detail[team2Max[2]]['0'],
           team2Detail[team2Max[2]]['16']
-        ],
+        ] : [
+            nameChange[team2Detail[team2Max[2]]['0']],
+            team2Detail[team2Max[2]]['16']
+          ],
         team1SummaryChart: team1SummaryChart,
         team2SummaryChart: team2SummaryChart
       },
       () => {
-
+        // console.log(this.state.team1ScoreMax)
       }
     );
   }
@@ -317,13 +367,9 @@ class Part2 extends React.Component {
     const {
       team1Detail,
       team2Detail,
-      team1Summary,
-      team2Summary,
       team1Name,
       team2Name,
       teamDefaultValue,
-      team1Max,
-      team2Max,
       team1ScoreMax,
       team1ReboundMax,
       team1AssistMax,

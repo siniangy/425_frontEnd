@@ -25,8 +25,8 @@ class Part2Table extends React.Component {
             jsonLength: Object.keys(nextProps.teamDetail[0]).length
           },
           () => {
-            // console.log(this.state.jsonLength);
-            // console.log(this.state.teamDetail);
+            console.log(this.state.jsonLength);
+            console.log(this.state.teamDetail);
           }
         );
       }
@@ -140,7 +140,7 @@ class Part2Table extends React.Component {
     const dataSource = teamDetail;
     const basicColumns = [
       {
-        title: "球员",
+        title: "Players",
         dataIndex: "0",
         key: "0",
         width: 180,
@@ -332,7 +332,7 @@ class Part2Table extends React.Component {
     ];
     const advansColumns = [
       {
-        title: "球员",
+        title: "Players",
         dataIndex: "0",
         key: "0",
         width: 180,

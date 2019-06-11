@@ -1,5 +1,7 @@
 import React from "react";
 
+const nameChange = require("../playerToEng.js");
+
 class Part3Chart1 extends React.Component {
   constructor(props) {
     super(props);
@@ -23,12 +25,35 @@ class Part3Chart1 extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.players != nextProps.players) {
       if (nextProps.players) {
+        let players = [];
+        let relation = [];
+        if (nameChange[nextProps.players[0]]) {
+          for (let i in nextProps.players) {
+            players.push(nameChange[nextProps.players[i]])
+          }
+        } else {
+          players = nextProps.players
+        }
+        if (nameChange[nextProps.relation[0][0]]) {
+          for (let i in nextProps.relation) {
+            let d = [];
+            d.push(nameChange[nextProps.relation[i][0]]);
+            d.push(nameChange[nextProps.relation[i][1]]);
+            d.push(nextProps.relation[i][2]);
+            d.push(nextProps.relation[3])
+            relation.push(d);
+          }
+        } else {
+          relation = nextProps.relation
+        }
         this.setState(
           {
-            players: nextProps.players,
-            relation: nextProps.relation
+            players: players,
+            relation: relation
           },
           () => {
+            // console.log(this.state.players)
+            // console.log(this.state.relation)
             this.getInitialChart(this.state.players, this.state.relation);
           }
         );
@@ -291,7 +316,8 @@ class Part3Chart1 extends React.Component {
               opacity: 0.9,
               width: dataLink[i][2] * 2,
               curveness: 0.3,
-              color: color[dataLink[i][3] - 1]
+              // color: color[dataLink[i][3] - 1]
+              color: "#4CB7F2"
             }
           }
         });
