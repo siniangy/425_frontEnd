@@ -173,7 +173,7 @@ class SeasonAvgChart extends React.Component {
       },
       series: [
         {
-          name: "本场表现数据",
+          name: "Local Performance",
           type: "radar",
           symbol: "circle",
           symbolSize: 10,
@@ -196,7 +196,7 @@ class SeasonAvgChart extends React.Component {
           data: [data1]
         },
         {
-          name: "生涯场均数据",
+          name: "Career Performance",
           type: "radar",
           symbol: "circle",
           symbolSize: 10,
