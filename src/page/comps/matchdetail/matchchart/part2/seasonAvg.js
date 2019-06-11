@@ -1,5 +1,5 @@
 import React from "react";
-
+const nameChange = require("../playerToEng.js")
 class SeasonAvgChart extends React.Component {
   constructor(props) {
     super(props);
@@ -39,14 +39,23 @@ class SeasonAvgChart extends React.Component {
     }
   }
   getSeasonAvgData(data, data1, id) {
-    const that = this;
+    let target = "";
+    let flag = false;
+    let d = "";
+    for (let key in nameChange) {
+      if (nameChange[key] === data) {
+        d = key
+        flag = true
+      }
+    }
+    target = (flag === true) ? d : data
     let postData =
-      data == "科克-辛里奇"
+      target == "科克-辛里奇"
         ? {
           cnName: "柯克-辛里奇"
         }
         : {
-          cnName: data
+          cnName: target
         };
     $.ajax({
       url: "/getSinglePlayerSeasonAvg",
@@ -76,35 +85,35 @@ class SeasonAvgChart extends React.Component {
         }
         let indicator = [
           {
-            name: "投篮%",
+            name: "FG%",
             max: 1
           },
           {
-            name: "篮板",
+            name: "TRB",
             max: 100
           },
           {
-            name: "助攻",
+            name: "AST",
             max: 50
           },
           {
-            name: "抢断",
+            name: "ATL",
             max: 50
           },
           {
-            name: "盖帽",
+            name: "BLK",
             max: 50
           },
           {
-            name: "失误",
+            name: "TOV",
             max: 50
           },
           {
-            name: "犯规",
+            name: "PF",
             max: 50
           },
           {
-            name: "得分",
+            name: "PTS",
             max: 200
           }
         ];

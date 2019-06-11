@@ -1,7 +1,7 @@
 import React from "react";
 import { Table, Popover, Card, message, Icon } from "antd";
 import Chart from "./seasonAvg.js";
-
+const nameChange = require("../playerToEng.js")
 class Part2Table extends React.Component {
   constructor(props) {
     super(props);
@@ -18,15 +18,25 @@ class Part2Table extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.teamDetail != nextProps.teamDetail) {
       if (nextProps.teamDetail) {
+        let detail = [];
+        if (Object.keys(nextProps.teamDetail[0]).length > 18) {
+          for (let i in nextProps.teamDetail) {
+            nextProps.teamDetail[i]['0'] = (nameChange[nextProps.teamDetail[i]['0']] !== undefined) ? nameChange[nextProps.teamDetail[i]['0']] : nextProps.teamDetail[i]['0']
+          }
+          detail = nextProps.teamDetail
+        } else {
+          detail = nextProps.teamDetail;
+        }
+
         this.setState(
           {
-            teamDetail: nextProps.teamDetail,
+            teamDetail: detail,
             cardData: [],
             jsonLength: Object.keys(nextProps.teamDetail[0]).length
           },
           () => {
-            console.log(this.state.jsonLength);
-            console.log(this.state.teamDetail);
+            // console.log(this.state.jsonLength);
+            // console.log(this.state.teamDetail);
           }
         );
       }
@@ -101,7 +111,7 @@ class Part2Table extends React.Component {
     );
   }
   render() {
-    const { teamDetail, modalTarget, showData, cardData } = this.state;
+    const { teamDetail, modalTarget, cardData } = this.state;
     const cardItems = cardData.map((item, index) => {
       const data = this.state.teamDetail.filter((t, i) => t["0"] == item);
       return (
@@ -178,19 +188,19 @@ class Part2Table extends React.Component {
         )
       },
       {
-        title: "首发",
+        title: "SF",
         dataIndex: "1",
         key: "1",
         width: 56
       },
       {
-        title: "时间",
+        title: "MP",
         dataIndex: "2",
         key: "2",
         width: 67
       },
       {
-        title: "投篮%",
+        title: "FG%",
         dataIndex: "3",
         key: "3",
         width: 82,
@@ -203,19 +213,19 @@ class Part2Table extends React.Component {
         )
       },
       {
-        title: "命中",
+        title: "FG",
         dataIndex: "4",
         key: "4",
         width: 56
       },
       {
-        title: "出手",
+        title: "FGA",
         dataIndex: "5",
         key: "5",
         width: 67
       },
       {
-        title: "三分%",
+        title: "3P%",
         dataIndex: "6",
         key: "6",
         width: 82,
@@ -228,19 +238,19 @@ class Part2Table extends React.Component {
         )
       },
       {
-        title: "命中",
+        title: "3P",
         dataIndex: "7",
         key: "7",
         width: 56
       },
       {
-        title: "出手",
+        title: "3PA",
         dataIndex: "8",
         key: "8",
         width: 56
       },
       {
-        title: "罚球%",
+        title: "FT%",
         dataIndex: "9",
         key: "9",
         width: 94,
@@ -251,19 +261,19 @@ class Part2Table extends React.Component {
         )
       },
       {
-        title: "命中",
+        title: "FT",
         dataIndex: "10",
         key: "10",
         width: 56
       },
       {
-        title: "出手",
+        title: "FTA",
         dataIndex: "11",
         key: "11",
         width: 56
       },
       {
-        title: "真实命中%",
+        title: "TS%",
         dataIndex: "12",
         key: "12",
         width: 82,
@@ -276,55 +286,55 @@ class Part2Table extends React.Component {
         )
       },
       {
-        title: "篮板",
+        title: "TRB",
         dataIndex: "13",
         key: "13",
         width: 67
       },
       {
-        title: "前场",
+        title: "ORB",
         dataIndex: "14",
         key: "14",
         width: 56
       },
       {
-        title: "后场",
+        title: "DRB",
         dataIndex: "15",
         key: "15",
         width: 67
       },
       {
-        title: "助攻",
+        title: "AST",
         dataIndex: "16",
         key: "16",
         width: 56
       },
       {
-        title: "抢断",
+        title: "STL",
         dataIndex: "17",
         key: "17",
         width: 56
       },
       {
-        title: "盖帽",
+        title: "BLK",
         dataIndex: "18",
         key: "18",
         width: 56
       },
       {
-        title: "失误",
+        title: "TOV",
         dataIndex: "19",
         key: "19",
         width: 56
       },
       {
-        title: "犯规",
+        title: "PF",
         dataIndex: "20",
         key: "20",
         width: 57
       },
       {
-        title: "得分",
+        title: "PTS",
         dataIndex: "21",
         key: "21",
         width: 69

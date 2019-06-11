@@ -357,7 +357,7 @@ export default class Part3 extends React.Component {
             overflowY: "hidden"
           }}>
           <h3>
-            Time Events Filter
+            Time Events Analysis
             <span style={{ marginLeft: "15px" }}>
               <Select
                 defaultValue="All Events"
@@ -458,7 +458,7 @@ export default class Part3 extends React.Component {
             id="part3"
           >
             <h3 style={{}}>
-              Assisting Relationship
+              Team Chemistry Analysis
               <span style={{ marginLeft: "15px" }}>
                 <RadioGroup
                   onChange={e => this.handleButton(e)}
@@ -485,7 +485,7 @@ export default class Part3 extends React.Component {
             }}
             id="test"
           >
-            <h3>Video Link Component</h3>
+            <h3>Match Video Analysis</h3>
             <div style={{ marginTop: "30px", minHeight: "400px" }}>
               <Player ref="player" videoId="video-1" poster="/images/news.jpg">
                 <source src={this.state.videoSrc} />
