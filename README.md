@@ -5,6 +5,7 @@
 1：前端代码基于全栈"MERN"架构开发，MongoDB+Express+React+Node
 
 2：说明：
+
 0. node版本大于V8
 1. 视频测试数据是2019年3月1号的比赛数据，其中以公牛对阵老鹰为例
 2. react-router有bug
